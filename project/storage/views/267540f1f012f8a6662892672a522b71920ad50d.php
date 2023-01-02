@@ -7,28 +7,28 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield("title")</title>
-    <meta content="@yield('description')" name="description"/>
-    <meta content="@yield('keywords')" name="keywords"/>
+    <title><?php echo $__env->yieldContent("title"); ?></title>
+    <meta content="<?php echo $__env->yieldContent('description'); ?>" name="description"/>
+    <meta content="<?php echo $__env->yieldContent('keywords'); ?>" name="keywords"/>
 
-    <meta property="og:title" content="@yield('ogTitle')">
-    <meta property="og:description" content="@yield('ogDescription')">
-    <meta property="og:image" content="@yield('ogImage')">
-    <meta property="og:type" content="@yield('ogType')">
+    <meta property="og:title" content="<?php echo $__env->yieldContent('ogTitle'); ?>">
+    <meta property="og:description" content="<?php echo $__env->yieldContent('ogDescription'); ?>">
+    <meta property="og:image" content="<?php echo $__env->yieldContent('ogImage'); ?>">
+    <meta property="og:type" content="<?php echo $__env->yieldContent('ogType'); ?>">
 
-    <link rel="shortcut icon" href="{{baseUrl(httpCheck())}}assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo e(baseUrl(httpCheck())); ?>assets/images/favicon.ico">
 
-    <script src="{{baseUrl(httpCheck())}}assets/js/layout.js"></script>
+    <script src="<?php echo e(baseUrl(httpCheck())); ?>assets/js/layout.js"></script>
 
-    <link href="{{baseUrl(httpCheck())}}assets/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo e(baseUrl(httpCheck())); ?>assets/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="{{baseUrl(httpCheck())}}assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo e(baseUrl(httpCheck())); ?>assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="{{baseUrl(httpCheck())}}assets/css/app-rtl.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo e(baseUrl(httpCheck())); ?>assets/css/app-rtl.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="{{baseUrl(httpCheck())}}assets/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo e(baseUrl(httpCheck())); ?>assets/css/custom.css" rel="stylesheet" type="text/css"/>
 
-    @yield("head")
+    <?php echo $__env->yieldContent("head"); ?>
 
 </head>
 
@@ -37,11 +37,11 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    @php
+    <?php
         $routeHere=$_SERVER['REQUEST_URI'];
         $routeHereQueryString=str_contains($_SERVER['REQUEST_URI'],'?')?substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],"?")):'';
-    @endphp
-    @if($routeHere!="/adminpanel/Auth-signup" and $routeHereQueryString!="/adminpanel/Auth-signup" and $routeHere!="/adminpanel/Auth-signin" and $routeHereQueryString!="/adminpanel/Auth-signin")
+    ?>
+    <?php if($routeHere!="/adminpanel/Auth-signup" and $routeHereQueryString!="/adminpanel/Auth-signup" and $routeHere!="/adminpanel/Auth-signin" and $routeHereQueryString!="/adminpanel/Auth-signin"): ?>
 
         <header id="page-topbar">
             <div class="layout-width">
@@ -51,19 +51,19 @@
                         <div class="navbar-brand-box horizontal-logo">
                             <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{baseUrl(httpCheck())}}assets/images/logo-sm.png" alt="" height="22">
+                            <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-sm.png" alt="" height="22">
                         </span>
                                 <span class="logo-lg">
-                            <img src="{{baseUrl(httpCheck())}}assets/images/logo-dark.png" alt="" height="17">
+                            <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-dark.png" alt="" height="17">
                         </span>
                             </a>
 
                             <a href="index.html" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{baseUrl(httpCheck())}}assets/images/logo-sm.png" alt="" height="22">
+                            <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-sm.png" alt="" height="22">
                         </span>
                                 <span class="logo-lg">
-                            <img src="{{baseUrl(httpCheck())}}assets/images/logo-light.png" alt="" height="17">
+                            <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-light.png" alt="" height="17">
                         </span>
                             </a>
                         </div>
@@ -196,42 +196,42 @@
                             </div>
                         </div>
 
-{{--                        <div class="dropdown ms-1 topbar-head-dropdown header-item">--}}
-{{--                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"--}}
-{{--                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                                <img id="header-lang-img1"--}}
-{{--                                     src="{{baseUrl(httpCheck())}}assets/images/flags/{{getLanguage()=='en'?'us':(getLanguage()=='fa'?'ir':'sa')}}.svg"--}}
-{{--                                     alt="Header Language" height="20" class="rounded">--}}
-{{--                            </button>--}}
-{{--                            <div class="dropdown-menu dropdown-menu-end">--}}
+                        <div class="dropdown ms-1 topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img id="header-lang-img1"
+                                     src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/flags/<?php echo e(getLanguage()=='en'?'us':(getLanguage()=='fa'?'ir':'sa')); ?>.svg"
+                                     alt="Header Language" height="20" class="rounded">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
 
-{{--                                <!-- item-->--}}
-{{--                                <a href="{{baseUrl(httpCheck())}}adminpanel/Setting-changeLanguage-en"--}}
-{{--                                   class="dropdown-item notify-item language py-2" data-lang="en" title="English">--}}
-{{--                                    <img src="{{baseUrl(httpCheck())}}assets/images/flags/us.svg" alt="user-image"--}}
-{{--                                         class="me-2 rounded" height="18">--}}
-{{--                                    <span class="align-middle">English</span>--}}
-{{--                                </a>--}}
-
-
-{{--                                <a href="{{baseUrl(httpCheck())}}adminpanel/Setting-changeLanguage-fa"--}}
-{{--                                   class="dropdown-item notify-item language" data-lang="fa" title="فارسی">--}}
-{{--                                    <img src="{{baseUrl(httpCheck())}}assets/images/flags/ir.svg" alt="user-image"--}}
-{{--                                         class="me-2 rounded" height="18">--}}
-{{--                                    <span class="align-middle">فارسی</span>--}}
-{{--                                </a>--}}
+                                <!-- item-->
+                                <a href="<?php echo e(baseUrl(httpCheck())); ?>adminpanel/Setting-changeLanguage-en"
+                                   class="dropdown-item notify-item language py-2" data-lang="en" title="English">
+                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/flags/us.svg" alt="user-image"
+                                         class="me-2 rounded" height="18">
+                                    <span class="align-middle">English</span>
+                                </a>
 
 
-{{--                                <a href="{{baseUrl(httpCheck())}}adminpanel/Setting-changeLanguage-ar"--}}
-{{--                                   class="dropdown-item notify-item language" data-lang="ar" title="العربیه">--}}
-{{--                                    <img src="{{baseUrl(httpCheck())}}assets/images/flags/sa.svg" alt="user-image"--}}
-{{--                                         class="me-2 rounded" height="18">--}}
-{{--                                    <span class="align-middle">العربیه</span>--}}
-{{--                                </a>--}}
+                                <a href="<?php echo e(baseUrl(httpCheck())); ?>adminpanel/Setting-changeLanguage-fa"
+                                   class="dropdown-item notify-item language" data-lang="fa" title="فارسی">
+                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/flags/ir.svg" alt="user-image"
+                                         class="me-2 rounded" height="18">
+                                    <span class="align-middle">فارسی</span>
+                                </a>
 
 
-{{--                            </div>--}}
-{{--                        </div>--}}
+                                <a href="<?php echo e(baseUrl(httpCheck())); ?>adminpanel/Setting-changeLanguage-ar"
+                                   class="dropdown-item notify-item language" data-lang="ar" title="العربیه">
+                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/flags/sa.svg" alt="user-image"
+                                         class="me-2 rounded" height="18">
+                                    <span class="align-middle">العربیه</span>
+                                </a>
+
+
+                            </div>
+                        </div>
 
                         <div class="dropdown topbar-head-dropdown ms-1 header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -255,21 +255,21 @@
                                     <div class="row g-0">
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#!">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/brands/github.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/brands/github.png"
                                                      alt="Github">
                                                 <span>GitHub</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#!">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/brands/bitbucket.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/brands/bitbucket.png"
                                                      alt="bitbucket">
                                                 <span>Bitbucket</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#!">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/brands/dribbble.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/brands/dribbble.png"
                                                      alt="dribbble">
                                                 <span>Dribbble</span>
                                             </a>
@@ -279,21 +279,21 @@
                                     <div class="row g-0">
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#!">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/brands/dropbox.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/brands/dropbox.png"
                                                      alt="dropbox">
                                                 <span>Dropbox</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#!">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/brands/mail_chimp.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/brands/mail_chimp.png"
                                                      alt="mail_chimp">
                                                 <span>Mail Chimp</span>
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a class="dropdown-icon-item" href="#!">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/brands/slack.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/brands/slack.png"
                                                      alt="slack">
                                                 <span>Slack</span>
                                             </a>
@@ -337,7 +337,7 @@
                                         </div>
                                         <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/products/img-1.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/products/img-1.png"
                                                      class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                                 <div class="flex-1">
                                                     <h6 class="mt-0 mb-1 fs-14">
@@ -363,7 +363,7 @@
 
                                         <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/products/img-2.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/products/img-2.png"
                                                      class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                                 <div class="flex-1">
                                                     <h6 class="mt-0 mb-1 fs-14">
@@ -388,7 +388,7 @@
 
                                         <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/products/img-3.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/products/img-3.png"
                                                      class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                                 <div class="flex-1">
                                                     <h6 class="mt-0 mb-1 fs-14">
@@ -414,7 +414,7 @@
 
                                         <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/products/img-6.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/products/img-6.png"
                                                      class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                                 <div class="flex-1">
                                                     <h6 class="mt-0 mb-1 fs-14">
@@ -440,7 +440,7 @@
 
                                         <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{baseUrl(httpCheck())}}assets/images/products/img-5.png"
+                                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/products/img-5.png"
                                                      class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                                 <div class="flex-1">
                                                     <h6 class="mt-0 mb-1 fs-14">
@@ -579,7 +579,7 @@
 
                                             <div class="text-reset notification-item d-block dropdown-item position-relative active">
                                                 <div class="d-flex">
-                                                    <img src="{{baseUrl(httpCheck())}}assets/images/users/avatar-2.jpg"
+                                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-2.jpg"
                                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
@@ -636,7 +636,7 @@
 
                                             <div class="text-reset notification-item d-block dropdown-item position-relative">
                                                 <div class="d-flex">
-                                                    <img src="{{baseUrl(httpCheck())}}assets/images/users/avatar-8.jpg"
+                                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-8.jpg"
                                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
@@ -675,7 +675,7 @@
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                    <img src="{{baseUrl(httpCheck())}}assets/images/users/avatar-3.jpg"
+                                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-3.jpg"
                                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
@@ -701,7 +701,7 @@
 
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                    <img src="{{baseUrl(httpCheck())}}assets/images/users/avatar-2.jpg"
+                                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-2.jpg"
                                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
@@ -729,7 +729,7 @@
 
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                    <img src="{{baseUrl(httpCheck())}}assets/images/users/avatar-6.jpg"
+                                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-6.jpg"
                                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
@@ -757,7 +757,7 @@
 
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                    <img src="{{baseUrl(httpCheck())}}assets/images/users/avatar-8.jpg"
+                                                    <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-8.jpg"
                                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
@@ -792,7 +792,7 @@
                                     <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel"
                                          aria-labelledby="alerts-tab">
                                         <div class="w-25 w-sm-50 pt-3 mx-auto">
-                                            <img src="{{baseUrl(httpCheck())}}assets/images/svg/bell.svg"
+                                            <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/svg/bell.svg"
                                                  class="img-fluid" alt="user-pic">
                                         </div>
                                         <div class="text-center pb-5 mt-2">
@@ -809,7 +809,7 @@
                                     aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <img class="rounded-circle header-profile-user"
-                                 src="{{baseUrl(httpCheck())}}assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                 src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/users/avatar-1.jpg" alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna Adame</span>
                                 <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">Founder</span>
@@ -858,19 +858,19 @@
                 <!-- Dark Logo-->
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{baseUrl(httpCheck())}}assets/images/logo-sm.png" alt="" height="22">
+                        <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{baseUrl(httpCheck())}}assets/images/logo-dark.png" alt="" height="17">
+                        <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-dark.png" alt="" height="17">
                     </span>
                 </a>
                 <!-- Light Logo-->
                 <a href="index.html" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{baseUrl(httpCheck())}}assets/images/logo-sm.png" alt="" height="22">
+                        <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{baseUrl(httpCheck())}}assets/images/logo-light.png" alt="" height="17">
+                        <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-light.png" alt="" height="17">
                     </span>
                 </a>
                 <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -1960,9 +1960,9 @@
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>
 
-    @endif
+    <?php endif; ?>
 
-    @yield("content")
+    <?php echo $__env->yieldContent("content"); ?>
 
 </div>
 
@@ -2561,7 +2561,7 @@
                             <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-01"
                                    value="img-1">
                             <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-01">
-                                <img src="{{baseUrl(httpCheck())}}assets/images/sidebar/img-1.jpg" alt=""
+                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/sidebar/img-1.jpg" alt=""
                                      class="avatar-md w-auto object-cover">
                             </label>
                         </div>
@@ -2570,7 +2570,7 @@
                             <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-02"
                                    value="img-2">
                             <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-02">
-                                <img src="{{baseUrl(httpCheck())}}assets/images/sidebar/img-2.jpg" alt=""
+                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/sidebar/img-2.jpg" alt=""
                                      class="avatar-md w-auto object-cover">
                             </label>
                         </div>
@@ -2578,7 +2578,7 @@
                             <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-03"
                                    value="img-3">
                             <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-03">
-                                <img src="{{baseUrl(httpCheck())}}assets/images/sidebar/img-3.jpg" alt=""
+                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/sidebar/img-3.jpg" alt=""
                                      class="avatar-md w-auto object-cover">
                             </label>
                         </div>
@@ -2586,7 +2586,7 @@
                             <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-04"
                                    value="img-4">
                             <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-04">
-                                <img src="{{baseUrl(httpCheck())}}assets/images/sidebar/img-4.jpg" alt=""
+                                <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/sidebar/img-4.jpg" alt=""
                                      class="avatar-md w-auto object-cover">
                             </label>
                         </div>
@@ -2676,17 +2676,17 @@
     </div>
 </div>
 
-<script src="{{baseUrl(httpCheck())}}assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="{{baseUrl(httpCheck())}}assets/libs/simplebar/simplebar.min.js"></script>
-<script src="{{baseUrl(httpCheck())}}assets/libs/node-waves/waves.min.js"></script>
-<script src="{{baseUrl(httpCheck())}}assets/libs/feather-icons/feather.min.js"></script>
-<script src="{{baseUrl(httpCheck())}}assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-<script src="{{baseUrl(httpCheck())}}assets/js/plugins.js"></script>
+<script src="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/simplebar/simplebar.min.js"></script>
+<script src="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/node-waves/waves.min.js"></script>
+<script src="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/feather-icons/feather.min.js"></script>
+<script src="<?php echo e(baseUrl(httpCheck())); ?>assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+<script src="<?php echo e(baseUrl(httpCheck())); ?>assets/js/plugins.js"></script>
 
 
-@yield("script")
+<?php echo $__env->yieldContent("script"); ?>
 
 </body>
 
 </html>
-@php die; @endphp
+<?php die; ?><?php /**PATH C:\wamp64\www\bala24.ir-v2\project\view/admin/fa/layout/app.blade.php ENDPATH**/ ?>

@@ -11,7 +11,7 @@ $dotenv->load();
 
 errorHandle();
 if (!getLanguage())
-    setLanguage('en');
+    setLanguage('fa');
 
 
 $connection = connection(envv('DB_HOST'), envv('DB_USERNAME'), envv('DB_PASSWORD'), envv('DB_DATABASE'));
