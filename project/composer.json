@@ -1,0 +1,29 @@
+{
+    "name": "mahdi/project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php",
+            "view/view.php",
+            "route/web.php"
+
+        ]
+    },
+    "authors": [
+        {
+            "name": "mahdiJabbari",
+            "email": "m.h.jabbary@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "morilog/jalali": "^3.4",
+        "gregwar/captcha": "^1.1",
+        "phpoffice/phpspreadsheet": "^1.25",
+        "gilbitron/easycsrf": "^1.5",
+        "jenssegers/blade": "^1.4",
+        "guzzlehttp/guzzle": "^7.5"
+    }
+}

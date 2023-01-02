@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7ef55a7c-90c5-4854-b616-93312f62508f" name="Changes" comment="first upload project" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true">
+    <pharConfigPath>$PROJECT_DIR$/project/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/project/vendor/beberlei/assert" />
+      <path value="$PROJECT_DIR$/project/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/project/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/project/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/project/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/project/vendor/composer" />
+      <path value="$PROJECT_DIR$/project/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/project/vendor/gilbitron/easycsrf" />
+      <path value="$PROJECT_DIR$/project/vendor/jenssegers/blade" />
+      <path value="$PROJECT_DIR$/project/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/project/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/project/vendor/morilog/jalali" />
+      <path value="$PROJECT_DIR$/project/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/project/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/project/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/project/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/project/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/project/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/project/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/collections" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/view" />
+      <path value="$PROJECT_DIR$/project/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/project/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/bus" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/support" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/filesystem" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/macroable" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/container" />
+      <path value="$PROJECT_DIR$/project/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/pipeline" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/events" />
+      <path value="$PROJECT_DIR$/project/vendor/illuminate/contracts" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/project/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/project/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/project/vendor/gregwar/captcha" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/project/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/project/vendor/guzzlehttp/psr7" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="2JjdLq1fEupDmmNxM7SNDB8PBBD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/bala24.ir&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7ef55a7c-90c5-4854-b616-93312f62508f" name="Changes" comment="" />
+      <created>1672595373781</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1672595373781</updated>
+      <workItem from="1672595376171" duration="2756000" />
+      <workItem from="1672636316160" duration="2919000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="first upload project" />
+    <option name="LAST_COMMIT_MESSAGE" value="first upload project" />
+  </component>
+</project>
