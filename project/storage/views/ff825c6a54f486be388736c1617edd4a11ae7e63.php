@@ -136,17 +136,17 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="">
 
-                                                <img src="<?php echo e($builder->inline()); ?>"/>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4 col-sm-8 mb-3">
-                                                    <label for="captcha" class="form-label">کپچا</label>
-                                                    <input type="text" name="captcha" class="form-control"
-                                                           placeholder="کپچا را وارد کنید" id="captcha">
-                                                </div>
-                                            </div>
+
+
+
+
+
+
+
+
+
+
                                             <hr>
                                             <h4 class=" text-bold">SEO</h4>
                                             <div class="row mt-3">
