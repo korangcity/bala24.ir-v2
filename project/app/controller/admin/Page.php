@@ -84,16 +84,16 @@ class Page
                     endif;
                 }
 
-                if ($_POST['captcha'] != $_SESSION['phrase']) {
-                    if ($this->language == 'en'):
-                        setError('enter captcha value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('مقدار کپچا را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل کلمة تحقیق بشكل صحيح');
-                    endif;
-
-                }
+//                if ($_POST['captcha'] != $_SESSION['phrase']) {
+//                    if ($this->language == 'en'):
+//                        setError('enter captcha value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('مقدار کپچا را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل کلمة تحقیق بشكل صحيح');
+//                    endif;
+//
+//                }
 
                 if ($this->language == 'en'):
                     $title = sanitizeInput($_POST['title']);
@@ -438,16 +438,16 @@ class Page
                     endif;
                 }
 
-                if ($_POST['captcha'] != $_SESSION['phrase']) {
-                    if ($this->language == 'en'):
-                        setError('enter captcha value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('مقدار کپچا را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل کلمة تحقیق بشكل صحيح');
-                    endif;
-
-                }
+//                if ($_POST['captcha'] != $_SESSION['phrase']) {
+//                    if ($this->language == 'en'):
+//                        setError('enter captcha value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('مقدار کپچا را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل کلمة تحقیق بشكل صحيح');
+//                    endif;
+//
+//                }
 
                 if ($this->language == 'en'):
 
@@ -685,7 +685,7 @@ class Page
         return $this->db->insert("pages", $data);
     }
 
-    private function getPages()
+    public function getPages()
     {
         $query = "select * from `pages` where `language`='".$this->language."' order by `id` desc";
 

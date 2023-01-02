@@ -459,3 +459,11 @@ function back()
 {
     return header('location:' . $_SERVER['HTTP_REFERER']);
 }
+
+function isActive($input)
+{
+    $currentUrl = substr($_SERVER['REQUEST_URI'], 12);
+    return (is_array($input) and in_array($currentUrl, $input)) ? "active" : (($input == $currentUrl) ? "active" : "");
+
+}
+

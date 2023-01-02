@@ -73,17 +73,17 @@ class News
 
                 }
 
-                if ($_POST['captcha'] != $_SESSION['phrase']) {
-                    if ($this->language == 'en'):
-                        setError('enter captcha value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('مقدار کپچا را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل کلمة تحقیق بشكل صحيح');
-                    endif;
-
-
-                }
+//                if ($_POST['captcha'] != $_SESSION['phrase']) {
+//                    if ($this->language == 'en'):
+//                        setError('enter captcha value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('مقدار کپچا را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل کلمة تحقیق بشكل صحيح');
+//                    endif;
+//
+//
+//                }
 
 
                 if ($this->language == 'en'):
@@ -206,15 +206,15 @@ class News
 
                 }
 
-                if ($_POST['captcha'] != $_SESSION['phrase']) {
-                    if ($this->language == 'en'):
-                        setError('enter captcha value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('مقدار کپچا را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل کلمة تحقیق بشكل صحيح');
-                    endif;
-                }
+//                if ($_POST['captcha'] != $_SESSION['phrase']) {
+//                    if ($this->language == 'en'):
+//                        setError('enter captcha value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('مقدار کپچا را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل کلمة تحقیق بشكل صحيح');
+//                    endif;
+//                }
 
                 if ($this->language == 'en'):
                     $title = sanitizeInput($_POST['title']) ?? $category['title'];
@@ -402,15 +402,15 @@ class News
                     endif;
                 }
 
-                if ($_POST['captcha'] != $_SESSION['phrase']) {
-                    if ($this->language == 'en'):
-                        setError('enter captcha value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('مقدار کپچا را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل کلمة تحقیق بشكل صحيح');
-                    endif;
-                }
+//                if ($_POST['captcha'] != $_SESSION['phrase']) {
+//                    if ($this->language == 'en'):
+//                        setError('enter captcha value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('مقدار کپچا را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل کلمة تحقیق بشكل صحيح');
+//                    endif;
+//                }
 
                 if ($this->language == 'en'):
                     $category = sanitizeInput($_POST['category']);
