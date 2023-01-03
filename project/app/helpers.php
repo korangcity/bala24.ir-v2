@@ -2,6 +2,9 @@
 
 use App\controller\Database;
 use Jenssegers\Blade\Blade;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 
 /**
@@ -466,4 +469,56 @@ function isActive($input)
     return (is_array($input) and in_array($currentUrl, $input)) ? "active" : (($input == $currentUrl) ? "active" : "");
 
 }
+
+function sendEmail(array $addresses,array $addCCs=[],array $addBCCs=[]){
+    $mail = new PHPMailer(true);
+    try{
+
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'bala24.ir@gmail.com';                     //SMTP username
+        $mail->Password   = 'c6wxgiyu3yjnb3fojgcdasl4hrks';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+        $mail->Port       = 587;
+//        $mail->Port       = 465;
+
+        //Recipients
+        $mail->setFrom('bala24.ir@gmail.com', 'Bala24');
+
+        foreach ($addresses as $address) {
+            $mail->addAddress($address);     //Add a recipient
+        }
+
+        $mail->addReplyTo('bala24.ir@gmail.com', 'Bala24.ir');
+
+        foreach ($addCCs as $addCC) {
+
+            $mail->addCC($addCC);
+        }
+
+        foreach ($addBCCs as $addBCC) {
+
+            $mail->addBCC($addBCC);
+        }
+
+        //Attachments
+//        $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+//        $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+        //Content
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Here is the subject';
+        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+        echo 'Message has been sent';
+
+    }catch (Exception $e){
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
+
 

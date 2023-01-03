@@ -21,6 +21,7 @@ class Page
 
     public function __construct()
     {
+        !checkLogin() ? redirect("adminpanel/Auth-signin") : null;
         $this->db = connection(envv('DB_HOST'), envv('DB_USERNAME'), envv('DB_PASSWORD'), envv('DB_DATABASE'));
         $this->sessionProvider = new NativeSessionProvider();
         $this->easyCSRF = new EasyCSRF($this->sessionProvider);

@@ -128,7 +128,7 @@ class Auth
                 if (empty(getErrors())) {
                     $password = sha1($password);
                     $r = $this->register($email, $password);
-                    redirect('adminpanel/Auth-signup');
+                    redirect('adminpanel/Auth-signin');
                 }
 
             }
@@ -226,7 +226,7 @@ class Auth
                         }
                         login();
                         set_user_info($email, $password);
-                        redirect('adminpanel/Auth-signin');
+                        redirect('adminpanel/Dashboard-dashboard');
                     endif;
                 }
 
@@ -603,6 +603,10 @@ class Auth
             }
         }
 
+        if ($act == "signout") {
+            logout();
+            redirect("adminpanel/Auth-signin");
+        }
     }
 
     public function register($email, $password)

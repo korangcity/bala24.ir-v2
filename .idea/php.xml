@@ -46,6 +46,7 @@
       <path value="$PROJECT_DIR$/project/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/project/vendor/phpoffice/phpspreadsheet" />
       <path value="$PROJECT_DIR$/project/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/project/vendor/phpmailer/phpmailer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

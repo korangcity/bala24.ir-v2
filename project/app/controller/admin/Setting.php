@@ -6,6 +6,7 @@ class Setting
 { 
     public function __construct()
     {
+        !checkLogin() ? redirect("adminpanel/Auth-signin") : null;
     }
 
     public function act($act, $option = '')

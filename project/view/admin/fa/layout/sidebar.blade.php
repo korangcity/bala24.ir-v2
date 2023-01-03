@@ -33,18 +33,18 @@
                 <a class="nav-link menu-link {{isActive(['Blog-blogCategoryList','Blog-createBlogCategory','Blog-editBlogCategory','Blog-blogList','Blog-createBlog','Blog-editBlog'])}}" href="#blog"
                    data-bs-toggle="collapse"
                    role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                    <i class="ri-file-paper-2-fill"></i> <span data-key="t-blog">اطلاعیه ها</span>
+                    <i class="ri-file-paper-2-fill"></i> <span data-key="t-blog">وبلاگ ها</span>
                 </a>
                 <div class="collapse menu-dropdown {{(isActive(['Blog-blogCategoryList','Blog-createBlogCategory','Blog-editBlogCategory','Blog-blogList','Blog-createBlog','Blog-editBlog'])=='active')?'show':''}}" id="blog">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="/adminpanel/Blog-blogCategoryList"
                                class="nav-link {{isActive(['Blog-blogCategoryList','Blog-createBlogCategory','Blog-editBlogCategory'])}}" data-key="t-analytics">
-                                دسته بندی اطلاعیه ها </a>
+                                دسته بندی وبلاگ ها </a>
                         </li>
                         <li class="nav-item">
                             <a href="/adminpanel/Blog-blogList" class="nav-link {{isActive(['Blog-blogList','Blog-createBlog','Blog-editBlog'])}}"
-                               data-key="t-crm"> اطلاعیه ها </a>
+                               data-key="t-crm"> وبلاگ ها </a>
                         </li>
 
                     </ul>
@@ -55,18 +55,18 @@
                 <a class="nav-link menu-link {{isActive(['Service-serviceCategoryList','Service-createServiceCategory','Service-editServiceCategory','Service-serviceList','Service-createService','Service-editService'])}}" href="#service"
                    data-bs-toggle="collapse"
                    role="button" aria-expanded="false" aria-controls="service">
-                    <i class="ri-product-hunt-fill"></i> <span data-key="t-service">محصولات</span>
+                    <i class="ri-product-hunt-fill"></i> <span data-key="t-service">سرویس ها</span>
                 </a>
                 <div class="collapse menu-dropdown {{(isActive(['Service-serviceCategoryList','Service-createServiceCategory','Service-editServiceCategory','Service-serviceList','Service-createService','Service-editService'])=='active')?'show':''}}" id="service">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="/adminpanel/Service-serviceCategoryList"
                                class="nav-link {{isActive(['Service-serviceCategoryList','Service-createServiceCategory','Service-editServiceCategory'])}}" data-key="t-analytics">
-                                دسته بندی محصولات </a>
+                                دسته بندی سرویس ها </a>
                         </li>
                         <li class="nav-item">
                             <a href="/adminpanel/Service-serviceList" class="nav-link {{isActive(['Service-serviceList','Service-createService','Service-editService'])}}"
-                               data-key="t-crm"> محصولات </a>
+                               data-key="t-crm"> سرویس ها </a>
                         </li>
 
                     </ul>
@@ -113,47 +113,6 @@
                 </div>
             </li>
 
-
-            <li class="nav-item">
-                <a class="nav-link menu-link {{isActive(['Guide-createGuide','Guide-guideList','Guide-guideEdit','Guide-createGuideImage','Guide-guideImageList'])}}" href="#guide"
-                   data-bs-toggle="collapse"
-                   role="button" aria-expanded="false" aria-controls="service">
-                    <i class="ri-guide-fill"></i> <span data-key="t-service">راهنمایی</span>
-                </a>
-                <div class="collapse menu-dropdown {{(isActive(['Guide-createGuide','Guide-guideList','Guide-guideEdit','Guide-createGuideImage','Guide-guideImageList'])=='active')?'show':''}}" id="guide">
-                    <ul class="nav nav-sm flex-column">
-
-                        <li class="nav-item">
-                            <a href="/adminpanel/Guide-guideList" class="nav-link {{isActive(['Guide-createGuide','Guide-guideList','Guide-guideEdit'])}}"
-                               data-key="t-crm"> راهنمایی </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/adminpanel/Guide-guideImageList" class="nav-link {{isActive(['Guide-createGuideImage','Guide-guideImageList'])}}"
-                               data-key="t-crm"> تصاویر راهنمایی </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link {{isActive(['Setting-GeneralInformationList','Setting-editGeneralInformation'])}}" href="#setting"
-                   data-bs-toggle="collapse"
-                   role="button" aria-expanded="false" aria-controls="service">
-                    <i class="ri-settings-2-fill"></i> <span data-key="t-service">تنظیمات</span>
-                </a>
-                <div class="collapse menu-dropdown {{(isActive(['Setting-GeneralInformationList','Setting-editGeneralInformation'])=='active')?'show':''}}" id="setting">
-                    <ul class="nav nav-sm flex-column">
-
-                        <li class="nav-item">
-                            <a href="/adminpanel/Setting-GeneralInformationList" class="nav-link {{isActive(['Setting-GeneralInformationList','Setting-editGeneralInformation'])}}"
-                               data-key="t-crm"> تنظیمات </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
             <li class="nav-item">
                 <a class="nav-link menu-link {{isActive(['Metatag-metatagList','Metatag-createMetatag','Metatag-editMetatag'])}}" href="#metatag"
                    data-bs-toggle="collapse"
@@ -172,41 +131,6 @@
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link menu-link {{isActive(['Slider-createSlider','Slider-sliderList','Slider-sliderEdit'])}}" href="#slider"
-                   data-bs-toggle="collapse"
-                   role="button" aria-expanded="false" aria-controls="service">
-                    <i class="ri-slideshow-2-fill"></i> <span data-key="t-service">اسلایدر</span>
-                </a>
-                <div class="collapse menu-dropdown {{(isActive(['Slider-createSlider','Slider-sliderList','Slider-sliderEdit'])=='active')?'show':''}}" id="slider">
-                    <ul class="nav nav-sm flex-column">
-
-                        <li class="nav-item">
-                            <a href="/adminpanel/Slider-sliderList" class="nav-link {{isActive(['Slider-createSlider','Slider-sliderList','Slider-sliderEdit'])}}"
-                               data-key="t-crm"> اسلایدر </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link {{isActive(['Dashboard-messages'])}}" href="#message"
-                   data-bs-toggle="collapse"
-                   role="button" aria-expanded="false" aria-controls="service">
-                    <i class="ri-message-2-fill"></i> <span data-key="t-message">پیام ها</span>
-                </a>
-                <div class="collapse menu-dropdown {{(isActive(['Dashboard-messages'])=='active')?'show':''}}" id="message">
-                    <ul class="nav nav-sm flex-column">
-
-                        <li class="nav-item">
-                            <a href="/adminpanel/Dashboard-messages" class="nav-link {{isActive(['Dashboard-messages'])}}"
-                               data-key="t-crm"> پیام های کاربران </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link menu-link" href="/adminpanel/Auth-signout">

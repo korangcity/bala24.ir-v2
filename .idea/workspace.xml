@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ef55a7c-90c5-4854-b616-93312f62508f" name="Changes" comment="upload some files">
-      <change afterPath="$PROJECT_DIR$/project/app/controller/admin/Metatag.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/storage/views/16513a6799386480a044dce9d98918564da84db5.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/storage/views/a850a0a60be6bca75f7a009b21c3a98bf62b2f5a.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/view/admin/fa/layout/sidebar.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/view/admin/fa/metatag/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/view/admin/fa/metatag/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/view/admin/fa/metatag/list.blade.php" afterDir="false" />
+    <list default="true" id="7ef55a7c-90c5-4854-b616-93312f62508f" name="Changes" comment="delete captcha from som files and add metatag part to project">
+      <change afterPath="$PROJECT_DIR$/project/app/controller/admin/Dashboard.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/327f07ad9755044e768305837d99a0c8276f533f.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/3b074c40210a89f0cd65b3a3b67521385ef20f20.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/51f0ae70b0a719df501648514480bad9df9e8be0.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/5cbec7d88f772ad29c766851fc1a598ca30aa0a4.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/876c311c845e0815f64b2f27312811cde7879ccf.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/96fcc590d072f48fe5c1aa2d76829ff1937bc523.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/bed420dd207cfab478c835a296ab048e16fd807f.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/storage/views/c6d2224b9db3bc8438475c673fb1fc0252a96981.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/view/admin/fa/dashboard/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bala24.ir-v2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bala24.ir-v2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Acl.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Acl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Auth.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Blog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Metatag.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Metatag.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/controller/admin/News.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/News.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Page.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Page.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Service.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Service.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/controller/admin/Setting.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/controller/admin/Setting.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/helpers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/storage/views/267540f1f012f8a6662892672a522b71920ad50d.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/storage/views/267540f1f012f8a6662892672a522b71920ad50d.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/storage/views/ff825c6a54f486be388736c1617edd4a11ae7e63.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/storage/views/ff825c6a54f486be388736c1617edd4a11ae7e63.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/acl/group_create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/acl/group_create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/acl/group_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/acl/group_edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/blog/category_create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/blog/category_create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/blog/category_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/blog/category_edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/blog/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/blog/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/blog/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/blog/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/layout/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/layout/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/news/category_create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/news/category_create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/news/category_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/news/category_edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/news/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/news/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/news/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/news/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/pages/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/pages/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/pages/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/pages/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/service/category_create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/service/category_create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/service/category_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/service/category_edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/service/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/service/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/service/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/service/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/bootstrap/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/bootstrap/autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/project/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/storage/views/16513a6799386480a044dce9d98918564da84db5.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/storage/views/16513a6799386480a044dce9d98918564da84db5.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/project/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/vendor/composer/installed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/auth/signin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/auth/signin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/auth/signup.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/auth/signup.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/view/admin/fa/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/project/view/admin/fa/layout/sidebar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +96,7 @@
       <path value="$PROJECT_DIR$/project/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/project/vendor/phpoffice/phpspreadsheet" />
       <path value="$PROJECT_DIR$/project/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/project/vendor/phpmailer/phpmailer" />
     </include_path>
   </component>
   <component name="ProjectId" id="2JjdLq1fEupDmmNxM7SNDB8PBBD" />
@@ -107,18 +107,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/wamp64/www/bala24.ir-v2/project/view/admin/fa",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/mellat&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\bala24.ir-v2\project\view\admin\fa" />
@@ -139,7 +140,12 @@
       <workItem from="1672645566943" duration="1909000" />
       <workItem from="1672648074808" duration="207000" />
       <workItem from="1672663077436" duration="232000" />
-      <workItem from="1672663939859" duration="3451000" />
+      <workItem from="1672663939859" duration="3880000" />
+      <workItem from="1672677235578" duration="6227000" />
+      <workItem from="1672722633420" duration="1817000" />
+      <workItem from="1672749534573" duration="1163000" />
+      <workItem from="1672753645147" duration="258000" />
+      <workItem from="1672767205259" duration="1756000" />
     </task>
     <task id="LOCAL-00001" summary="first upload public_html">
       <created>1672644984072</created>
@@ -162,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1672647485078</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="delete captcha from som files and add metatag part to project">
+      <created>1672667836468</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1672667836468</updated>
+    </task>
+    <task id="LOCAL-00005" summary="delete captcha from som files and add metatag part to project">
+      <created>1672667981897</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1672667981897</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +207,7 @@
     <MESSAGE value="first upload public_html" />
     <MESSAGE value="first upload public_html v2" />
     <MESSAGE value="upload some files" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload some files" />
+    <MESSAGE value="delete captcha from som files and add metatag part to project" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete captcha from som files and add metatag part to project" />
   </component>
 </project>

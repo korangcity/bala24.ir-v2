@@ -1,11 +1,11 @@
-@extends('admin.fa.layout.app')
 
-@section("head")
 
-    <link href="{{baseUrl(httpCheck())}}assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
-@endsection
+<?php $__env->startSection("head"); ?>
 
-@section('content')
+    <link href="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="main-content">
         <div class="page-content">
             <div class="auth-page-wrapper pt-5">
@@ -29,7 +29,7 @@
                                 <div class="text-center mt-sm-5 mb-4 text-white-50">
                                     <div>
                                         <a href="" class="d-inline-block auth-logo">
-                                            <img src="{{baseUrl(httpCheck())}}assets/images/logo-light.png" alt="" height="20">
+                                            <img src="<?php echo e(baseUrl(httpCheck())); ?>assets/images/logo-light.png" alt="" height="20">
                                         </a>
                                     </div>
 
@@ -43,73 +43,73 @@
                                 <div class="card mt-4">
 
                                     <div class="card-body p-4">
-{{--                                        <div class="text-end">--}}
-{{--                                            <div class=" ms-1">--}}
-{{--                                                <button type="button"--}}
-{{--                                                        class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"--}}
-{{--                                                        data-bs-toggle="dropdown" aria-haspopup="true"--}}
-{{--                                                        aria-expanded="false">--}}
-{{--                                                    <img id="header-lang-img1"--}}
-{{--                                                         src="{{baseUrl(httpCheck())}}assets/images/flags/{{getLanguage()=='en'?'us':(getLanguage()=='fa'?'ir':'sa')}}.svg"--}}
-{{--                                                         alt="Header Language" height="20" class="rounded">--}}
-{{--                                                </button>--}}
-{{--                                                <div class="dropdown-menu dropdown-menu-end">--}}
-
-{{--                                                    <!-- item-->--}}
-{{--                                                    <a href="{{baseUrl(httpCheck())}}adminpanel/Setting-changeLanguage-en"--}}
-{{--                                                       class="dropdown-item notify-item language py-2" data-lang="en"--}}
-{{--                                                       title="English">--}}
-{{--                                                        <img src="{{baseUrl(httpCheck())}}assets/images/flags/us.svg"--}}
-{{--                                                             alt="user-image"--}}
-{{--                                                             class="me-2 rounded" height="18">--}}
-{{--                                                        <span class="align-middle">English</span>--}}
-{{--                                                    </a>--}}
 
 
-{{--                                                    <a href="{{baseUrl(httpCheck())}}adminpanel/Setting-changeLanguage-fa"--}}
-{{--                                                       class="dropdown-item notify-item language" data-lang="fa"--}}
-{{--                                                       title="فارسی">--}}
-{{--                                                        <img src="{{baseUrl(httpCheck())}}assets/images/flags/ir.svg"--}}
-{{--                                                             alt="user-image"--}}
-{{--                                                             class="me-2 rounded" height="18">--}}
-{{--                                                        <span class="align-middle">فارسی</span>--}}
-{{--                                                    </a>--}}
 
 
-{{--                                                    <a href="{{baseUrl(httpCheck())}}adminpanel/Setting-changeLanguage-ar"--}}
-{{--                                                       class="dropdown-item notify-item language" data-lang="ar"--}}
-{{--                                                       title="العربیه">--}}
-{{--                                                        <img src="{{baseUrl(httpCheck())}}assets/images/flags/sa.svg"--}}
-{{--                                                             alt="user-image"--}}
-{{--                                                             class="me-2 rounded" height="18">--}}
-{{--                                                        <span class="align-middle">العربیه</span>--}}
-{{--                                                    </a>--}}
 
 
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         <div class="text-center mt-2">
                                             <h5 class="text-primary">خوش آمدید</h5>
                                         </div>
-                                        @if (!empty(getErrors()))
+                                        <?php if(!empty(getErrors())): ?>
                                             <div class="alert alert-danger">
                                                 <ul>
-                                                    @foreach (getErrors() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = getErrors(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <li><?php echo e($error); ?></li>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </ul>
                                             </div>
-                                        @endif
+                                        <?php endif; ?>
                                         <div class="p-2 mt-4">
                                             <form action="/adminpanel/Auth-signinProcess"
                                                   method="post">
-                                                <input type="hidden" name="token" value="{{$token}}">
+                                                <input type="hidden" name="token" value="<?php echo e($token); ?>">
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">ایمیل <span
                                                                 class="text-danger">*</span></label>
                                                     <input type="email" name="email" class="form-control"
-                                                           value="{{old('email')??''}}" id="email"
+                                                           value="<?php echo e(old('email')??''); ?>" id="email"
                                                            placeholder="ایمیل را وارد کنید">
                                                 </div>
 
@@ -128,7 +128,7 @@
                                                                     class="ri-eye-fill align-middle"></i></button>
                                                     </div>
                                                 </div>
-                                                <img src="{{$builder->inline()}}"/>
+                                                <img src="<?php echo e($builder->inline()); ?>"/>
                                                 <div class="mb-3">
                                                     <label for="captcha" class="form-label">کپچا <span
                                                                 class="text-danger">*</span></label>
@@ -185,19 +185,19 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-    <script src="{{baseUrl(httpCheck())}}assets/libs/particles.js/particles.js"></script>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/particles.js/particles.js"></script>
 
-    <script src="{{baseUrl(httpCheck())}}assets/js/pages/particles.app.js"></script>
+    <script src="<?php echo e(baseUrl(httpCheck())); ?>assets/js/pages/particles.app.js"></script>
 
-    <script src="{{baseUrl(httpCheck())}}assets/js/pages/password-addon.init.js"></script>
+    <script src="<?php echo e(baseUrl(httpCheck())); ?>assets/js/pages/password-addon.init.js"></script>
 
-    <script src="{{baseUrl(httpCheck())}}assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="<?php echo e(baseUrl(httpCheck())); ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script>
-        @if($_REQUEST['error'])
+        <?php if($_REQUEST['error']): ?>
         Swal.fire({
             html: '<div class="mt-3">' +
                 '<lord-icon src="https://cdn.lordicon.com/tdrtiskw.json" ' +
@@ -215,7 +215,9 @@
             showCloseButton: !0
         })
 
-        @endif
+        <?php endif; ?>
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.fa.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\bala24.ir-v2\project\view/admin/fa/auth/signin.blade.php ENDPATH**/ ?>
