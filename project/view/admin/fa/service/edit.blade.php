@@ -51,7 +51,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="title" class="form-label">عنوان سرویس
-                                                        <span class="text-danger">*</span></label>
+                                                        </label>
                                                     <input type="text" name="title" value="{{$service["title"]}}"
                                                            class="form-control"
                                                            placeholder="عنوان وبلاگ" id="title">
@@ -60,7 +60,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="brief_description" class="form-label">توضیح مختصر
-                                                        <span class="text-danger">*</span></label>
+                                                        </label>
                                                     <textarea name="brief_description" id="brief_description"
                                                               value="" id="" cols="30"
                                                               rows="5"
@@ -72,7 +72,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="h1_title" class="form-label">عنوان H1
-                                                        <span class="text-danger">*</span></label>
+                                                        </label>
                                                     <input type="text" name="h1_title" value="{{$service["h1_title"]}}"
                                                            class="form-control"
                                                            placeholder="عنوان H1" id="title">
@@ -83,7 +83,7 @@
 
                                         <div class="col-12">
                                             <label class="form-label">متن سرویس
-                                                <span class="text-danger">*</span></label>
+                                                </label>
                                             <textarea name="description" id="editor" cols="30"
                                                       rows="10">{{$service["description"]}}</textarea>
                                         </div>
@@ -103,6 +103,78 @@
 
 
                                         </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mt-2">
+                                                <div class="mb-3">
+                                                    <label for="service_guide_title" class="form-label">عنوان راهنمای
+                                                        سرویس
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_guide_title" id="service_guide_title"
+                                                              cols="30"
+                                                              rows="10">{{$service['service_guide_title']??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_guide_brief_description" class="form-label">توضیح
+                                                        مختصر راهنمای سرویس
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_guide_brief_description"
+                                                              id="service_guide_brief_description" cols="30"
+                                                              rows="10">{{$service['service_guide_brief_description']??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_part_title" class="form-label">عنوان قسمت های
+                                                        سرویس
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_part_title" id="service_part_title"
+                                                              cols="30"
+                                                              rows="10">{{$service['service_part_title']??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_sample_title" class="form-label">عنوان نمونه کار
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_sample_title" id="service_sample_title"
+                                                              cols="30"
+                                                              rows="10">{{$service['service_sample_title']??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_sample_description" class="form-label">توضیح
+                                                        مختصر نمونه کار
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_sample_description"
+                                                              id="service_sample_description" cols="30"
+                                                              rows="10">{{$service['service_sample_description']??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
 
                                         <div class="row">
                                             @foreach(json_decode($service["images"]) as $key=>$image)
@@ -144,6 +216,79 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        <br>
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">تصویر شاخص کوچک (فرمت مجاز:
+                                                        jpg,jpeg,png,svg,gif)</h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="indexImage">
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <input type="text" class="form-control mb-2"
+                                                                   name="indexImageAlt"
+                                                                   placeholder="مقدار alt تصویر را وارد کنید.">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">ویدئو (فرمت مجاز:
+                                                        mp4)
+                                                    <span class="text-danger">اگر فایل ویدئو را دارید از قسمت آپلود فایل اقدام نمایید یا اگر لینک ویدئو را دارید لینک را در جایگاه مشخص شده کپی کنید</span>
+                                                    </h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="video">
+                                                        </div>
+
+                                                        <div class="col-lg-6">
+                                                            <textarea name="videoLink" placeholder="لینک ویدئو را اینجا کپی کنید" class="form-control mb-2" id="" cols="30" rows="10">{{($service['video'] != strip_tags($service['video']))? $service['video']:''}}</textarea>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">پوستر ویدئو (فرمت مجاز:
+                                                        jpg,jpeg,png,svg,gif)</h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="videoPoster">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                         <div class="row">
 {{--                                            <div class="">--}}
@@ -177,9 +322,8 @@
                                                 <div class="col-md-4 col-sm-8 mb-3">
                                                     <label for="pageDescription" class="form-label">صفحهDescription
                                                     </label>
-                                                    <input type="text" name="pageDescription" class="form-control"
-                                                           placeholder="pageDescription وارد کنید "
-                                                           value="{{$service['page_description_seo']}}" id="pageDescription">
+
+                                                    <textarea name="pageDescription" class="form-control" id="pageDescription" cols="30" rows="10">{{$service['page_description_seo']}}</textarea>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-8 mb-3">
@@ -203,10 +347,9 @@
                                                     <label for="pageOgDescription" class="form-label">og:Description
                                                         صفحه
                                                     </label>
-                                                    <input type="text" name="pageOgDescription"
-                                                           value="{{$service['page_og_description_seo']}}" class="form-control"
-                                                           placeholder="pageOgDescription وارد کنید "
-                                                           id="pageOgDescription">
+
+
+                                                    <textarea name="pageOgDescription" class="form-control" id="pageOgDescription" cols="30" rows="10">{{$service['page_og_description_seo']}}</textarea>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-8 mb-3">

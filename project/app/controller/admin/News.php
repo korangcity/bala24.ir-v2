@@ -1033,7 +1033,7 @@ class News
         return $this->db->rawQuery($query);
     }
 
-    private function getSingleNews($news_id)
+    public function getSingleNews($news_id)
     {
         $data = [
             'id' => $news_id

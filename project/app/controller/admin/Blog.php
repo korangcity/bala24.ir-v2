@@ -1003,7 +1003,7 @@ class Blog
         return $this->db->rawQuery($query);
     }
 
-    private function getBlog($blog_id)
+    public function getBlog($blog_id)
     {
         $data = [
             'id' => $blog_id

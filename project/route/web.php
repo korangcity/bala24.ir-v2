@@ -1,6 +1,8 @@
 <?php
 
 
+use App\controller\home\Setting;
+
 function route($url1, $url2, $adminPanelUrl)
 {
 
@@ -24,23 +26,24 @@ function route($url1, $url2, $adminPanelUrl)
 
     } else {
 
+        $setting=new Setting();
+        $genaralRoutes=$setting->getGeneralRoutes();
         $main_url = $url1;
         $page_for = "guest";
         $TheCourse = "";
+
+        if($main_url!="" and !in_array($main_url,$genaralRoutes) and $url2=="-"){
+            $TheCourse = "service";
+        }
+
+        if($main_url!="" and !in_array($main_url,$genaralRoutes) and $url2!="-"){
+            $TheCourse = "sampleService";
+        }
 
         if ($main_url == "") {
             $TheCourse = "home";
         }
 
-        if ($main_url == "signin") {
-            $TheCourse = "signin";
-        }
-        if ($main_url == "signup") {
-            $TheCourse = "signup";
-        }
-        if ($main_url == "downloader") {
-            $TheCourse = "downloader";
-        }
 
 
         if ($TheCourse == '') {
@@ -48,6 +51,10 @@ function route($url1, $url2, $adminPanelUrl)
         }
 
         $output['TheCourse'] = $TheCourse;
+        $output['main'] = $main_url;
+        $output['single'] = $url2;
+
+
     }
 
     $output['page_for'] = $page_for;

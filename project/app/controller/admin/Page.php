@@ -693,7 +693,7 @@ class Page
         return $this->db->rawQuery($query);
     }
 
-    private function getPage($page_id)
+    public function getPage($page_id)
     {
         $data = [
             'id' => $page_id

@@ -95,8 +95,8 @@
                                                 <div class="col-md-4 col-sm-8 mb-3">
                                                     <label for="pageDescription" class="form-label">صفحهDescription
                                                     </label>
-                                                    <input type="text" name="pageDescription" class="form-control"
-                                                           placeholder="pageDescription وارد کنید " value="{{$category['page_description_seo']??''}}" id="pageDescription">
+
+                                                    <textarea name="pageDescription" id="pageDescription" class="form-control" cols="30" rows="10">{{$category['page_description_seo']??''}}</textarea>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-8 mb-3">
@@ -117,8 +117,8 @@
                                                 <div class="col-md-4 col-sm-8 mb-3">
                                                     <label for="pageOgDescription" class="form-label">og:Description صفحه
                                                     </label>
-                                                    <input type="text" name="pageOgDescription" value="{{$category['page_og_description_seo']??''}}" class="form-control"
-                                                           placeholder="pageOgDescription وارد کنید " id="pageOgDescription">
+
+                                                    <textarea name="pageOgDescription" id="pageOgDescription" class="form-control" cols="30" rows="10">{{$category['page_og_description_seo']??''}}</textarea>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-8 mb-3">

@@ -82,8 +82,8 @@ function sanitizeInput($data = "")
         $data1 = [];
         foreach ($data as $val) {
             $val = preg_replace('/[^a-zA-Z0-9@_\-.+-,:\/\?]/s', ' ', $val);
-            $val = trim($data);
-            $val = stripslashes($data);
+            $val = trim($val);
+            $val = stripslashes($val);
             $data1[] = htmlspecialchars($val);
         }
         $data = $data1;
@@ -102,9 +102,8 @@ function sanitizeInputNonEn($data = "")
     if (is_array($data)) {
         $data1 = [];
         foreach ($data as $val) {
-            $val = preg_replace('/[^a-zA-Z0-9@_\-.+-,:\/\?]/s', ' ', $val);
-            $val = trim($data);
-            $val = stripslashes($data);
+            $val = trim($val);
+            $val = stripslashes($val);
             $data1[] = htmlspecialchars($val);
         }
         $data = $data1;
@@ -410,6 +409,35 @@ function destroyErrors()
     return true;
 }
 
+
+function setErrorCheck()
+{
+    $_SESSION['errorCheck'] = true;
+}
+
+function getErrorCheck()
+{
+    return $_SESSION['errorCheck'] ?? '';
+}
+
+function destroyErrorCheck()
+{
+    unset($_SESSION['errorCheck']);
+}
+
+function setRegisterMessageOk(){
+    $_SESSION['registerMessageOk'] = true;
+}
+
+function getRegisterMessageOk(){
+    return $_SESSION['registerMessageOk']??'';
+}
+
+function destroyRegisterMessageOk(){
+    unset($_SESSION['registerMessageOk']);
+    return true;
+}
+
 function login()
 {
     $_SESSION['login'] = true;
@@ -470,55 +498,74 @@ function isActive($input)
 
 }
 
-function sendEmail(array $addresses,array $addCCs=[],array $addBCCs=[]){
-    $mail = new PHPMailer(true);
-    try{
+function isActive2($input)
+{
+    $currentUrl = substr($_SERVER['REQUEST_URI'], 1);
+    $currentUrl=urldecode($currentUrl);
+    return (is_array($input) and in_array($currentUrl, $input)) ? "active" : (($input == $currentUrl) ? "active" : "");
 
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'bala24.ir@gmail.com';                     //SMTP username
-        $mail->Password   = 'c6wxgiyu3yjnb3fojgcdasl4hrks';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-        $mail->Port       = 587;
-//        $mail->Port       = 465;
-
-        //Recipients
-        $mail->setFrom('bala24.ir@gmail.com', 'Bala24');
-
-        foreach ($addresses as $address) {
-            $mail->addAddress($address);     //Add a recipient
-        }
-
-        $mail->addReplyTo('bala24.ir@gmail.com', 'Bala24.ir');
-
-        foreach ($addCCs as $addCC) {
-
-            $mail->addCC($addCC);
-        }
-
-        foreach ($addBCCs as $addBCC) {
-
-            $mail->addBCC($addBCC);
-        }
-
-        //Attachments
-//        $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-//        $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-        //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-        $mail->send();
-        echo 'Message has been sent';
-
-    }catch (Exception $e){
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
 }
 
+function emailSetting()
+{
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host = envv("SMTP_HOST");                     //Set the SMTP server to send through
+    $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+    $mail->Username = envv("SMTP_USERNAME");                     //SMTP username
+    $mail->Password = envv("SMTP_PASSWORD");                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+    $mail->Port = envv("SMTP_ENCRYPTION_PORT");
+
+    return $mail;
+}
+
+function sendEmail(string $subject = '', string $message = '', array $addresses, array $addCCs = [], array $addBCCs = [], array $files = [])
+{
+
+//    try{
+    $mail = emailSetting();
+    $mail->setFrom(envv("EMAIL_FROM"), envv("EMAIL_FROM_NAME"));
+    foreach ($addresses as $address) {
+        $mail->addAddress($address);
+    }
+    $mail->addReplyTo(envv("EMAIL_REPLY_TO"), envv("EMAIL_REPLY_TO_NAME"));
+    foreach ($addCCs as $addCC) {
+        $mail->addCC($addCC);
+    }
+    foreach ($addBCCs as $addBCC) {
+        $mail->addBCC($addBCC);
+    }
+    foreach ($files as $key => $file) {
+        $mail->addAttachment(storageRoot() . $file, $key);
+    }
+
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $message;
+
+    $mail->send();
+    return true;
+
+//    }catch (Exception $e){
+//        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+//    }
+}
+
+function array_flatten($array) {
+    if (!is_array($array)) {
+        return FALSE;
+    }
+    $result = [];
+    foreach ($array as $key => $value) {
+        if (is_array($value)) {
+            $result = array_merge($result, array_flatten($value));
+        }
+        else {
+            $result[$key] = $value;
+        }
+    }
+    return $result;
+}
 

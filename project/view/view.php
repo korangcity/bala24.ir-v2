@@ -2,6 +2,9 @@
 
 
 use App\controller\Auth;
+use App\controller\home\Company;
+use App\controller\home\Service;
+use App\controller\home\Setting;
 use App\controller\Instagram;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use Gregwar\Captcha\CaptchaBuilder;
@@ -20,108 +23,113 @@ function view(array $route)
     $phraseBuilder = new PhraseBuilder(5, '0123456789');
     $builder = new CaptchaBuilder(null, $phraseBuilder);
 
+
     if ($route['page_for'] == 'guest') {
+
+        $language=getLanguage();
 
         if ($route['TheCourse'] == 'home') {
 
-            echo "hiiiii";
-
-//            $token = $easyCSRF->generate('my_token');
-
-//           $validator=new Validator;
-//           $validator->make($_POST + $_FILES,[
-//               'name'                  => 'required',
-//               'email'                 => 'required|email',
-//               'password'              => 'required|min:6',
-//               'confirm_password'      => 'required|same:password',
-//               'avatar'                => 'required|uploaded_file:0,500K,png,jpeg',
-//           ],[
-//               'name:required'=>'is required'
-//           ])->validate();
-
-
-//            $phraseBuilder = new PhraseBuilder(5, '0123456789');
-//            $builder = new CaptchaBuilder(null, $phraseBuilder);
-//            if($builder->getPhrase())
-//                echo $builder->getPhrase();
-//            $builder->build();
-
-//
-//            $spreadsheet = new Spreadsheet();
-//
-//            $spreadsheet->getProperties()
-//                ->setCreator("Maarten Balliauw")
-//                ->setLastModifiedBy("Maarten Balliauw")
-//                ->setTitle("Office 2007 XLSX Test Document")
-//                ->setSubject("Office 2007 XLSX Test Document")
-//                ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-//                ->setKeywords("office 2007 openxml php")
-//                ->setCategory("Test result file");
-//
-//
-//            $sheet = $spreadsheet->getActiveSheet();
-//            $sheet->setCellValue('A1', 'Hello World !');
-//
-//            $writer = new Xlsx($spreadsheet);
-//            $writer->save('hello world.xlsx');
-
-//            renderView('admin.register');
-
-
-        }
-
-        if ($route['TheCourse'] == 'signup') {
-            $auth = new Auth();
-
-            if (!isset($_REQUEST['error'])) {
-                destroyErrors();
-                requestSessionDestroy();
+            $service_obj = new Service();
+            destroyErrors();
+            requestSessionDestroy();
+            if ($_REQUEST['verify'] == true) {
+                destroyRegisterMessageOk();
+                redirect(substr($_SERVER['REQUEST_URI'], 1, strpos($_SERVER['REQUEST_URI'], "?") - 1));
             }
 
             if ($_POST) {
 
-                $checkCsrf = $easyCSRF->check('my_token', $_POST['token']);
+                destroyErrors();
+                requestSessionDestroy();
 
+                newRequest('name', $_POST['name']);
                 newRequest('email', $_POST['email']);
+                newRequest('subject', $_POST['subject']);
+                newRequest('message', $_POST['message']);
+
+                $checkCsrf = $service_obj->checkCsrf();
 
                 if ($checkCsrf === false) {
-                    setError('send information correctly');
-                    redirect('signup?error=true');
+                    setError('اطلاعات را به درستی ارسال کنید');
                 }
                 if ($_POST['captcha'] != $_SESSION['phrase']) {
-                    setError('enter captcha value correctly');
-                    redirect('signup?error=true');
+                    setError(' کد را به درستی وارد کنید');
 
                 }
 
-                $email = sanitizeInput($_POST['email']);
-                $password = sanitizeInput($_POST['password']);
-                $confirm_password = sanitizeInput($_POST['confirm_password']);
+                $name = sanitizeInputNonEn($_POST['name']);
+                $email = sanitizeInputNonEn($_POST['email']);
+                $subject = sanitizeInputNonEn($_POST['subject']);
+                $message = sanitizeInputNonEn($_POST['message']);
 
 
-                $result = $auth->register($email, $password, $confirm_password);
+                if (!$name) {
+                    setError(' نام و نام خانوادگی را به درستی وارد کنید');
+                }
+                if (!$subject) {
+                    setError(' موضوع را به درستی وارد کنید');
+                }
 
-                if ($result == false)
-                    redirect('signup?error=true');
-                else
-                    redirect('signup?signup=true');
+                if(!emailVerify($email)){
+                    setError(' ایمیل را به درستی وارد کنید');
+                }
+
+                if (!$message) {
+                    setError(' پیام را به درستی وارد کنید');
+                }
+
+                if (!empty(getErrors())) {
+                    back();
+                    setErrorCheck();
+                }
+
+                if (empty(getErrors())) {
+                    $service_obj->registerMessage($name, $email,$subject, $message);
+                    destroyErrorCheck();
+                    setRegisterMessageOk();
+                    back();
+                }
+
 
             }
 
 
-            $token = $easyCSRF->generate('my_token');
-            $builder->build();
-            $_SESSION['phrase'] = $builder->getPhrase();
 
-            renderView('home.auth.signup', ['token' => $token, 'builder' => $builder]);
+            $services=$service_obj->getServices();
+            $company=new Company();
+            $companies=$company->companies();
+            $khadamats=$service_obj->getKhadamats();
+            $getSecurityCode=$service_obj->getSecurityCodes();
+            $set=new Setting();
+            $setting=$set->settingInfo()[0];
+
+            $plan=$service_obj->getPlan('i');
+
+            renderView('home.'.$language.'.main.index', ['plan'=>$plan,'builder' => $getSecurityCode['builder'], 'token' => $getSecurityCode['token'],'khadamats'=>$khadamats,'services'=>$services,"setting"=>$setting,"companies"=>$companies]);
+        }
+
+        if ($route['TheCourse'] == "service") {
+
+            $service_obj = new Service();
+            $service = $service_obj->getService($route['main'])[0];
+            $service_category=$service_obj->getServiceCategory($service['category_id'])[0];
+            $serviceProcess=$service_obj->getServiceGuides($service['id']);
+            $sampleServices=$service_obj->getSampleServices($service['id']);
+            $serviceParts=$service_obj->getServiceParts($service['id']);
+            $plan=$service_obj->getPlan($service['id']);
+            $subPlans=$service_obj->getSubPlan($plan['id']);
+            $time_periods=$service_obj->getTimePeriods();
+
+            renderView('home.'.$language.'.service.single', ['service_obj' => $service_obj,'subPlans' => $subPlans,'time_periods' => $time_periods,'plan' => $plan,'main_url' => $route['main'],'serviceParts' => $serviceParts,'sampleServices' => $sampleServices,'serviceProcess' => $serviceProcess,'service' => $service,"service_category"=>$service_category]);
 
         }
 
-        if ($route['TheCourse'] == 'signin') {
+        if($route['TheCourse']=="sampleService"){
 
-        }
-
-        if ($route['TheCourse'] == 'downloader') {
+            $service_obj = new Service();
+            $sampleService = $service_obj->getSampleService($route['single'])[0];
+            renderView('home.'.$language.'.service.sample_service', ['sampleService' => $sampleService]);
 
         }
 

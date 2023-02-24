@@ -57,7 +57,7 @@
                    role="button" aria-expanded="false" aria-controls="service">
                     <i class="ri-product-hunt-fill"></i> <span data-key="t-service">سرویس ها</span>
                 </a>
-                <div class="collapse menu-dropdown <?php echo e((isActive(['Service-serviceCategoryList','Service-createServiceCategory','Service-editServiceCategory','Service-serviceList','Service-createService','Service-editService'])=='active')?'show':''); ?>" id="service">
+                <div class="collapse menu-dropdown <?php echo e((isActive(['Service-guideServiceList','Service-createGuide','Service-editGuideService','Service-serviceCategoryList','Service-createServiceCategory','Service-editServiceCategory','Service-serviceList','Service-createService','Service-editService'])=='active')?'show':''); ?>" id="service">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a href="/adminpanel/Service-serviceCategoryList"
@@ -67,6 +67,14 @@
                         <li class="nav-item">
                             <a href="/adminpanel/Service-serviceList" class="nav-link <?php echo e(isActive(['Service-serviceList','Service-createService','Service-editService'])); ?>"
                                data-key="t-crm"> سرویس ها </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/Service-sampleServiceList" class="nav-link <?php echo e(isActive(['Service-sampleServiceList','Service-createSampleService','Service-editSampleService'])); ?>"
+                               data-key="t-crm"> نمونه سرویس ها </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/Service-guideServiceList" class="nav-link <?php echo e(isActive(['Service-guideServiceList','Service-createGuide','Service-editGuideService'])); ?>"
+                               data-key="t-crm"> راهنمای سرویس ها </a>
                         </li>
 
                     </ul>

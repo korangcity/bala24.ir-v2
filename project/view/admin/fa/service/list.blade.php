@@ -39,6 +39,8 @@
                                         <th>جزییات</th>
                                         <th>SEO</th>
                                         <th>وضعیت نمایش</th>
+                                        <th> نمایش ویدئو</th>
+                                        <th> وضعیت به زودی</th>
                                         <th>تاریخ ایجاد</th>
                                         <th>اقدامات</th>
                                     </tr>
@@ -63,10 +65,27 @@
 
                                         <td>
                                             <div class="form-check form-switch form-switch-success mb-3">
-                                                <input data-id="{{$page['id']}}"
+                                                <input data-id="{{$service['id']}}"
                                                        class="form-check-input mx-auto form-control isShow"
-                                                       {{$page['is_show']==1?'checked':''}} type="checkbox"
+                                                       {{$service['is_show']==1?'checked':''}} type="checkbox"
                                                        role="switch" id="SwitchCheck3">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-check form-switch form-switch-success mb-3">
+                                                <input data-id="{{$service['id']}}"
+                                                       class="form-check-input mx-auto form-control isVideoShow"
+                                                       {{$service['show_video']==1?'checked':''}} type="checkbox"
+                                                       role="switch" id="SwitchCheck355">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check form-switch form-switch-success mb-3">
+                                                <input data-id="{{$service['id']}}"
+                                                       class="form-check-input mx-auto form-control isComing"
+                                                       {{$service['is_coming']==1?'checked':''}} type="checkbox"
+                                                       role="switch" id="SwitchCheck3555">
                                             </div>
                                         </td>
                                         <td>{{$service['created_at_jalali']}}</td>
@@ -319,25 +338,117 @@
                     url: '/adminpanel/Service-serviceIsShow',
                     data: {situation: situation, service_id: service_id},
                     success: function (response) {
-console.log(response);
-                        // Swal.fire({
-                        //     html: '<div class="mt-3">' +
-                        //         '<lord-icon src="https://cdn.lordicon.com/lupuorrc.json" ' +
-                        //         'trigger="loop" colors="primary:#0ab39c,secondary:#405189" ' +
-                        //         'style="width:120px;height:120px">' +
-                        //         '</lord-icon>' +
-                        //         '<div class="mt-4 pt-2 fs-15"><h4>درخواست شما با موفقیت انجام شد!</h4>' +
-                        //         '</div>' +
-                        //         '</div>',
-                        //     showCancelButton: !1,
-                        //     showConfirmButton: 1,
-                        //     confirmButtonClass: "btn btn-success w-xs mb-1",
-                        //     confirmButtonText: "فهمیدم",
-                        //     buttonsStyling: !1,
-                        //     showCloseButton: !0
-                        // }).then(function (t) {
-                        //     window.location.href = "/adminpanel/Service-serviceList";
-                        // })
+
+                        Swal.fire({
+                            html: '<div class="mt-3">' +
+                                '<lord-icon src="https://cdn.lordicon.com/lupuorrc.json" ' +
+                                'trigger="loop" colors="primary:#0ab39c,secondary:#405189" ' +
+                                'style="width:120px;height:120px">' +
+                                '</lord-icon>' +
+                                '<div class="mt-4 pt-2 fs-15"><h4>درخواست شما با موفقیت انجام شد!</h4>' +
+                                '</div>' +
+                                '</div>',
+                            showCancelButton: !1,
+                            showConfirmButton: 1,
+                            confirmButtonClass: "btn btn-success w-xs mb-1",
+                            confirmButtonText: "فهمیدم",
+                            buttonsStyling: !1,
+                            showCloseButton: !0
+                        }).then(function (t) {
+                            window.location.href = "/adminpanel/Service-serviceList";
+                        })
+                    },
+                    error: function () {
+                        alert("ooos")
+                    }
+                });
+
+            }
+        });
+
+
+        $(".isVideoShow").click(function () {
+
+            let situation;
+            if (!$(this).is(":checked")) {
+                situation = 0;
+            } else {
+                situation = 1;
+            }
+            let service_id = $(this).data("id");
+            let chk = confirm("از نمایش دادن محتوا مطمئن هستید؟");
+
+            if (chk) {
+                $.ajax({
+                    type: 'post',
+                    url: '/adminpanel/Service-serviceIsVideoShow',
+                    data: {situation: situation, service_id: service_id},
+                    success: function (response) {
+
+                        Swal.fire({
+                            html: '<div class="mt-3">' +
+                                '<lord-icon src="https://cdn.lordicon.com/lupuorrc.json" ' +
+                                'trigger="loop" colors="primary:#0ab39c,secondary:#405189" ' +
+                                'style="width:120px;height:120px">' +
+                                '</lord-icon>' +
+                                '<div class="mt-4 pt-2 fs-15"><h4>درخواست شما با موفقیت انجام شد!</h4>' +
+                                '</div>' +
+                                '</div>',
+                            showCancelButton: !1,
+                            showConfirmButton: 1,
+                            confirmButtonClass: "btn btn-success w-xs mb-1",
+                            confirmButtonText: "فهمیدم",
+                            buttonsStyling: !1,
+                            showCloseButton: !0
+                        }).then(function (t) {
+                            window.location.href = "/adminpanel/Service-serviceList";
+                        })
+                    },
+                    error: function () {
+                        alert("ooos")
+                    }
+                });
+
+            }
+        });
+
+
+        $(".isComing").click(function () {
+
+            let situation;
+            if (!$(this).is(":checked")) {
+                situation = 0;
+            } else {
+                situation = 1;
+            }
+            let service_id = $(this).data("id");
+            let chk = confirm("از تغییر وضعیت مطمئن هستید؟");
+
+            if (chk) {
+                $.ajax({
+                    type: 'post',
+                    url: '/adminpanel/Service-serviceIsComing',
+                    data: {situation: situation, service_id: service_id},
+                    success: function (response) {
+
+                        Swal.fire({
+                            html: '<div class="mt-3">' +
+                                '<lord-icon src="https://cdn.lordicon.com/lupuorrc.json" ' +
+                                'trigger="loop" colors="primary:#0ab39c,secondary:#405189" ' +
+                                'style="width:120px;height:120px">' +
+                                '</lord-icon>' +
+                                '<div class="mt-4 pt-2 fs-15"><h4>درخواست شما با موفقیت انجام شد!</h4>' +
+                                '</div>' +
+                                '</div>',
+                            showCancelButton: !1,
+                            showConfirmButton: 1,
+                            confirmButtonClass: "btn btn-success w-xs mb-1",
+                            confirmButtonText: "فهمیدم",
+                            buttonsStyling: !1,
+                            showCloseButton: !0
+                        }).then(function (t) {
+                            window.location.href = "/adminpanel/Service-serviceList";
+                        })
                     },
                     error: function () {
                         alert("ooos")

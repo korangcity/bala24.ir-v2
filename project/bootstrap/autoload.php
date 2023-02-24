@@ -13,8 +13,6 @@ errorHandle();
 if (!getLanguage())
     setLanguage('fa');
 
-//sendEmail(addresses: ['m.h.jabbary@gmail.com']);
-//die;
 
 $connection = connection(envv('DB_HOST'), envv('DB_USERNAME'), envv('DB_PASSWORD'), envv('DB_DATABASE'));
 

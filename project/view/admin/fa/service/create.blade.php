@@ -31,7 +31,8 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    <form action="/adminpanel/Service-createServiceProcess" method="post" enctype="multipart/form-data">
+                                    <form action="/adminpanel/Service-createServiceProcess" method="post"
+                                          enctype="multipart/form-data">
                                         <input type="hidden" name="token" value="{{$token}}">
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -50,16 +51,16 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="title" class="form-label">عنوان سرویس
-                                                        <span class="text-danger">*</span></label>
+                                                        </label>
                                                     <input type="text" name="title" value="{{old('title')??''}}"
                                                            class="form-control"
-                                                           placeholder="عنوان وبلاگ" id="title">
+                                                           placeholder="عنوان " id="title">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="brief_description" class="form-label">توضیح مختصر
-                                                        <span class="text-danger">*</span></label>
+                                                        </label>
                                                     <textarea name="brief_description" id="brief_description"
                                                               value="" id="" cols="30"
                                                               rows="5"
@@ -71,7 +72,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="h1_title" class="form-label">عنوان H1
-                                                        <span class="text-danger">*</span></label>
+                                                       </label>
                                                     <input type="text" name="h1_title" value="{{old('h1_title')??''}}"
                                                            class="form-control"
                                                            placeholder="عنوان H1" id="h1_title">
@@ -82,7 +83,7 @@
 
                                         <div class="col-12">
                                             <label class="form-label">متن سرویس
-                                                <span class="text-danger">*</span></label>
+                                                </label>
                                             <textarea name="description" id="editor" cols="30"
                                                       rows="10">{{old("description")??''}}</textarea>
                                         </div>
@@ -97,6 +98,74 @@
                                                     <input type="text" name="keywords" value="{{old('keywords')??''}}"
                                                            class="form-control"
                                                            placeholder="مثال : مهدی+زهرا + ..." id="title">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6 mt-2">
+                                                <div class="mb-3">
+                                                    <label for="service_guide_title" class="form-label">عنوان راهنمای
+                                                        سرویس
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_guide_title" id="service_guide_title"
+                                                              cols="30"
+                                                              rows="10">{{old('service_guide_title')??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_guide_brief_description" class="form-label">توضیح
+                                                        مختصر راهنمای سرویس
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_guide_brief_description"
+                                                              id="service_guide_brief_description" cols="30"
+                                                              rows="10">{{old('service_guide_brief_description')??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_part_title" class="form-label">عنوان قسمت های
+                                                        سرویس
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_part_title" id="service_part_title"
+                                                              cols="30"
+                                                              rows="10">{{old('service_part_title')??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_sample_title" class="form-label">عنوان نمونه کار
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_sample_title" id="service_sample_title"
+                                                              cols="30"
+                                                              rows="10">{{old('service_sample_title')??''}}</textarea>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6 ">
+                                                <div class="mb-3">
+                                                    <label for="service_sample_description" class="form-label">توضیح
+                                                        مختصر نمونه کار
+
+                                                    </label>
+                                                    <textarea class="form-control" name="service_sample_description"
+                                                              id="service_sample_description" cols="30"
+                                                              rows="10">{{old('service_sample_description')??''}}</textarea>
+
                                                 </div>
                                             </div>
 
@@ -134,19 +203,81 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        <br>
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">تصویر شاخص کوچک (فرمت مجاز:
+                                                        jpg,jpeg,png,svg,gif)</h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="indexImage">
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <input type="text" class="form-control mb-2"
+                                                                   name="indexImageAlt"
+                                                                   placeholder="مقدار alt تصویر را وارد کنید.">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">ویدئو (فرمت مجاز:
+                                                        mp4)
+                                                        <span class="text-danger">اگر فایل ویدئو را دارید از قسمت آپلود فایل اقدام نمایید یا اگر لینک ویدئو را دارید لینک را در جایگاه مشخص شده کپی کنید</span>
+                                                    </h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="video">
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <textarea name="videoLink" placeholder="لینک ویدئو را اینجا کپی کنید" class="form-control mb-2" id="" cols="30" rows="10"></textarea>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">پوستر ویدئو (فرمت مجاز:
+                                                        jpg,jpeg,png,svg,gif)</h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="videoPoster">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
 
                                         <div class="row">
-{{--                                            <div class="">--}}
 
-{{--                                                <img src="{{$builder->inline()}}"/>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="col-md-4 col-sm-8 mb-3">--}}
-{{--                                                    <label for="captcha" class="form-label">کپچا</label>--}}
-{{--                                                    <input type="text" name="captcha" class="form-control"--}}
-{{--                                                           placeholder="کپچا را وارد کنید" id="captcha">--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                             <hr>
                                             <h4 class=" text-bold">SEO</h4>
                                             <div class="row mt-3">
@@ -167,9 +298,10 @@
                                                 <div class="col-md-4 col-sm-8 mb-3">
                                                     <label for="pageDescription" class="form-label">صفحهDescription
                                                     </label>
-                                                    <input type="text" name="pageDescription" class="form-control"
-                                                           placeholder="pageDescription وارد کنید "
-                                                           value="{{old('pageDescription')??''}}" id="pageDescription">
+
+                                                    <textarea name="pageDescription" id="pageDescription" cols="30"
+                                                              class="form-control"
+                                                              rows="10">{{old('pageDescription')??''}}</textarea>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-8 mb-3">
@@ -193,10 +325,10 @@
                                                     <label for="pageOgDescription" class="form-label">og:Description
                                                         صفحه
                                                     </label>
-                                                    <input type="text" name="pageOgDescription"
-                                                           value="{{old('pageOgDescription')??''}}" class="form-control"
-                                                           placeholder="pageOgDescription وارد کنید "
-                                                           id="pageOgDescription">
+
+                                                    <textarea name="pageOgDescription" class="form-control"
+                                                              id="pageOgDescription" cols="30"
+                                                              rows="10">{{old('pageOgDescription')??''}}</textarea>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-8 mb-3">
@@ -263,7 +395,7 @@
                                             <div class="row mt-2">
                                                 <div class="col-lg-12">
                                                     <div class="justify-content-between d-flex align-items-center mb-3">
-                                                        <h5 class="mb-0 pb-1 ">صفحه  og:image (allowed format:
+                                                        <h5 class="mb-0 pb-1 ">صفحه og:image (allowed format:
                                                             jpg,jpeg,png,svg,gif)</h5>
                                                     </div>
 
