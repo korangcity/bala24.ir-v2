@@ -12,7 +12,7 @@ class Plan
     private $sessionProvider;
     private $easyCSRF;
     private $language;
-    private $pages;
+    public $pages;
 /*
  * index => i
  * services => s
@@ -798,7 +798,7 @@ class Plan
 //                }
 
                 if (!empty(getErrors())) {
-                    redirect('adminpanel/Plan-editPlanFeature' . $plan_feature_id . '?error=true');
+                    redirect('adminpanel/Plan-editPlanFeature-' . $plan_feature_id . '?error=true');
                 }
 
                 $positive_features = json_encode(array_filter($positive_features));
@@ -1032,6 +1032,317 @@ class Plan
             }
         }
 
+        if($act=="createVideo"){
+            if (!isset($_REQUEST['error'])) {
+                destroyErrors();
+                requestSessionDestroy();
+            }
+            $token = $this->easyCSRF->generate('my_token');
+
+            $service=new Service();
+            $serviceCategories=$service->getServiceCategories($this->language);
+
+            renderView("admin.$this->language.plan.video_create", ['serviceCategories' => $serviceCategories,'token' => $token, 'pages' => $this->pages]);
+        }
+
+        if($act=="createVideoProcess"){
+            if ($_POST) {
+
+                destroyErrors();
+                requestSessionDestroy();
+
+                $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
+                newRequest('pagee', $_POST['pagee']);
+                newRequest('page_children', $_POST['page_children']);
+                newRequest('service_category', $_POST['service_category']);
+                newRequest('title', $_POST['title']);
+                newRequest('brief_description', $_POST['brief_description']);
+                newRequest('feature', $_POST['feature']);
+                newRequest('videoo', $_POST['videoo']);
+
+                if ($checkCsrf === false) {
+
+                    if ($this->language == 'en'):
+                        setError('send information correctly');
+                    elseif ($this->language == 'fa'):
+                        setError('اطلاعات را به درستی ارسال کنید');
+                    elseif ($this->language == 'ar'):
+                        setError('إرسال المعلومات بشكل صحيح');
+                    endif;
+                }
+
+                if ($this->language == 'en'):
+                    $pagee = sanitizeInput($_POST['pagee']);
+                    $page_children = sanitizeInput($_POST['page_children']);
+                    $service_category = sanitizeInput($_POST['service_category']);
+                    $title= sanitizeInput($_POST['title']);
+                    $brief_description = sanitizeInput($_POST['brief_description']);
+                    $feature = sanitizeInput($_POST['feature']);
+
+                else:
+                    $pagee = sanitizeInputNonEn($_POST['pagee']);
+                    $page_children = sanitizeInputNonEn($_POST['page_children']);
+                    $service_category = sanitizeInputNonEn($_POST['service_category']);
+                    $title= sanitizeInputNonEn($_POST['title']);
+                    $brief_description = sanitizeInputNonEn($_POST['brief_description']);
+                    $feature = sanitizeInputNonEn($_POST['feature']);
+                endif;
+
+                $feature=json_encode(array_filter($feature));
+                if ($pagee == '') {
+                    if ($this->language == 'en'):
+                        setError('enter position value correctly');
+                    elseif ($this->language == 'fa'):
+                        setError('جایگاه را به درستی وارد کنید');
+                    elseif ($this->language == 'ar'):
+                        setError('أدخل موضع بشكل صحيح');
+                    endif;
+                }
+
+                $planable_type = [];
+                foreach ($pagee as $item) {
+                    if ($item == 1) {
+                        $planable_type[] = "blog";
+                    } elseif ($item == 2) {
+                        $planable_type[] = "service";
+                    } elseif ($item == 3) {
+                        $planable_type[] = "service_sample";
+                    } elseif ($item == 4) {
+                        $planable_type[] = "news";
+                    } elseif ($item == 5) {
+                        $planable_type[] = "page";
+                    } elseif ($item == 6) {
+                        $planable_type[] = "index";
+                    }elseif ($item == 7) {
+                        $planable_type[] = "services";
+                    }elseif ($item == 8) {
+                        $planable_type[] = "blogs";
+                    }elseif ($item == 9) {
+                        $planable_type[] = "news";
+                    }elseif ($item == 10) {
+                        $planable_type[] = "sampleServices";
+                    }
+                }
+                $planable_type = json_encode($planable_type);
+                $video='';
+                $poster='';
+                $planable_id = json_encode($page_children);
+
+                if (empty(getErrors())) {
+                    if (!empty($_FILES['video']) and $_FILES['video']['name'] != '') {
+                        $videoo = $_FILES['video'];
+                        $video = file_upload($videoo, 'plan', ['mp4']);
+                        if ($video == '') {
+                            if ($this->language == 'en'):
+                                setError('enter video with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('ویدئو را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل فیدیو بالتنسيق الصحيح');
+                            endif;
+
+                        }
+                    }else{
+                        $video=$_POST['videoo'];
+                    }
+
+
+                    if (!empty($_FILES['poster']) and !empty($_FILES['poster']['name'])) {
+                        $posterr = $_FILES['poster'];
+
+                        $poster = file_upload($posterr, 'plan', ['png', 'svg', 'jpg', 'jpeg', 'gif', 'PNG', 'JPEG', 'JPG']);
+                            if ($poster == '') {
+                                if ($this->language == 'en'):
+                                    setError('enter image with correct format');
+                                elseif ($this->language == 'fa'):
+                                    setError('تصویر را با فرمت صحیح وارد کنید');
+                                elseif ($this->language == 'ar'):
+                                    setError('أدخل الصورة بالتنسيق الصحيح');
+                                endif;
+                            }
+
+                    }
+
+                }
+
+
+                if (!empty(getErrors())) {
+                    redirect('adminpanel/Setting-createVideo?error=true');
+                }
+
+                if (empty(getErrors())) {
+                    $res = $this->registerVideo($planable_type, $planable_id,$service_category,$title,$brief_description,$feature,$video,$poster);
+                    redirect('adminpanel/Plan-videoList');
+                }
+
+
+            }
+        }
+
+        if($act=="videoList"){
+
+            $videos=$this->getVideos();
+            $service=new Service();
+            $serviceCategories=$service->getServiceCategories($this->language);
+
+            renderView("admin.$this->language.plan.video_list", ['serviceCategories' => $serviceCategories,'videos'=>$videos]);
+
+        }
+
+        if($act=="videoDelete"){
+            $video_id=$option;
+            $video_info=$this->getVideo($video_id)[0];
+            destroy_file($video_info['video']);
+            $this->deleteVideo($video_id);
+
+            redirect('adminpanel/Plan-videoList');
+        }
+
+        if($act=="editVideo"){
+            if (!isset($_REQUEST['error'])) {
+                destroyErrors();
+                requestSessionDestroy();
+            }
+            $token = $this->easyCSRF->generate('my_token');
+            $video_id=$option;
+            $video_info=$this->getVideo($video_id)[0];
+            $service=new Service();
+            $serviceCategories=$service->getServiceCategories($this->language);
+
+            renderView("admin.$this->language.plan.video_edit", ['video_info' => $video_info,'serviceCategories' => $serviceCategories,'token' => $token, 'pages' => $this->pages]);
+
+        }
+
+        if($act=="editVideoProcess"){
+            if ($_POST) {
+
+                destroyErrors();
+                requestSessionDestroy();
+
+                $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
+
+
+                if ($checkCsrf === false) {
+
+                    if ($this->language == 'en'):
+                        setError('send information correctly');
+                    elseif ($this->language == 'fa'):
+                        setError('اطلاعات را به درستی ارسال کنید');
+                    elseif ($this->language == 'ar'):
+                        setError('إرسال المعلومات بشكل صحيح');
+                    endif;
+                }
+
+                if ($this->language == 'en'):
+                    $pagee = sanitizeInput($_POST['pagee']);
+                    $page_children = sanitizeInput($_POST['page_children']);
+                    $service_category = sanitizeInput($_POST['service_category']);
+                    $title= sanitizeInput($_POST['title']);
+                    $brief_description = sanitizeInput($_POST['brief_description']);
+                    $feature = sanitizeInput($_POST['feature']);
+
+                else:
+                    $pagee = sanitizeInputNonEn($_POST['pagee']);
+                    $page_children = sanitizeInputNonEn($_POST['page_children']);
+                    $service_category = sanitizeInputNonEn($_POST['service_category']);
+                    $title= sanitizeInputNonEn($_POST['title']);
+                    $brief_description = sanitizeInputNonEn($_POST['brief_description']);
+                    $feature = sanitizeInputNonEn($_POST['feature']);
+                endif;
+
+                $feature=json_encode(array_filter($feature));
+                if ($pagee == '') {
+                    if ($this->language == 'en'):
+                        setError('enter position value correctly');
+                    elseif ($this->language == 'fa'):
+                        setError('جایگاه را به درستی وارد کنید');
+                    elseif ($this->language == 'ar'):
+                        setError('أدخل موضع بشكل صحيح');
+                    endif;
+                }
+
+                $planable_type = [];
+                foreach ($pagee as $item) {
+                    if ($item == 1) {
+                        $planable_type[] = "blog";
+                    } elseif ($item == 2) {
+                        $planable_type[] = "service";
+                    } elseif ($item == 3) {
+                        $planable_type[] = "service_sample";
+                    } elseif ($item == 4) {
+                        $planable_type[] = "news";
+                    } elseif ($item == 5) {
+                        $planable_type[] = "page";
+                    } elseif ($item == 6) {
+                        $planable_type[] = "index";
+                    }elseif ($item == 7) {
+                        $planable_type[] = "services";
+                    }elseif ($item == 8) {
+                        $planable_type[] = "blogs";
+                    }elseif ($item == 9) {
+                        $planable_type[] = "news";
+                    }elseif ($item == 10) {
+                        $planable_type[] = "sampleServices";
+                    }
+                }
+                $planable_type = json_encode($planable_type);
+                $video='';
+                $poster='';
+                $planable_id = json_encode($page_children);
+
+                $video_id=sanitizeInput($_POST['video_id']);
+                $video_info=$this->getVideo($video_id)[0];
+
+                if (empty(getErrors())) {
+                    if (!empty($_FILES['video']) and $_FILES['video']['name'] != '') {
+                        $videoo = $_FILES['video'];
+                        $video = file_upload($videoo, 'plan', ['mp4']);
+                        if ($video == '') {
+                            if ($this->language == 'en'):
+                                setError('enter video with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('ویدئو را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل فیدیو بالتنسيق الصحيح');
+                            endif;
+
+                        }else{
+                            destroy_file($video_info['video']);
+                        }
+                    }else{
+                        $video=$_POST['videoo'];
+                    }
+
+                    if (!empty($_FILES['poster']) and !empty($_FILES['poster']['name'])) {
+                        $posterr = $_FILES['poster'];
+
+                        $poster = file_upload($posterr, 'plan', ['png', 'svg', 'jpg', 'jpeg', 'gif', 'PNG', 'JPEG', 'JPG']);
+                        if ($poster == '') {
+                            if ($this->language == 'en'):
+                                setError('enter image with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('تصویر را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل الصورة بالتنسيق الصحيح');
+                            endif;
+                        }
+
+                    }
+
+                }
+
+                if (!empty(getErrors())) {
+                    redirect('adminpanel/Setting-createVideo?error=true');
+                }
+
+                if (empty(getErrors())) {
+                    $res = $this->editVideo($video_id,$planable_type, $planable_id,$service_category,$title,$brief_description,$feature,$video,$poster);
+                    redirect('adminpanel/Plan-videoList');
+                }
+
+
+            }
+        }
     }
 
     private function registerPlanTime($title, $time_period, $title_value)
@@ -1156,11 +1467,13 @@ class Plan
         $this->db->update("plans", $data, 'id="' . $plan_id . '"');
 
         $plan_feature = $this->getPlanFeatureByPlan_id($plan_id)[0];
-        $plan_feature_prices = $this->getPlanFeaturePrice($plan_feature)[0];
+
+        $plan_feature_prices = $this->getPlanFeaturePrice($plan_feature['id'])[0];
 
         $this->deletePlanFeatureByPlanFeatureId($plan_feature_prices['plan_feature_id']);
         $this->updatePlanFeaturePriceTimePeriod($plan_feature_prices['plan_feature_id'], json_decode($time_period));
 
+        return true;
     }
 
     private function registerPlanFeature($title, $brief_description, $plan, $positive_features, $negative_features, $icon)
@@ -1314,16 +1627,16 @@ class Plan
 
 
         $this->db->update("plan_features", $data, "id='" . $plan_feature_id . "'");
-        $times = json_decode(($this->getPlan($plan)[0])['time_period']);
-        $this->deletePlanFeaturePriceByPlanFeatureId($plan_feature_id);
-        foreach ($times as $time) {
-            $data1 = [
-                'plan_feature_id' => $plan_feature_id,
-                'time_period_id' => $time
-            ];
-
-            $this->db->insert("plan_feature_price", $data1);
-        }
+//        $times = json_decode(($this->getPlan($plan)[0])['time_period']);
+//        $this->deletePlanFeaturePriceByPlanFeatureId($plan_feature_id);
+//        foreach ($times as $time) {
+//            $data1 = [
+//                'plan_feature_id' => $plan_feature_id,
+//                'time_period_id' => $time
+//            ];
+//
+//            $this->db->insert("plan_feature_price", $data1);
+//        }
 
         return true;
     }
@@ -1381,6 +1694,65 @@ class Plan
         ];
 
         return $this->db->update("stick_footer_pages",$data,'id="'.$stickFooterId.'"');
+    }
+
+    private function registerVideo($planable_type,$planable_id,$service_category,$title,$brief_description,$feature,$video,$poster)
+    {
+        $data=[
+            'service_category_id'=>$service_category,
+            'title'=>$title,
+            'brief_description'=>$brief_description,
+            'options'=>$feature,
+            'video'=>$video,
+            'pageable_type'=>$planable_type,
+            'pageable_id'=>$planable_id
+        ];
+
+        if($video!=''){
+            $data['video']=$video;
+        }
+        if($poster!=''){
+            $data['poster']=$poster;
+        }
+
+        return $this->db->insert("videos",$data);
+    }
+
+    private function getVideos()
+    {
+        return $this->db->select_q("videos",[],"order by id desc");
+    }
+
+    private function getVideo($video_id)
+    {
+        return $this->db->select_q("videos",['id'=>$video_id]);
+    }
+
+    private function deleteVideo($video_id)
+    {
+        $query="delete from videos where id='".$video_id."' limit 1";
+
+        return $this->db->select_old($query);
+    }
+
+    private function editVideo( $video_id, $planable_type, $planable_id,$service_category,$title,$brief_description,$feature, $video,$poster)
+    {
+        $data=[
+            'service_category_id'=>$service_category,
+            'title'=>$title,
+            'brief_description'=>$brief_description,
+            'options'=>$feature,
+            'pageable_type'=>$planable_type,
+            'pageable_id'=>$planable_id
+        ];
+        if($video!=''){
+            $data['video']=$video;
+        }
+        if($poster!=''){
+            $data['poster']=$poster;
+        }
+
+        return $this->db->update("videos",$data,'id="'.$video_id.'"');
     }
 
 }

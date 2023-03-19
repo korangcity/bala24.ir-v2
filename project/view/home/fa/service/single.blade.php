@@ -76,7 +76,7 @@
                     <div class="col-lg-8">
                         <div class="text-center mb-5">
                             <h3 class="mb-3 fw-semibold">{{$service["service_guide_title"]??"راهنمای سرویس"}}</h3>
-                            <p class="text-muted mb-4 ff-secondary">
+                            <p class="text-muted mb-4 ">
                                 {{$service["service_guide_brief_description"]??"توضیحات راهنمای سرویس"}}
                             </p>
                         </div>
@@ -99,7 +99,7 @@
                             </div>
 
                             <h5>{{$serviceProcess[0]['title']}}</h5>
-                            <p class="text-muted ff-secondary">{{$serviceProcess[0]['brief_description']}}</p>
+                            <p class="text-muted ">{{$serviceProcess[0]['brief_description']}}</p>
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@
                             </div>
 
                             <h5>{{$serviceProcess[1]['title']}}</h5>
-                            <p class="text-muted ff-secondary">{{$serviceProcess[1]['brief_description']}}</p>
+                            <p class="text-muted ">{{$serviceProcess[1]['brief_description']}}</p>
                         </div>
                     </div>
 
@@ -130,7 +130,7 @@
                             </div>
 
                             <h5>{{$serviceProcess[2]['title']}}</h5>
-                            <p class="text-muted ff-secondary">{{$serviceProcess[2]['brief_description']}}</p>
+                            <p class="text-muted ">{{$serviceProcess[2]['brief_description']}}</p>
                         </div>
                     </div>
 
@@ -187,7 +187,7 @@
                     <div class="col-lg-8">
                         <div class="text-center mb-5">
                             <h3 class="mb-3 fw-semibold">{{$service["service_sample_title"]??"نمونه کارها"}}</h3>
-                            <p class="text-muted mb-4 ff-secondary">{{$service["service_sample_description"]??"لیست نمونه کارها"}}</p>
+                            <p class="text-muted mb-4 ">{{$service["service_sample_description"]??"لیست نمونه کارها"}}</p>
                         </div>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
                                                  alt="{{$sample['title']}}"
                                                  class="img-fluid rounded-circle">
                                             <a target="_blank"
-                                               href="{{baseUrl(httpCheck()).$main_url."/".($sample['page_url']??$sample['id'])}}"
+                                               href="/{{$main_url."/".($sample['page_url']??$sample['id'])}}"
                                                class="btn btn-success btn-sm position-absolute bottom-0 end-0 rounded-circle avatar-xs">
                                                 <div class="avatar-title bg-transparent">
                                                     <i class="ri-mail-fill align-bottom"></i>
@@ -215,7 +215,7 @@
                                                             href="{{baseUrl(httpCheck()).$main_url."/".($sample['page_url']??$sample['id'])}}"
                                                             class="text-body">{{$sample['title']}}</a>
                                         </h5>
-                                        <p class="text-muted mb-0 ff-secondary">{{$sample['brief_description']}}</p>
+                                        <p class="text-muted mb-0 ">{{$sample['brief_description']}}</p>
                                     </div>
                                 </div>
 
@@ -248,7 +248,7 @@
                                                             href="{{baseUrl(httpCheck()).$main_url."/".($sample['page_url']??$sample['id'])}}"
                                                             class="text-body">{{$sample['title']}}</a>
                                         </h5>
-                                        <p class="text-muted mb-0 ff-secondary">{{$sample['brief_description']}}</p>
+                                        <p class="text-muted mb-0 ">{{$sample['brief_description']}}</p>
                                     </div>
                                 </div>
 
@@ -322,9 +322,9 @@
                             $planFeaturePrices=$service_obj->getPlanFeaturePrices($subPlan['id']);
 
                         @endphp
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 d-flex">
                             <div class="card plan-box mb-0 ribbon-box right">
-                                <div class="card-body p-4 m-2">
+                                <div class="card-body flex-column p-4 m-2">
 
                                     <div class="ribbon-two ribbon-two-danger d-none showParticular"><span>ویژه</span>
                                     </div>
@@ -346,7 +346,7 @@
                                             <h1 data-timeid="{{$price['time_period_id']}}"
                                                 data-particular="{{$price['particular']}}"
                                                 class="month showPricee @if($firsKey!=$price['time_period_id']) d-none @else d-block @endif">
-                                                <span class="ff-secondary fw-bold">{{$price['price']??0}}</span><sup><small>تومان</small></sup>
+                                                <span class=" fw-bold">{{$price['price']?number_format($price['price']):0}}</span><sup><small>تومان</small></sup><br>
                                                 <span class="fs-13 text-muted">/@php foreach($time_periods as $time_periodd): if($time_periodd['id']==$price['time_period_id']):  echo $time_periodd['title'];  endif; endforeach;  @endphp</span>
                                             </h1>
 
@@ -355,7 +355,7 @@
                                     </div>
 
                                     <div>
-                                        <ul class="list-unstyled text-muted vstack gap-3 ff-secondary">
+                                        <ul class="list-unstyled text-muted vstack gap-3 ">
                                             @foreach(json_decode($subPlan['positive_features']) as $item)
                                                 <li>
                                                     <div class="d-flex">
@@ -383,7 +383,7 @@
                                             @endforeach
                                         </ul>
                                         <div class="mt-4">
-                                            <a href="javascript:void(0);" class="btn btn-soft-success w-100">شروع
+                                            <a href="javascript:void(0);" class="btn btn-soft-success  w-100">شروع
                                             </a>
                                         </div>
                                     </div>
@@ -401,6 +401,126 @@
         </section>
     @endif
 
+    @if($video)
+        <section class="section" >
+            <div class="container">
+                <div class="row align-items-center gy-4">
+                    <div class="col-lg-6 col-sm-7 col-10 mx-auto">
+                        <div>
+
+                            @if($video['video'] == strip_tags($video['video']))
+                                <video width="100%"  poster="{{baseUrl(httpCheck()).$video['poster']}}" controls>
+                                    <source src="{{baseUrl(httpCheck()).$video['video']}}" type="video/mp4">
+                                </video>
+
+                            @else
+                                {!! html_entity_decode($video['video']) !!}
+                            @endif
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="text-muted ps-lg-5">
+                            <h5 class="fs-12 text-uppercase text-success">{{$serviceCategory}}</h5>
+                            <h4 class="mb-3">{{$video['title']}}</h4>
+                            <p class="mb-4">{{$video['brief_description']}}</p>
+
+                            <div class="vstack gap-2">
+                                @foreach(json_decode($video['options']) as $item)
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0 me-2">
+                                            <div class="avatar-xs icon-effect">
+                                                <div class="avatar-title bg-transparent text-success rounded-circle h2">
+                                                    <i class="ri-check-fill"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0">{{$item}}</p>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    @endif
+
+    @if($khadamats)
+        <div class="container section">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h1 class="mb-3  fw-semibold lh-base">{{$khadamats[0]['main_title']}}</h1>
+                        <p class="text-muted">{{$khadamats[0]['main_brief_description']}}</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row g-3">
+                @foreach($khadamats as $khadamat)
+                    <div class="col-lg-4">
+                        <div class="d-flex p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm icon-effect">
+                                    <div class="avatar-title bg-transparent text-success rounded-circle">
+                                        <i class="{{$khadamat['icon']}} fs-36"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-18">{{$khadamat['title']??''}}</h5>
+                                <p class="text-muted my-3 ">{{$khadamat['brief_description']??''}}</p>
+                                <div>
+                                    <a target="_blank" href="{{$khadamat['link']??''}}" class="fs-14 fw-medium">بیشتر <i
+                                                class="ri-arrow-right-s-line align-bottom"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+        </div>
+
+    @endif
+
+
+    @if($stickFooter)
+        <section class="py-5 bg-primary position-relative">
+            <div class="bg-overlay bg-overlay-pattern opacity-50"></div>
+            <div class="container">
+                <div class="row align-items-center gy-4">
+                    <div class="col-sm">
+                        <div>
+                            <h4 class="text-white mb-0 fw-semibold">{{$stickFooter['stick_footer_text']}}</h4>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-sm-auto">
+                        <div>
+                            <a href="{{$stickFooter['stick_footer_link']}}" target="_blank"
+                               class="btn bg-gradient btn-danger"><i class="{{$stickFooter['stick_footer_icon']}} align-middle me-1"></i>
+                                {{$stickFooter['stick_footer_title']}}</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+    @endif
 @endsection
 
 

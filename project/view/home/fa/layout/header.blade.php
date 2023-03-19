@@ -6,6 +6,12 @@
     $set_obj=new \App\controller\home\Setting();
     $setting=$set_obj->settingInfo()[0];
 
+    $user_info=[];
+    if(checkUserLogin()){
+        $auth_obj = new \App\controller\home\Auth();
+        $user_id=getUserEncryptInfo()['user_id'];
+        $user_info=$auth_obj->getUserInfo($user_id)[0];
+    }
 @endphp
 
 <header id="page-topbar">
@@ -16,19 +22,23 @@
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="/" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{baseUrl(httpCheck()).$setting['small_logo_dark']}}" alt="{{$setting['small_logo_dark_alt']}}" height="22">
+                            <img src="{{baseUrl(httpCheck()).$setting['small_logo_dark']}}"
+                                 alt="{{$setting['small_logo_dark_alt']}}" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{baseUrl(httpCheck()).$setting['large_logo_dark']}}" alt="{{$setting['large_logo_dark_alt']}}" height="17">
+                            <img src="{{baseUrl(httpCheck()).$setting['large_logo_dark']}}"
+                                 alt="{{$setting['large_logo_dark_alt']}}" height="17">
                         </span>
                     </a>
 
                     <a href=/ class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{baseUrl(httpCheck()).$setting['small_logo_light']}}" alt="{{$setting['small_logo_light_alt']}}" height="22">
+                            <img src="{{baseUrl(httpCheck()).$setting['small_logo_light']}}"
+                                 alt="{{$setting['small_logo_light_alt']}}" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{baseUrl(httpCheck()).$setting['large_logo_light']}}" alt="{{$setting['large_logo_light_alt']}}" height="17">
+                            <img src="{{baseUrl(httpCheck()).$setting['large_logo_light']}}"
+                                 alt="{{$setting['large_logo_light_alt']}}" height="17">
                         </span>
                     </a>
                 </div>
@@ -138,6 +148,23 @@
             </div>
 
             <div class="d-flex align-items-center">
+
+
+                <div class="ms-1 header-item  d-sm-flex">
+
+                        <button type="button" class="btn btn-ghost-secondary rounded-circle">
+                            <span class="text-light sb_font_s ms-4 d-none d-lg-block">{{\Morilog\Jalali\CalendarUtils::strftime("l d F Y")}}</span>
+                        </button>
+
+                </div>
+                <div class="ms-1 header-item  d-sm-flex">
+                    <a href="tel:{{$setting['phone1']}}">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle phoneClass"
+                        >
+                            <i class='ri-phone-fill fs-22'></i>
+                        </button>
+                    </a>
+                </div>
 
                 <div class="dropdown d-md-none topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -452,16 +479,17 @@
                             aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <img class="rounded-circle header-profile-user"
-                                 src="{{baseUrl(httpCheck())}}assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                 src="{{!empty($user_info)?(baseUrl(httpCheck()).$user_info['avatar']):baseUrl(httpCheck())."assets/images/users/user-dummy-img.jpg"}}" alt="{{!empty($user_info)?($user_info['name']):"user"}}">
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">مریم مقدس</span>
-                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">09129129122</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{!empty($user_info)?($user_info['name']):"مهمان"}}</span>
+                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">{{!empty($user_info)?($user_info['mobile']):""}}</span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">مریم مقدس خوش آمدید!</h6>
+                        <h6 class="dropdown-header">{{!empty($user_info)?($user_info['name']):"مهمان عزیز"}} خوش آمدید!</h6>
+                      @if(!empty($user_info))
                         <a class="dropdown-item" href="#"><i
                                     class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                     class="align-middle">پروفایل</span></a>
@@ -483,9 +511,21 @@
                                     class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                     class="align-middle">تنظیمات</span></a>
                         {{--                        <a class="dropdown-item" href="#"><i class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a>--}}
-                        <a class="dropdown-item" href="#"><i
+                        <a class="dropdown-item" href="/signout"><i
                                     class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
                                     class="align-middle" data-key="t-logout">خروج</span></a>
+
+                          @else
+
+                            <a target="_blank" class="dropdown-item" href="/signin"><i
+                                        class="mdi mdi-login text-muted fs-16 align-middle me-1"></i> <span
+                                        class="align-middle" data-key="t-logout">ورود</span></a>
+
+                            <a target="_blank" class="dropdown-item" href="/signup"><i
+                                        class="mdi mdi-registered-trademark text-muted fs-16 align-middle me-1"></i> <span
+                                        class="align-middle" data-key="t-signup">ثبت نام</span></a>
+
+                        @endif
                     </div>
                 </div>
             </div>
@@ -498,21 +538,25 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index.html" class="logo logo-dark">
+        <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="" height="22">
+                        <img src="{{baseUrl(httpCheck()).$setting['small_logo_dark']}}"
+                             alt="{{$setting['small_logo_dark_alt']}}" height="22">
                     </span>
             <span class="logo-lg">
-                        <img src="assets/images/logo-dark.png" alt="" height="17">
+                        <img src="{{baseUrl(httpCheck()).$setting['large_logo_dark']}}"
+                             alt="{{$setting['large_logo_dark_alt']}}" height="17">
                     </span>
         </a>
-        <!-- Light Logo-->
-        <a href="index.html" class="logo logo-light">
+
+        <a href="/" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="" height="22">
+                        <img src="{{baseUrl(httpCheck()).$setting['small_logo_light']}}"
+                             alt="{{$setting['small_logo_light_alt']}}" height="22">
                     </span>
             <span class="logo-lg">
-                        <img src="assets/images/logo-light.png" alt="" height="17">
+                        <img src="{{baseUrl(httpCheck()).$setting['large_logo_light']}}"
+                             alt="{{$setting['large_logo_light_alt']}}" height="17">
                     </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"

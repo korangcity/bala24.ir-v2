@@ -14,7 +14,7 @@
         <div class="page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xxl-6">
+                    <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1"> تنظیمات</h4>
@@ -129,6 +129,26 @@
                                                            value="{{$setting['address']??''}}"
                                                            class="form-control"
                                                            placeholder="address" id="address">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="footer_aboutus_title" class="form-label">عنوان درباره ما در فوتر
+                                                    </label>
+                                                    <input type="text" name="footer_aboutus_title"
+                                                           value="{{$setting['footer_aboutus_title']??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="footer_aboutus_title">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="footer_aboutus" class="form-label">درباره ما در فوتر
+                                                    </label>
+                                                    <textarea name="footer_aboutus" id="footer_aboutus" cols="30" rows="4"
+                                                              class="form-control">{{$setting['footer_aboutus']??''}}</textarea>
                                                 </div>
                                             </div>
 
@@ -260,48 +280,139 @@
                                         <br><br>
                                         <div class="row">
 
-                                            <h4>قسمت چسبیده به فوتر</h4>
+                                            <h4>عناوین صفحه اصلی</h4>
 
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="stick_footer_text" class="form-label">متن کوتاه
+                                                    <label for="index_service_title" class="form-label">عنوان سرویس
                                                     </label>
-                                                    <input type="text" name="stick_footer_text"
-                                                           value="{{$setting['stick_footer_text']??''}}"
+                                                    <input type="text" name="index_service_title"
+                                                           value="{{$setting['index_service_title']??''}}"
                                                            class="form-control"
-                                                           placeholder="" id="stick_footer_text">
+                                                           placeholder="" id="index_service_title">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="stick_footer_icon" class="form-label">آیکن دکمه
+                                                    <label for="index_service_description" class="form-label">توضیح مختصر سرویس
                                                     </label>
-                                                    <input type="text" name="stick_footer_icon"
-                                                           value="{{$setting['stick_footer_icon']??''}}"
-                                                           class="form-control"
-                                                           placeholder="" id="stick_footer_icon">
+                                                    <textarea class="form-control" name="index_service_description" id="index_service_description" cols="30" rows="5">{{$setting['index_service_description']??''}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="stick_footer_link" class="form-label">لینک دکمه
+                                                    <label for="index_company_title" class="form-label">عنوان قسمت شرکت ها
                                                     </label>
-                                                    <input type="text" name="stick_footer_link"
-                                                           value="{{$setting['stick_footer_link']??''}}"
+                                                    <input type="text" name="index_company_title"
+                                                           value="{{$setting['index_company_title']??''}}"
                                                            class="form-control"
-                                                           placeholder="" id="stick_footer_link">
+                                                           placeholder="" id="index_company_title">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="stick_footer_title" class="form-label">متن دکمه
+                                                    <label for="index_satisfy_title" class="form-label">عنوان قسمت رضایتمندی کاربران
                                                     </label>
-                                                    <input type="text" name="stick_footer_title"
-                                                           value="{{$setting['stick_footer_title']??''}}"
+                                                    <input type="text" name="index_satisfy_title"
+                                                           value="{{$setting['index_satisfy_title']??''}}"
                                                            class="form-control"
-                                                           placeholder="" id="stick_footer_title">
+                                                           placeholder="" id="index_satisfy_title">
                                                 </div>
                                             </div>
+
+                                            <br>
+
+                                            <br>
+                                            <hr style="border: none;height: 5px;background-color: #ff0000; ">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_titles1" class="form-label">عنوان اول عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_titles1"
+                                                           value="{{json_decode($setting['index_functionality_titles'])[0]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_titles1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_values1" class="form-label">مقدار اول عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_values1"
+                                                           value="{{json_decode($setting['index_functionality_values'])[0]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_values1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_titles2" class="form-label">عنوان دوم عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_titles2"
+                                                           value="{{json_decode($setting['index_functionality_titles'])[1]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_titles2">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_values2" class="form-label">مقدار دوم عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_values2"
+                                                           value="{{json_decode($setting['index_functionality_values'])[1]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_values2">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_titles3" class="form-label">عنوان سوم عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_titles3"
+                                                           value="{{json_decode($setting['index_functionality_titles'])[2]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_titles3">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_values3" class="form-label">مقدار سوم عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_values3"
+                                                           value="{{json_decode($setting['index_functionality_values'])[3]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_values3">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_titles4" class="form-label">عنوان چهارم عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_titles4"
+                                                           value="{{json_decode($setting['index_functionality_titles'])[3]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_titles4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="index_functionality_values4" class="form-label">مقدار چهارم عملکرد سال
+                                                    </label>
+                                                    <input type="text" name="index_functionality_values4"
+                                                           value="{{json_decode($setting['index_functionality_values'])[3]??''}}"
+                                                           class="form-control"
+                                                           placeholder="" id="index_functionality_values4">
+                                                </div>
+                                            </div>
+
 
 
                                         </div>

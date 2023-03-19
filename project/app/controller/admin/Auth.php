@@ -226,6 +226,7 @@ class Auth
                         }
                         login();
                         set_user_info($email, $password);
+                        setUserId($result[0]['id']);
                         redirect('adminpanel/Dashboard-dashboard');
                     endif;
                 }
@@ -436,6 +437,8 @@ class Auth
                 $civilization_code = sanitizeInput($_POST['civilization_code']);
                 $iban = sanitizeInput($_POST['iban']);
                 $credit_card_number = sanitizeInput($_POST['credit_card_number']);
+                $departman = sanitizeInputNonEn($_POST['departman']);
+                $address = sanitizeInputNonEn($_POST['address']);
 
                 if ($mobile != "" and !checkIfMobileIsCorrect($mobile)) {
                     if ($this->language == 'en'):
@@ -481,7 +484,7 @@ class Auth
                     redirect("adminpanel/Auth-adminEdit-" . $user_id . "?error=true");
                 }
                 if (empty(getErrors())) {
-                    $this->updateAdminPersonalInformation($user_id, $name, $mobile, $civilization_code, $iban, $credit_card_number);
+                    $this->updateAdminPersonalInformation($user_id, $name, $mobile, $civilization_code, $iban, $credit_card_number,$departman,$address);
 
                     redirect("adminpanel/Auth-adminList?success=true");
                 }
@@ -679,7 +682,7 @@ class Auth
         return $this->db->rawQuery($query);
     }
 
-    private function updateAdminPersonalInformation($user_id, $name, $mobile, $civilization_code, $iban, $credit_card_number)
+    private function updateAdminPersonalInformation($user_id, $name, $mobile, $civilization_code, $iban, $credit_card_number,$departman,$address)
     {
         $data = [
             'name' => $name,
@@ -687,6 +690,8 @@ class Auth
             'civilization_code' => $civilization_code,
             'iban' => $iban,
             'credit_card_number' => $credit_card_number,
+            'departman' => $departman,
+            'address' => $address,
         ];
 
         return $this->db->update("users", $data, "id='" . $user_id . "'");

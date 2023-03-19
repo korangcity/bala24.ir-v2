@@ -30,15 +30,15 @@ class Metatag
         $this->language = getLanguage();
 
         $page=new Page();
-        $pages=$page->getPages();
+        $pages=$page->getPages($this->language);
 
         $this->routes = [
             '/' => 'صفحه اصلی',
-            '/products' => 'صفحه محصولات'
+            '/services' => 'صفحه سرویس ها'
         ];
 
         foreach ($pages as $page) {
-            $this->routes[$page["page_url"]]=$page['page_title_seo'];
+            $this->routes[$page["page_url"]]=$page['title'];
         }
     }
 

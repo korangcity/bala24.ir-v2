@@ -1,4 +1,7 @@
 <?php
+
+use App\controller\home\Redirect;
+
 session_start();
 
 
@@ -13,6 +16,19 @@ errorHandle();
 if (!getLanguage())
     setLanguage('fa');
 
+$redirect=new Redirect();
+$redirects=$redirect->getRedirects();
+foreach ($redirects as $redirectItem) {
+
+    if(urldecode($redirectItem['origin'])==baseUrl(httpCheck()).substr($_SERVER['REQUEST_URI'],1)){
+        redirectUrlComplete($redirectItem['destination']);
+        die;
+    }
+    if($redirectItem['origin']==baseUrl(httpCheck()).substr($_SERVER['REQUEST_URI'],1)){
+        redirectUrlComplete($redirectItem['destination']);
+        die;
+    }
+}
 
 $connection = connection(envv('DB_HOST'), envv('DB_USERNAME'), envv('DB_PASSWORD'), envv('DB_DATABASE'));
 
@@ -22,7 +38,7 @@ $adminPanelUrl = adminPanelUrl($base_url);
 $current_url = $_GET['rt'] ?? '/';
 $pages = seprator($current_url);
 
-$route = route($pages[0], $pages[1] ?? '-', $adminPanelUrl);
+$route = route($pages[0], $pages[1] ?? '-', $pages[2] ?? '-', $adminPanelUrl);
 
 view($route);
 

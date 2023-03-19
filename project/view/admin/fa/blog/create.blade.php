@@ -135,6 +135,50 @@
                                             </div>
                                         </div>
 
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">ویدئو را آپلود کنید یا لینک ویدئو را وارد نمایید (فرمت مجاز:
+                                                        mp4)</h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="video">
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <textarea name="videoo" class="form-control" id="" cols="30" placeholder="درج لینک ویدئو" rows="3"></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12">
+                                                <div class="justify-content-between d-flex align-items-center mb-3">
+                                                    <h5 class="mb-0 pb-1 ">پوستر ویدئو (فرمت مجاز:
+                                                        jpg,jpeg,png,svg,gif)</h5>
+                                                </div>
+
+
+                                                <div class=" ">
+                                                    <div class="d-flex">
+                                                        <div class="col-lg-6">
+                                                            <input type="file" class="form-control mb-2"
+                                                                   name="poster">
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
 {{--                                            <div class="">--}}
 

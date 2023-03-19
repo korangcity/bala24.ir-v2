@@ -16,7 +16,7 @@ class Service
     private $phraseBuilder;
     private $builder;
     private $language;
-    private $pages;
+    public $pages;
 
     public function __construct()
     {
@@ -44,13 +44,14 @@ class Service
 
     public function getServices()
     {
-        $data = [
-            'is_show' => 1
-        ];
+        $query="select services.*,service_category.id AS catId,service_category.enTitle AS catTitle from services join service_category on services.category_id=service_category.id where services.is_show=1 order by services.is_coming asc";
+//        $data = [
+//            'is_show' => 1
+//        ];
+//
+//        $info = $this->db->select_q("services", $data,"order by is_coming asc");
 
-        $info = $this->db->select_q("services", $data);
-
-        return $info;
+        return $this->db->rawQuery($query);
     }
 
     public function getService($input)
@@ -106,14 +107,13 @@ class Service
         return $this->db->select_q("service_category", $data);
     }
 
-
     public function getServiceGuides($service_id)
     {
 
         $data = [
             'service_id' => $service_id
         ];
-        return $this->db->select_q("guide_service", $data, "order by id desc");
+        return $this->db->select_q("guide_service", $data, "order by id asc");
     }
 
     public function getSampleServices($service_id)
@@ -141,6 +141,7 @@ class Service
 
     public function getServiceSamples()
     {
+
         return $this->db->select_q("sample_service", []);
     }
 
@@ -151,21 +152,7 @@ class Service
 
 
         foreach ($plansInfo as $item) {
-            if (in_array('index',json_decode($item['planable_type']))){
-                $plabableIds=json_decode($item['planable_id']);
-                foreach ($plabableIds as $r=>$plabableId) {
-                    $plabableIdd=explode("*",$plabableId);
-
-                    if($service_id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["صفحه اصلی"]){
-                        $result=$item;
-                        break;
-                    }elseif( $service_id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["سرویس"]){
-                        $result=$item;
-                        break;
-                    }
-                }
-
-            }elseif (in_array('service',json_decode($item['planable_type']))){
+            if (in_array('service',json_decode($item['planable_type']))){
                 $plabableIds=json_decode($item['planable_id']);
                 foreach ($plabableIds as $r=>$plabableId) {
                     $plabableIdd=explode("*",$plabableId);
@@ -174,6 +161,56 @@ class Service
                         break;
                     }
                 }
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getPlan2($service_id)
+    {
+        $query="select * from plans";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('services',json_decode($item['planable_type']))){
+                $plabableIds=json_decode($item['planable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($service_id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["صفحه سرویس ها"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getPlanSample($service_id)
+    {
+        $query="select * from plans";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('service_sample',json_decode($item['planable_type']))){
+                $plabableIds=json_decode($item['planable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($service_id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["نمونه سرویس"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+
             }
         }
 
@@ -198,7 +235,7 @@ class Service
             'plan_id' => $plan_id
         ];
 
-        return $this->db->select_q("plan_features",$data,"order by id desc");
+        return $this->db->select_q("plan_features",$data,"order by id asc");
     }
 
     public function getPlanFeaturePrices($subPlan_id)
@@ -210,9 +247,215 @@ class Service
         return $this->db->select_q("plan_feature_price",$data,"order by id desc");
     }
 
-    public function getKhadamats()
+    public function getKhadamats($id)
     {
-        return $this->db->select_q("khadamats",[],"order by id desc");
+        $khadamats= $this->db->select_q("khadamats",[],"order by id desc");
+        $result=[];
+        foreach ($khadamats as $item) {
+           if (in_array('service',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+                    if( $id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["سرویس"]){
+                        $result[]=$item;
+
+                    }
+                }
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getKhadamats2($id)
+    {
+        $khadamats= $this->db->select_q("khadamats",[],"order by id desc");
+        $result=[];
+        foreach ($khadamats as $item) {
+            if (in_array('services',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["صفحه سرویس ها"]){
+                        $result[]=$item;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getKhadamatsSample($id)
+    {
+        $khadamats= $this->db->select_q("khadamats",[],"order by id desc");
+        $result=[];
+        foreach ($khadamats as $item) {
+            if (in_array('service_sample',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["نمونه سرویس"]){
+                        $result[]=$item;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getStickFooter($id)
+    {
+        $query="select * from stick_footer_pages";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+           if (in_array('service',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+                    if( $id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["سرویس"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getStickFooter2($id)
+    {
+        $query="select * from stick_footer_pages";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('services',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["صفحه سرویس ها"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getStickFooterSample($id)
+    {
+        $query="select * from stick_footer_pages";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('service_sample',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["نمونه سرویس"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getVideo($id)
+    {
+        $query="select * from videos";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('service',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+                    if( $id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["سرویس"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getVideo2($id)
+    {
+        $query="select * from videos";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('services',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["صفحه سرویس ها"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
+    }
+
+    public function getVideoSample($id)
+    {
+        $query="select * from videos";
+        $plansInfo=$this->db->rawQuery($query);
+
+
+        foreach ($plansInfo as $item) {
+            if (in_array('service_sample',json_decode($item['pageable_type']))){
+                $plabableIds=json_decode($item['pageable_id']);
+                foreach ($plabableIds as $r=>$plabableId) {
+                    $plabableIdd=explode("*",$plabableId);
+
+                    if($id==$plabableIdd[0] and $plabableIdd[1]==array_flip($this->pages)["نمونه سرویس"]){
+                        $result=$item;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
+        return $result;
     }
 
     public function registerMessage($name, $email,$subject, $message)
@@ -226,5 +469,6 @@ class Service
 
         return $this->db->insert("messages",$data);
     }
+
 
 }

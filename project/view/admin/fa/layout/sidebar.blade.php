@@ -6,7 +6,7 @@
         <ul class="navbar-nav" id="navbar-nav">
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="/adminpanel/Dashboard-dashboard">
+                <a class="nav-link menu-link  {{isActive(['Dashboard-dashboard'])}}" href="/adminpanel/Dashboard-dashboard">
                     <i class="las la-tachometer-alt"></i> <span data-key="t-dashboards">داشبورد</span>
                 </a>
             </li>
@@ -235,6 +235,24 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link menu-link {{isActive(['Plan-videoList','Plan-createVideo','Plan-editVideo'])}}" href="#video"
+                   data-bs-toggle="collapse"
+                   role="button" aria-expanded="false" aria-controls="service">
+                    <i class="ri-video-fill "></i> <span data-key="t-plan">ویدئو ها</span>
+                </a>
+                <div class="collapse menu-dropdown {{(isActive(['Plan-videoList','Plan-createVideo','Plan-editVideo'])=='active')?'show':''}}" id="video">
+                    <ul class="nav nav-sm flex-column">
+
+                        <li class="nav-item">
+                            <a href="/adminpanel/Plan-videoList" class="nav-link {{isActive(['Plan-videoList','Plan-createVideo','Plan-editVideo'])}}"
+                               data-key="t-crm"> ویدئو ها </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link menu-link {{isActive(['Contactus-showMessages'])}}" href="#messages"
                    data-bs-toggle="collapse"
                    role="button" aria-expanded="false" aria-controls="service">
@@ -253,21 +271,54 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link {{isActive(['Setting-createGeneralInformation','Setting-GeneralInformationList','Setting-editGeneralInformation'])}}" href="#setting"
+                <a class="nav-link menu-link {{isActive(['Slider-sliderList','Slider-sliderEdit','Setting-createGeneralInformation','Setting-GeneralInformationList','Setting-editGeneralInformation'])}}" href="#setting"
                    data-bs-toggle="collapse"
                    role="button" aria-expanded="false" aria-controls="service">
                     <i class="ri-settings-6-fill"></i> <span data-key="t-service">تنظیمات</span>
                 </a>
-                <div class="collapse menu-dropdown {{(isActive(['Setting-createGeneralInformation','Setting-GeneralInformationList','Setting-editGeneralInformation'])=='active')?'show':''}}" id="setting">
+                <div class="collapse menu-dropdown {{(isActive(['Slider-sliderList','Slider-sliderEdit','Setting-createGeneralInformation','Setting-GeneralInformationList','Setting-editGeneralInformation'])=='active')?'show':''}}" id="setting">
                     <ul class="nav nav-sm flex-column">
 
                         <li class="nav-item">
                             <a href="/adminpanel/Setting-GeneralInformationList" class="nav-link {{isActive(['Setting-createGeneralInformation','Setting-GeneralInformationList','Setting-editGeneralInformation'])}}"
                                data-key="t-crm"> تنظیمات </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/Slider-sliderList" class="nav-link {{isActive(['Slider-sliderList','Slider-sliderEdit'])}}"
+                               data-key="t-crm"> اسلایدر </a>
+                        </li>
 
                     </ul>
                 </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link menu-link {{isActive(['FAQ-createFaq','FAQ-faqList','FAQ-editFaq','FAQ-editFaConstant','FAQ-faqConstantList'])}}" href="#faq"
+                   data-bs-toggle="collapse"
+                   role="button" aria-expanded="false" aria-controls="service">
+                    <i class="ri-question-answer-fill"></i> <span data-key="t-service">FAQ</span>
+                </a>
+                <div class="collapse menu-dropdown {{(isActive(['FAQ-createFaq','FAQ-faqList','FAQ-editFaq','FAQ-editFaConstant','FAQ-faqConstantList'])=='active')?'show':''}}" id="faq">
+                    <ul class="nav nav-sm flex-column">
+
+                        <li class="nav-item">
+                            <a href="/adminpanel/FAQ-faqConstantList" class="nav-link {{isActive(['FAQ-editFaConstant','FAQ-faqConstantList'])}}"
+                               data-key="t-crm"> اطلاعات ثابت faq </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/FAQ-faqList" class="nav-link {{isActive(['FAQ-createFaq','FAQ-faqList','FAQ-editFaq'])}}"
+                               data-key="t-crm"> faq </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link menu-link {{isActive(['Setting-icons'])}}" href="/adminpanel/Setting-icons">
+                    <i class="ri-remixicon-line "></i> <span data-key="t-dashboards">آیکن ها</span>
+                </a>
             </li>
 
 

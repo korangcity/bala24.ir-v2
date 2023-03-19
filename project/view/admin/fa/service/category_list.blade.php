@@ -1,4 +1,4 @@
-@extends("admin.ar.layout.app")
+@extends("admin.fa.layout.app")
 
 @section("title","مدیریت سایت | لیست دسته بندی سرویس")
 
@@ -33,6 +33,7 @@
                                     <tr>
                                         <th>ردیف</th>
                                         <th>عنوان</th>
+                                        <th>عنوان انگلیسی</th>
                                         <th>تاریخ ایجاد</th>
                                         <th>عکس دسته بندی</th>
                                         <th>SEO</th>
@@ -44,6 +45,7 @@
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$category['title']}}</td>
+                                        <td>{{$category['enTitle']}}</td>
                                         <td>{{$category['created_at']}}</td>
                                         <td>
                                             <img src="{{baseUrl(httpCheck()).$category['category_image']}}" alt="" class="rounded avatar-xl">

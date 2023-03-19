@@ -15,73 +15,75 @@
     <li class="nav-item">
         <a class="nav-link menu-link" href="#servicesCat" data-bs-toggle="collapse" role="button" aria-expanded="true"
            aria-controls="services">
-            <i class="ri-instagram-fill"></i> <span>دسته بندی سرویس ها</span>
+            <i class="ri-server-fill"></i> <span>خدمات</span>
         </a>
 
         <div class="collapse menu-dropdown show" id="servicesCat">
             <ul class="nav nav-sm flex-column">
-                @foreach($serviceCategories as $cat)
+                @foreach($serviceCategories as $ke=>$cat)
+                    {{--                    <li class="nav-item">--}}
+                    {{--                        <a href="#" class="nav-link"> {{$cat['title']}} </a>--}}
+                    {{--                    </li>--}}
+
+
+
                     <li class="nav-item">
-                        <a href="#" class="nav-link"> {{$cat['title']}} </a>
+                        <a href="#sidebarAccount{{$ke}}" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarAccount"
+                           data-key="t-level-1.2"> {{$cat['title']}}
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarAccount{{$ke}}">
+                            <ul class="nav nav-sm flex-column">
+                                @foreach($services as $service)
+                                    @if($service['category_id']==$cat['id'])
+                                        <li class="nav-item">
+                                            <a href="/{{$service['page_url']??$service['id']}}" class="nav-link"
+                                               data-key="t-level-2.1">{{$service['title']}}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
                     </li>
-
                 @endforeach
-
             </ul>
         </div>
     </li>
-
-
-    <li class="nav-item">
-        <a class="nav-link menu-link" href="#services" data-bs-toggle="collapse" role="button" aria-expanded="true"
-           aria-controls="services">
-            <i class="ri-instagram-fill"></i> <span>سرویس ها</span>
-        </a>
-        @php
-            foreach($services as $service):
-        $serviceLinkarray[]=$service['page_url'];
-            endforeach;
-
-        @endphp
-        <div class="collapse menu-dropdown {{isActive2($serviceLinkarray)=="active"?"show":""}}" id="services">
-            <ul class="nav nav-sm flex-column">
-                @foreach($services as $service)
-
-                    <li class="nav-item">
-                        <a href="/{{$service['page_url']??$service['id']}}"
-                           class="nav-link {{isActive2(($service['page_url']??$service['id']))}}"> {{$service['title']}} </a>
-                    </li>
-
-                @endforeach
-
-            </ul>
-        </div>
-    </li>
-
 
     <li class="nav-item">
         <a class="nav-link menu-link" href="#servicesSample" data-bs-toggle="collapse" role="button"
            aria-expanded="true"
            aria-controls="services">
-            <i class="ri-instagram-fill"></i> <span>نمونه کارها</span>
+            <i class="ri-file-2-fill"></i> <span>نمونه کار</span>
         </a>
 
-        <div class="collapse menu-dropdown show" id="servicesSample">
+        <div class="collapse menu-dropdown " id="servicesSample">
             <ul class="nav nav-sm flex-column">
-                @foreach($serviceSamples as $sample)
-                    @php
-                        $serviceLink='';
-                            foreach($services as $service):
-                            if($service['id']==$sample['service_id']):
-                       $serviceLink=$service['page_url'];
-                           endif;
-                            endforeach;
-
-                    @endphp
+                @foreach($serviceCategories as $keu=>$catt)
                     <li class="nav-item">
-                        <a href="{{baseUrl(httpCheck()).$serviceLink."/".$sample['page_url']}}" class="nav-link "> {{$sample['title']}} </a>
-                    </li>
+                        <a href="#sidebarAccountt{{$keu}}" class="nav-link" data-bs-toggle="collapse" role="button"
+                           aria-expanded="false" aria-controls="sidebarAccount"
+                           data-key="t-level-1.2"> {{$catt['title']}}
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarAccountt{{$keu}}">
+                            <ul class="nav nav-sm flex-column">
+                                @foreach($services as $servicee)
+                                    @if($servicee['category_id']==$catt['id'])
+                                        @foreach($serviceSamples as $sample)
+                                            @if($sample['service_id']==$servicee['id'])
+                                                @php $serviceLink=$servicee['page_url']; @endphp
+                                                <li class="nav-item">
+                                                    <a href="/{{$serviceLink."/".$sample['page_url']}}" class="nav-link"
+                                                       data-key="t-level-2.1">{{$sample['title']}}</a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
 
+                    </li>
                 @endforeach
 
             </ul>

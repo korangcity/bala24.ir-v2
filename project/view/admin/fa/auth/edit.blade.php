@@ -117,6 +117,26 @@
                                                     </div>
                                                 </div>
 
+
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="departman" class="form-label">دپارتمان</label>
+                                                        <input type="text" name="departman" class="form-control"
+                                                               id="departman"
+                                                               placeholder=""
+                                                               value="{{$user['departman']}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="address" class="form-label">آدرس</label>
+                                                        <input type="text" name="address" class="form-control"
+                                                               id="address"
+                                                               placeholder=""
+                                                               value="{{$user['address']}}">
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="iban" class="form-label">شماره شبا</label>

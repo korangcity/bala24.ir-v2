@@ -1,11 +1,11 @@
-@extends("admin.ar.layout.app")
+@extends("admin.fa.layout.app")
 
 @section("title","مدیریت سایت | لیست خدمات")
 
 
 @section("head")
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link href="{{baseUrl(httpCheck())}}assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
 @endsection
@@ -22,13 +22,109 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                               <div class="d-flex">
-                                   <h5 class="card-title mb-0">دسته خدمات </h5>
-                                   <a href="{{baseUrl(httpCheck())."adminpanel/Service-createKhadamat"}}" class="btn btn-outline-info btn-sm ms-auto">ایجاد </a>
-                               </div>
+                                <div class="d-flex">
+                                    <h5 class="card-title mb-0"> خدمات </h5>
+
+                                    <a href="{{baseUrl(httpCheck())."adminpanel/Service-createKhadamat-".$khadamatSubject['id']}}"
+                                       class="btn btn-outline-info btn-sm ms-auto">ایجاد </a>
+                                </div>
+                                <div>
+                                    <span class="badge badge-soft-danger fs-16">عنوان اصلی : </span>&nbsp;&nbsp;
+                                    <span>{{$khadamatSubject["main_title"]}}</span>
+                                </div>
+                                <br>
+                                <div>
+                                    <span class="badge badge-soft-info fs-16">توضیح مختصر اصلی : </span>&nbsp;&nbsp;
+                                    <span>{{$khadamatSubject["main_description"]}}</span>
+                                </div>
+                                <br>
+                                <div>
+                                    <span class="badge badge-soft-warning fs-16">جایگاه ها : </span>&nbsp;&nbsp;
+                                    <br>
+                                    @php
+                                        foreach (json_decode($khadamatSubject['pageable_type']) as $j=>$pageable_type) {
+
+                                            echo ($j+1)."-".match ($pageable_type){
+                                            "blog"=>"وبلاگ",
+                                            "service"=>"سرویس",
+                                            "service_sample"=>"نمونه سرویس",
+                                            "news"=>"اخبار",
+                                            "page"=>"صفحات",
+                                            "index"=>"صفحه اصلی",
+                                            "services"=>"صفحه سرویس ها",
+                                            "blogs"=>"صفحه وبلاگ ها",
+                                            "newss"=>"صفحه خبر ها",
+                                            "sampleServices"=>"صفحه نمونه سرویس ها",
+                                            }."<br>";
+                                        }
+                                    @endphp
+                                </div>
+                                <br>
+                                <div>
+                                    <span class="badge badge-soft-dark fs-16">صفحه ها : </span>&nbsp;&nbsp;
+                                    <br>
+                                    @php
+                                        foreach (json_decode($khadamatSubject['pageable_id']) as $k=>$pageable_idd) {
+                                            $pageable_id=explode("*",$pageable_idd)[0];
+                                            $pageable_type_id=explode("*",$pageable_idd)[1];
+                                             if ($pageable_type_id == 1) {
+                                                    $pageable_type = "blog";
+                                                } elseif ($pageable_type_id == 2) {
+                                                    $pageable_type = "service";
+                                                } elseif ($pageable_type_id == 3) {
+                                                    $pageable_type = "service_sample";
+                                                 } elseif ($pageable_type_id == 4) {
+                                                    $pageable_type= "news";
+                                                 } elseif ($pageable_type_id == 5) {
+                                                     $pageable_type = "page";
+                                                 }elseif ($pageable_type_id == 6) {
+                                                     $pageable_type = "index";
+                                                 }elseif ($pageable_type_id == 7) {
+                                                     $pageable_type = "services";
+                                                 }elseif ($pageable_type_id == 8) {
+                                                     $pageable_type = "blogs";
+                                                 }elseif ($pageable_type_id == 9) {
+                                                     $pageable_type = "newss";
+                                                 }elseif ($pageable_type_id == 10) {
+                                                     $pageable_type = "sampleServices";
+                                                 }
+
+
+                                         if($pageable_type=="blog"){
+                                             $blog=new \App\controller\admin\Blog();
+                                             echo ($k+1)."-".($blog->getBlog($pageable_id))[0]['title']."<br>";
+                                         }elseif($pageable_type=="service"){
+                                             $service=new \App\controller\admin\Service();
+                                             echo ($k+1)."-".($service->getService($pageable_id))[0]['title']."<br>";
+                                         }elseif($pageable_type=="service_sample"){
+                                             $service=new \App\controller\admin\Service();
+                                             echo ($k+1)."-".($service->getSampleService($pageable_id))[0]['title']."<br>";
+                                         }elseif($pageable_type=="news"){
+                                             $news=new \App\controller\admin\News();
+                                             echo ($k+1)."-".($news->getSingleNews($pageable_id))[0]['title']."<br>";
+                                         }elseif($pageable_type=="page"){
+                                             $page=new \App\controller\admin\Page();
+                                             echo ($k+1)."-".($page->getPage($pageable_id))[0]['title']."<br>";
+                                         }elseif($pageable_type=="index"){
+                                             echo ($k+1)."-صفحه اصلی<br>";
+                                         }elseif($pageable_type=="services"){
+                                             echo ($k+1)."-صفحه سرویس ها<br>";
+                                         }elseif($pageable_type=="blogs"){
+                                             echo ($k+1)."-صفحه وبلاگ ها<br>";
+                                         }elseif($pageable_type=="newss"){
+                                             echo ($k+1)."-صفحه خبر ها<br>";
+                                         }elseif($pageable_type=="sampleServices"){
+                                             echo ($k+1)."-صفحه نمونه سرویس ها<br>";
+                                         }
+                                        }
+
+
+                                    @endphp
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table id="buttons-datatables" class="display table table-bordered text-center" style="width:100%">
+                                <table id="buttons-datatables" class="display table table-bordered text-center"
+                                       style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>ردیف</th>
@@ -41,33 +137,40 @@
                                     </thead>
                                     <tbody>
                                     @foreach($khadamats as $khadamat)
-                                    <tr>
-                                        <td>{{$loop->index+1}}</td>
-                                        <td>{{$khadamat['title']}}</td>
-                                        <td>{{$khadamat['brief_description']??""}}</td>
-                                        <td>
-                                            <i class="{{$khadamat['icon']}} fs-36 text-success"></i>
-                                        </td>
-                                        <td>
-                                        {{$khadamat['link']??""}}
-                                        </td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a href="/adminpanel/Service-editKhadamat-{{$khadamat['id']}}" class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> ویرایش</a></li>
-                                                    <li>
-                                                        <a href="" data-id="{{$khadamat['id']}}"  class="dropdown-item remove-item-btn delItem">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> حذف
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$khadamat['title']}}</td>
+                                            <td>{{$khadamat['brief_description']??""}}</td>
+                                            <td>
+                                                <i class="{{$khadamat['icon']}} fs-36 text-success"></i>
+                                            </td>
+                                            <td>
+                                                {{urldecode($khadamat['link'])??""}}
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown d-inline-block">
+                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="ri-more-fill align-middle"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li>
+                                                            <a href="/adminpanel/Service-editKhadamat-{{$khadamat['id']}}"
+                                                               class="dropdown-item edit-item-btn"><i
+                                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                                ویرایش</a></li>
+                                                        <li>
+                                                            <a href="" data-id="{{$khadamat['id']}}"
+                                                               class="dropdown-item remove-item-btn delItem">
+                                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                                حذف
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
 
                                     @endforeach
                                 </table>
@@ -81,14 +184,12 @@
 
     </div>
 
-
-
-
 @endsection
 
 @section("script")
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!--datatable js-->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -134,7 +235,7 @@
         $(".delItem").click(function (e) {
             e.preventDefault();
             let item_id = $(this).data('id');
-            let chk =confirm('از حذف گزینه مورد نظر مطمئن هستید؟');
+            let chk = confirm('از حذف گزینه مورد نظر مطمئن هستید؟');
             if (chk) {
                 window.location.href = "/adminpanel/Service-khadamatDelete-" + item_id;
             }

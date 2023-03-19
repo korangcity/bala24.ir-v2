@@ -1,4 +1,4 @@
-@extends("admin.ar.layout.app")
+@extends("admin.fa.layout.app")
 
 @section("title","مدیریت سایت | لیست دسته بندی اخبار")
 

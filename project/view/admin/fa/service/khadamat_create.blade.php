@@ -4,6 +4,7 @@
 
 
 @section("head")
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link href="{{baseUrl(httpCheck())}}assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
 @endsection
 
@@ -16,7 +17,7 @@
 
 
                 <div class="row">
-                    <div class="col-xxl-6">
+                    <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1">خدمات</h4>
@@ -35,7 +36,9 @@
                                     @endif
                                     <form action="/adminpanel/Service-createKhadamatProcess" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="token" value="{{$token}}">
+                                        <input type="hidden" name="khadamat_subject_id" value="{{$khadamat_subject_id}}">
                                         <div class="row">
+
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="title" class="form-label">عنوان  (حداقل 3 کاراکتر) <span class="text-danger">*</span></label>
@@ -82,6 +85,29 @@
                                 </div>
 
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xxl-12">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <table id="buttons-datatables" class="display table table-bordered text-center" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th>عنوان</th>
+                                        <th>توضیخ مختصر</th>
+                                        <th>آیکن</th>
+                                        <th>لینک</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbodyResult">
+
+                                    </tbody>
+
+                                </table>
+                            </div>
                         </div>
                     </div>
 
@@ -98,7 +124,10 @@
 @endsection
 
 @section("script")
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{baseUrl(httpCheck())}}assets/js/pages/select2.init.js"></script>
     <script src="{{baseUrl(httpCheck())}}assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script src="{{baseUrl(httpCheck())}}assets/libs/prismjs/prism.js"></script>
@@ -126,5 +155,41 @@
         })
 
         @endif
+
+        $("#pagee").change(function(){
+
+            let page_id=$(this).val();
+
+            $.ajax({
+                type: 'post',
+                url: "/adminpanel/Plan-getPageChildren",
+                data: {page_id: page_id},
+                success: function (response) {
+                    $("#page_children").html(response);
+                    $(".js-example-disabled-multi").select2()
+                },
+                error: function () {
+                    alert("ooops");
+                }
+            })
+        });
+
+        $(".js-example-disabled-multi").select2();
+
+        $("#title_main1").change(function(){
+            let title=$(this).val();
+            $.ajax({
+                type: 'post',
+                url: "/adminpanel/Service-getKhadamatsByTitle",
+                data: {title: title},
+                success: function (response) {
+                    $("#tbodyResult").html(response);
+
+                },
+                error: function () {
+                    alert("ooops");
+                }
+            });
+        });
     </script>
 @endsection

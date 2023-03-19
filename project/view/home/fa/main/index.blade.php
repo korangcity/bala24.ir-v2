@@ -3,7 +3,19 @@
 @section('head')
 
     <link href="{{baseUrl(httpCheck())}}assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{baseUrl(httpCheck())}}assets/css/ia.css" rel="stylesheet" type="text/css"/>
 @endsection
+
+@if($metatag)
+    @section("title",$metatag['page_title_seo'])
+    @section("description",$metatag['page_description_seo'])
+    @section("keywords",$metatag['page_keywords_seo'])
+    @section("ogTitle",$metatag['page_og_title_seo'])
+    @section("ogDescription",$metatag['page_og_description_seo'])
+    @section("ogType",$metatag['page_og_type_seo'])
+    @section("ogImage",baseUrl(httpCheck()).$metatag['page_og_image_seo'])
+
+@endif
 
 @section("content")
 
@@ -12,14 +24,16 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-sm-10">
-                    <div class="text-center mt-lg-5 pt-5">
-                        <h1 class="display-6 fw-semibold mb-3 lh-base">سایت بالا 24</h1>
-                        <p class="lead text-muted lh-base">توضیح مختصر در اینجا</p>
+                    <div class="text-center mt-lg-4">
+                        <h1 class="display-6 fw-semibold mb-3 lh-base">{{$slider['title']}}</h1>
+                        <p class="lead text-muted lh-base">{{$slider['description']}}</p>
 
                         <div class="d-flex gap-2 justify-content-center mt-4">
-                            <a href="#" class="btn btn-primary">شروع <i
+                            <a @if($slider['first_link']) href="{{$slider['first_link']}}" @else id="gooo"
+                               @endif class="btn btn-primary">{{$slider['first_link_title']}} <i
                                         class="ri-arrow-right-line align-middle ms-1"></i></a>
-                            <a href="#" class="btn btn-danger">مشاهده <i class="ri-eye-line align-middle ms-1"></i></a>
+                            <a href="{{$slider['second_link']}}" class="btn btn-danger">{{$slider['second_link_title']}}
+                                <i class="ri-eye-line align-middle ms-1"></i></a>
                         </div>
                     </div>
 
@@ -34,34 +48,13 @@
                         </div>
                         <div class="carousel slide carousel-fade" data-bs-ride="carousel">
                             <div class="carousel-inner shadow-lg p-2 bg-white rounded">
-                                <div class="carousel-item active" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/default.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/saas.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/material.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/minimal.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/creative.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/modern.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="{{baseUrl(httpCheck())}}home/assets/images/demos/interactive.png"
-                                         class="d-block w-100" alt="...">
-                                </div>
+                                @foreach(json_decode($slider['images']) as $key=>$image)
+                                    <div class="carousel-item @if($key==0) active @endif " data-bs-interval="5000">
+                                        <img src="{{baseUrl(httpCheck()).$image}}"
+                                             class="d-block w-100" alt="{{json_decode($slider['alts'])[$key]}}">
+                                    </div>
+                                @endforeach
+
                             </div>
                         </div>
                     </div>
@@ -88,33 +81,43 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="text-center mb-5">
-                            <h3 class="mb-3 fw-semibold">سرویس ها</h3>
-                            <p class="text-muted mb-4 ff-secondary">سرویس هایی که ارائه میدهیم</p>
+                            <h3 class="mb-3 fw-semibold">{{$setting['index_service_title']}}</h3>
+                            <p class="text-muted mb-4 ">{{$setting['index_service_description']}}</p>
                         </div>
                     </div>
                 </div>
                 <!-- end row -->
-                <div class="row">
+                <div class="row justify-content-center">
                     @foreach($services as $key=>$service)
 
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="card">
+                        <div class="col-lg-3 col-sm-6 mt-4">
+                            <div class="card ribbon-box right h-100">
                                 <div class="card-body text-center p-4">
+                                    @if($service['is_coming']==1)
+                                        <div class="ribbon-two ribbon-two-danger "><span>به زودی</span>
+                                        </div>
+
+                                    @endif
+
                                     <div class="avatar-xl mx-auto mb-4 position-relative">
-                                        <img src="{{baseUrl(httpCheck()).$service['index_image']}}"
-                                             alt="{{$service['index_image_alt']}}" class="img-fluid rounded-circle">
-                                        <a @if($service['is_coming']==0) href="{{baseUrl(httpCheck()).($service['page_url']??$service['id'])}}" @endif
-                                           class="btn btn-success btn-sm position-absolute bottom-0 end-0 rounded-circle avatar-xs">
-                                            <div class="avatar-title bg-transparent">
-                                                <i class="ri-mail-fill align-bottom"></i>
-                                            </div>
-                                        </a>
+                                        <a @if($service['is_coming']==0) href="{{baseUrl(httpCheck()).$service['catTitle']."/".($service['page_url']??$service['id'])}}" @endif><img
+                                                    src="{{baseUrl(httpCheck()).$service['index_image']}}"
+                                                    alt="{{$service['index_image_alt']}}"
+                                                    class="img-fluid rounded-circle"></a>
+                                        {{--                                        <a @if($service['is_coming']==0) href="{{baseUrl(httpCheck()).($service['page_url']??$service['id'])}}" @endif--}}
+                                        {{--                                           class="btn btn-success btn-sm position-absolute bottom-0 end-0 rounded-circle avatar-xs">--}}
+                                        {{--                                            <div class="avatar-title bg-transparent">--}}
+                                        {{--                                                <i class="ri-mail-fill align-bottom"></i>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </a>--}}
                                     </div>
                                     <!-- end card body -->
                                     <h5 class="mb-1"><a @if($service['is_coming']==0)
-                                                href="{{baseUrl(httpCheck()).($service['page_url']??$service['id'])}}" @endif
-                                                class="text-body">{{$service['title']}}</a></h5>
-                                    <p class="text-muted mb-0 ">{{$service['brief_description']}}</p>
+                                                            href="{{baseUrl(httpCheck()).$service['catTitle']."/".($service['page_url']??$service['id'])}}"
+                                                        @endif
+                                                        class="text-body">{{$service['title']}}</a></h5>
+                                    <a @if($service['is_coming']==0) href="{{baseUrl(httpCheck()).$service['catTitle']."/".($service['page_url']??$service['id'])}}" @endif>
+                                        <p class="text-muted mb-0 ">{{$service['brief_description']}}</p></a>
                                 </div>
                             </div>
                             <!-- end card -->
@@ -154,9 +157,9 @@
                 {{--                </div>--}}
                 <!-- end row -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 mt-4">
                         <div class="text-center mt-2">
-                            <a @if($service['is_coming']==0) href="" @endif class="btn btn-primary"> @if($service['is_coming']==0)مشاهده همه سرویس ها  @else به زودی @endif <i
+                            <a href="/services" class="btn btn-primary">مشاهده همه سرویس ها <i
                                         class="ri-arrow-right-line ms-1 align-bottom"></i></a>
                         </div>
                     </div>
@@ -217,9 +220,9 @@
                             $planFeaturePrices=$service_obj->getPlanFeaturePrices($subPlan['id']);
 
                         @endphp
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 d-flex">
                             <div class="card plan-box mb-0 ribbon-box right">
-                                <div class="card-body p-4 m-2">
+                                <div class="card-body flex-column p-4 m-2">
 
                                     <div class="ribbon-two ribbon-two-danger d-none showParticular"><span>ویژه</span>
                                     </div>
@@ -241,7 +244,7 @@
                                             <h1 data-timeid="{{$price['time_period_id']}}"
                                                 data-particular="{{$price['particular']}}"
                                                 class="month showPricee @if($firsKey!=$price['time_period_id']) d-none @else d-block @endif">
-                                                <span class="ff-secondary fw-bold">{{$price['price']??0}}</span><sup><small>تومان</small></sup>
+                                                <span class=" fw-bold">{{$price['price']?number_format($price['price']):0}}</span><sup><small>تومان</small></sup><br>
                                                 <span class="fs-13 text-muted">/@php foreach($time_periods as $time_periodd): if($time_periodd['id']==$price['time_period_id']):  echo $time_periodd['title'];  endif; endforeach;  @endphp</span>
                                             </h1>
 
@@ -250,7 +253,7 @@
                                     </div>
 
                                     <div>
-                                        <ul class="list-unstyled text-muted vstack gap-3 ff-secondary">
+                                        <ul class="list-unstyled text-muted vstack gap-3 ">
                                             @foreach(json_decode($subPlan['positive_features']) as $item)
                                                 <li>
                                                     <div class="d-flex">
@@ -278,7 +281,7 @@
                                             @endforeach
                                         </ul>
                                         <div class="mt-4">
-                                            <a href="javascript:void(0);" class="btn btn-soft-success w-100">شروع
+                                            <a href="javascript:void(0);" class="btn btn-soft-success  w-100">شروع
                                             </a>
                                         </div>
                                     </div>
@@ -296,55 +299,114 @@
         </section>
     @endif
 
-    @if($khadamats)
-        <div class="container section">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center mb-5">
-                        <h1 class="mb-3 ff-secondary fw-semibold lh-base">خدمات بالا 24</h1>
-                        <p class="text-muted">خدماتی که ما ارائه میدهیم ...</p>
+    @if($video)
+        <section class="section">
+            <div class="container">
+                <div class="row align-items-center gy-4">
+                    <div class="col-lg-6 col-sm-7 col-10 mx-auto">
+                        <div>
+
+                            @if($video['video'] == strip_tags($video['video']))
+                                <video width="100%" poster="{{baseUrl(httpCheck()).$video['poster']}}" controls>
+                                    <source src="{{baseUrl(httpCheck()).$video['video']}}" type="video/mp4">
+                                </video>
+
+                            @else
+                                {!! html_entity_decode($video['video']) !!}
+                            @endif
+
+
+                        </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="text-muted ps-lg-5">
+                            <h5 class="fs-12 text-uppercase text-success">{{$serviceCategory}}</h5>
+                            <h4 class="mb-3">{{$video['title']}}</h4>
+                            <p class="mb-4">{{$video['brief_description']}}</p>
+
+                            <div class="vstack gap-2">
+                                @foreach(json_decode($video['options']) as $item)
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0 me-2">
+                                            <div class="avatar-xs icon-effect">
+                                                <div class="avatar-title bg-transparent text-success rounded-circle h2">
+                                                    <i class="ri-check-fill"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0">{{$item}}</p>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    @endif
+
+    @if($khadamats)
+
+        <section class="section bg-light" id="services">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5">
+                            <h1 class="mb-3 fw-semibold lh-base">{{$khadamats[0]['main_title']}}</h1>
+                            <p class="text-muted">{{$khadamats[0]['main_brief_description']}}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row justify-content-center g-3">
+                    @foreach($khadamats as $khadamat)
+                        <div class="col-lg-4">
+                            <div class="d-flex p-3">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="avatar-sm icon-effect">
+                                        <div class="avatar-title bg-transparent text-success rounded-circle">
+                                            <i class="{{$khadamat['icon']}} fs-36"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="fs-18">{{$khadamat['title']??''}}</h5>
+                                    <p class="text-muted my-3 ">{{$khadamat['brief_description']??''}}</p>
+                                    <div>
+                                        <a href="{{$khadamat['link']??''}}" class="fs-14 fw-medium">بیشتر <i
+                                                    class="ri-arrow-right-s-line align-bottom"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
                 </div>
 
             </div>
 
-
-            <div class="row g-3">
-                @foreach($khadamats as $khadamat)
-                    <div class="col-lg-4">
-                        <div class="d-flex p-3">
-                            <div class="flex-shrink-0 me-3">
-                                <div class="avatar-sm icon-effect">
-                                    <div class="avatar-title bg-transparent text-success rounded-circle">
-                                        <i class="{{$khadamat['icon']}} fs-36"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-18">{{$khadamat['title']??''}}</h5>
-                                <p class="text-muted my-3 ff-secondary">{{$khadamat['brief_description']??''}}</p>
-                                <div>
-                                    <a target="_blank" href="{{$khadamat['link']??''}}" class="fs-14 fw-medium">بیشتر <i
-                                                class="ri-arrow-right-s-line align-bottom"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-        </div>
+        </section>
 
     @endif
 
     @if($companies)
-        <div class="pt-5 mt-5">
+
+        <div class="pt-1 mt-1">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
 
                         <div class="text-center mt-5">
-                            <h5 class="fs-20">اعتماد قابل خرید نیست</h5>
+                            <h5 class="fs-20">{{$setting['index_company_title']}}</h5>
 
                             <!-- Swiper -->
                             <div class="swiper trusted-client-slider mt-sm-5 mt-4 mb-sm-5 mb-4" dir="ltr">
@@ -369,6 +431,7 @@
             </div>
 
         </div>
+
     @endif
     <section class="section bg-primary" id="reviews">
         <div class="bg-overlay bg-overlay-pattern"></div>
@@ -379,7 +442,7 @@
                         <div>
                             <i class="ri-double-quotes-l text-success display-3"></i>
                         </div>
-                        <h4 class="text-white mb-5"><span class="text-success">19k</span>+ رضایتمندی کاربران</h4>
+                        <h4 class="text-white mb-5">{{$setting['index_satisfy_title']}}</h4>
 
                         <!-- Swiper -->
                         <div class="swiper client-review-swiper rounded" dir="ltr">
@@ -388,11 +451,12 @@
                                     <div class="row justify-content-center">
                                         <div class="col-10">
                                             <div class="text-white-50">
-                                                <p class="fs-19 ff-secondary mb-4">"متن تست سوم "</p>
+                                                <p class="fs-19  mb-4">"ما بالای 10 سال هستش که داریم باهاشون کار میکنیم
+                                                    و تا حالا جایی لنگ نموندیم و همه چی خوب پیش رفته "</p>
 
                                                 <div>
-                                                    <h5 class="text-white">علی اکبر</h5>
-                                                    <p>qwer</p>
+                                                    <h5 class="text-white">ع.اسدی</h5>
+                                                    <p>ادمینی اینستاگرام</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -403,11 +467,12 @@
                                     <div class="row justify-content-center">
                                         <div class="col-10">
                                             <div class="text-white-50">
-                                                <p class="fs-19 ff-secondary mb-4">" متن تست دوم "</p>
+                                                <p class="fs-19  mb-4">" بچه های خوبی هستن و بعضی جاها از خود مجموعه ما
+                                                    هم پیگیر ترن، ما به اطرافیان معرفیشون کردیم "</p>
 
                                                 <div>
-                                                    <h5 class="text-white">سیاوش قورچیان</h5>
-                                                    <p>abcd</p>
+                                                    <h5 class="text-white">ب.قورچیان</h5>
+                                                    <p>طراحی سایت</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -418,11 +483,12 @@
                                     <div class="row justify-content-center">
                                         <div class="col-10">
                                             <div class="text-white-50">
-                                                <p class="fs-19 ff-secondary mb-4">" تست متن اول"</p>
+                                                <p class="fs-19  mb-4">" تا الان که با تیم بالا 24 مشکلی نداشیم و همچی
+                                                    خوب پیش رفته! به امید خدا ازین به بعدم همینجوری باشن"</p>
 
                                                 <div>
-                                                    <h5 class="text-white">مهدی جباری</h5>
-                                                    <p>m.h.jbri</p>
+                                                    <h5 class="text-white">م.احمدی</h5>
+                                                    <p>طراحی سایت</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -444,36 +510,44 @@
 
     </section>
 
-    <section class="py-5 position-relative bg-light">
+    <section class=" py-5 position-relative ">
         <div class="container">
             <div class="row text-center gy-4">
                 <div class="col-lg-3 col-6">
                     <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="100">0</span>+</h2>
-                        <div class="text-muted">تعداد یک</div>
+                        <h2 class="mb-2"><span class="counter-value"
+                                               data-target="{{json_decode($setting['index_functionality_values'])[0]}}">0</span>
+                        </h2>
+                        <div class="text-muted">{{json_decode($setting['index_functionality_titles'])[0]}}</div>
                     </div>
                 </div>
 
 
                 <div class="col-lg-3 col-6">
                     <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="24">0</span></h2>
-                        <div class="text-muted">تعداد 2</div>
+                        <h2 class="mb-2"><span class="counter-value"
+                                               data-target="{{json_decode($setting['index_functionality_values'])[1]}}">0</span>
+                        </h2>
+                        <div class="text-muted"> {{json_decode($setting['index_functionality_titles'])[1]}}</div>
                     </div>
                 </div>
 
 
                 <div class="col-lg-3 col-6">
                     <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="20.3">0</span>k</h2>
-                        <div class="text-muted">تعداد 3</div>
+                        <h2 class="mb-2"><span class="counter-value"
+                                               data-target="{{json_decode($setting['index_functionality_values'])[2]}}">0</span>
+                        </h2>
+                        <div class="text-muted">{{json_decode($setting['index_functionality_titles'])[2]}}</div>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-6">
                     <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="50">0</span></h2>
-                        <div class="text-muted">تعداد 4</div>
+                        <h2 class="mb-2"><span class="counter-value"
+                                               data-target="{{json_decode($setting['index_functionality_values'])[3]}}">0</span>
+                        </h2>
+                        <div class="text-muted">{{json_decode($setting['index_functionality_titles'])[3]}}</div>
                     </div>
                 </div>
 
@@ -483,13 +557,13 @@
 
     </section>
 
-    <section class="section" id="contact">
+    <section class="section bg-light" id="contact">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="text-center mb-5">
                         <h3 class="mb-3 fw-semibold">ارتباط با ما</h3>
-                        <p class="text-muted mb-4 ff-secondary">برای ارتباط با ما از روش های زیر استفاده کنید</p>
+                        <p class="text-muted mb-4 ">برای ارتباط با ما از روش های زیر استفاده کنید</p>
                     </div>
                 </div>
             </div>
@@ -525,11 +599,45 @@
                                 <div class="">{{$setting['email']}}</div>
                             </div>
                         @endif
+                        @if($setting['instagram'] or $setting['linkedin'] or $setting['telegram'] or $setting['whatsapp'])
+                            <div class="mt-4">
+                                <h5 class="fs-13 text-muted text-uppercase">شبکه های اجتماعی : </h5>
+                                <div class="">
+                                    @if($setting['linkedin'])
+                                        <a href="{{$setting['linkedin']}}" target="_blank"><i
+                                                    class="ri-linkedin-box-fill text-info font_xx_l"></i></a>
+                                    @endif
+                                    @if($setting['telegram'])
+                                        <a href="{{$setting['telegram']}}" target="_blank"><i
+                                                    class="ri-telegram-fill text-primary font_xx_l"></i></a>
+                                    @endif
+                                    @if($setting['instagram'])
+                                        <a href="{{$setting['instagram']}}" target="_blank"><i
+                                                    class="ri-instagram-fill text-danger font_xx_l"></i></a>
+                                    @endif
+                                    @if($setting['whatsapp'])
+                                        <a href="{{$setting['whatsapp']}}" target="_blank"><i
+                                                    class="ri-whatsapp-fill text-success font_xx_l"></i></a>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                        @endif
                     </div>
                 </div>
                 <!-- end col -->
                 <div class="col-lg-8">
                     <div>
+                        @if (!empty(getErrors()))
+                            <div class="alert alert-danger col-md-12 col-sm-12">
+                                <ul>
+                                    @foreach (getErrors() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form method="post"
                               action="{{htmlspecialchars(substr($_SERVER["REQUEST_URI"],0,strpos($_SERVER["REQUEST_URI"],'?')))}}">
 
@@ -601,30 +709,32 @@
 
     </section>
 
-    <section class="py-5 bg-primary position-relative">
-        <div class="bg-overlay bg-overlay-pattern opacity-50"></div>
-        <div class="container">
-            <div class="row align-items-center gy-4">
-                <div class="col-sm">
-                    <div>
-                        <h4 class="text-white mb-0 fw-semibold">متن تست در اینجا</h4>
+    @if($stickFooter)
+        <section class=" py-5 bg-primary position-relative">
+            <div class="bg-overlay bg-overlay-pattern opacity-50"></div>
+            <div class="container">
+                <div class="row align-items-center gy-4">
+                    <div class="col-sm">
+                        <div>
+                            <h4 class="text-white mb-0 fw-semibold">{{$stickFooter['stick_footer_text']}}</h4>
+                        </div>
                     </div>
-                </div>
-                <!-- end col -->
-                <div class="col-sm-auto">
-                    <div>
-                        <a href="/" target="_blank"
-                           class="btn bg-gradient btn-danger"><i class="ri-shopping-cart-2-line align-middle me-1"></i>
-                            ببینید</a>
+                    <!-- end col -->
+                    <div class="col-sm-auto">
+                        <div>
+                            <a href="{{$stickFooter['stick_footer_link']}}" target="_blank"
+                               class="btn bg-gradient btn-danger"><i
+                                        class="{{$stickFooter['stick_footer_icon']}} align-middle me-1"></i>
+                                {{$stickFooter['stick_footer_title']}}</a>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
 
-        </div>
-
-    </section>
-
+        </section>
+    @endif
 @endsection
 
 @section('script')
@@ -692,5 +802,11 @@
         })
 
         @endif
+
+        $("#gooo").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#team").offset().top
+            }, 2000);
+        });
     </script>
 @endsection

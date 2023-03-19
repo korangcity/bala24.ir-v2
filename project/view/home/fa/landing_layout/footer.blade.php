@@ -1,4 +1,3 @@
-
 @php
 
     $service_obj=new \App\controller\home\Service();
@@ -8,7 +7,8 @@
     $serviceSamples=$service_obj->getServiceSamples();
 $set_obj=new \App\controller\home\Setting();
     $setting=$set_obj->settingInfo()[0];
-
+ $pg=new \App\controller\home\Page();
+        $pages=$pg->getPages();
 @endphp
 
 <footer class="custom-footer bg-dark py-5 position-relative">
@@ -17,11 +17,12 @@ $set_obj=new \App\controller\home\Setting();
             <div class="col-lg-4 mt-4">
                 <div>
                     <div>
-                        <img src="{{baseUrl(httpCheck()).$setting['large_logo_light']}}" alt="{{$setting['large_logo_light_alt']}}" height="17">
+                        <img src="{{baseUrl(httpCheck()).$setting['large_logo_light']}}"
+                             alt="{{$setting['large_logo_light_alt']}}" height="17">
                     </div>
                     <div class="mt-4 fs-13">
-                        <p>بالا24 در خدمت شماست</p>
-                        <p>برای کسب اطلاعات بیشتر، در سایت ثبت نام نمایید</p>
+                        <p>{{$setting['footer_aboutus_title']}}</p>
+                        <p>{{$setting['footer_aboutus']}}</p>
                     </div>
                 </div>
             </div>
@@ -29,44 +30,52 @@ $set_obj=new \App\controller\home\Setting();
             <div class="col-lg-7 ms-lg-auto">
                 <div class="row">
                     <div class="col-sm-4 mt-4">
-                        <h5 class="text-white mb-0">دسته بندی سرویس ها</h5>
+                        <h5 class="text-white mb-0">دسترسی سریع</h5>
                         <div class="text-muted mt-3">
                             <ul class="list-unstyled  footer-list fs-14">
-                                @foreach($serviceCategories as $cat)
-                                    <li><a href="#">{{$cat['title']}}</a></li>
+                                @foreach($pages as $page)
+                                    <li><a href="{{$page['page_url']}}">{{$page['title']}}</a></li>
                                 @endforeach
+
+                                <li><a href="/faq">سوالات متداول</a></li>
 
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-4 mt-4">
-                        <h5 class="text-white mb-0">سرویس ها</h5>
+                        <h5 class="text-white mb-0">خدمات</h5>
                         <div class="text-muted mt-3">
                             <ul class="list-unstyled  footer-list fs-14">
-                                @foreach($services as $service)
-                                    <li><a href="{{baseUrl(httpCheck()).$service['page_url']}}">{{$service['title']}}</a></li>
-                                @endforeach
+                                @php $random_services=array_rand($services,4);  @endphp
+                                @for($i=0;$i<count($services);$i++)
+                                    <li>
+                                        <a href="{{baseUrl(httpCheck()).$services[$random_services[$i]]['page_url']}}">{{$services[$random_services[$i]]['title']}}</a>
+                                    </li>
+                                @endfor
 
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-4 mt-4">
-                        <h5 class="text-white mb-0">نمونه کارها</h5>
+                        <h5 class="text-white mb-0">نمونه کار</h5>
                         <div class="text-muted mt-3">
                             <ul class="list-unstyled  footer-list fs-14">
-                                @foreach($serviceSamples as $sample)
+                                @php $random_sample_services=array_rand($serviceSamples,4);  @endphp
+                                @for($j=0;$j<count($random_sample_services);$j++)
                                     @php
                                         $serviceLink='';
                                             foreach($services as $service):
-                                            if($service['id']==$sample['service_id']):
+                                            if($service['id']==$serviceSamples[$random_sample_services[$j]]['service_id']):
                                        $serviceLink=$service['page_url'];
                                            endif;
                                             endforeach;
 
                                     @endphp
-                                    <li><a href="{{baseUrl(httpCheck()).$serviceLink."/".$sample['page_url']}}">{{$sample['title']}}</a></li>
+                                    <li>
+                                        <a href="{{baseUrl(httpCheck()).$serviceLink."/".$serviceSamples[$random_sample_services[$j]]['page_url']}}">{{$serviceSamples[$random_sample_services[$j]]['title']}}</a>
+                                    </li>
 
-                                @endforeach
+                                @endfor
                             </ul>
                         </div>
                     </div>
@@ -88,41 +97,45 @@ $set_obj=new \App\controller\home\Setting();
             <div class="col-sm-6">
                 <div class="text-sm-end mt-3 mt-sm-0">
                     <ul class="list-inline mb-0 footer-social-link">
-                        <li class="list-inline-item">
-                            <a href="javascript: void(0);" class="avatar-xs d-block">
-                                <div class="avatar-title rounded-circle">
-                                    <i class="ri-facebook-fill"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="javascript: void(0);" class="avatar-xs d-block">
-                                <div class="avatar-title rounded-circle">
-                                    <i class="ri-github-fill"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="javascript: void(0);" class="avatar-xs d-block">
-                                <div class="avatar-title rounded-circle">
-                                    <i class="ri-linkedin-fill"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="javascript: void(0);" class="avatar-xs d-block">
-                                <div class="avatar-title rounded-circle">
-                                    <i class="ri-google-fill"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="javascript: void(0);" class="avatar-xs d-block">
-                                <div class="avatar-title rounded-circle">
-                                    <i class="ri-dribbble-line"></i>
-                                </div>
-                            </a>
-                        </li>
+                        @if($setting['telegram'])
+                            <li class="list-inline-item">
+                                <a href="{{$setting['telegram']}}" class="avatar-xs d-block">
+                                    <div class="avatar-title rounded-circle">
+                                        <i class="ri-telegram-fill"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                        @endif
+
+                        @if($setting['instagram'])
+                            <li class="list-inline-item">
+                                <a href="{{$setting['instagram']}}" class="avatar-xs d-block">
+                                    <div class="avatar-title rounded-circle">
+                                        <i class="ri-instagram-fill"></i>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                        @if($setting['linkedin'])
+                            <li class="list-inline-item">
+                                <a href="{{$setting['linkedin']}}" class="avatar-xs d-block">
+                                    <div class="avatar-title rounded-circle">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                        @if($setting['whatsapp'])
+                            <li class="list-inline-item">
+                                <a href="{{$setting['whatsapp']}}" class="avatar-xs d-block">
+                                    <div class="avatar-title rounded-circle">
+                                        <i class="ri-whatsapp-fill"></i>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+
                     </ul>
                 </div>
             </div>

@@ -43,6 +43,13 @@
                                                            placeholder="عنوان دسته بندی" id="title">
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="enTitle" class="form-label">عنوان انگلیسی دسته بندی <span class="text-danger">*</span></label>
+                                                    <input type="text" name="enTitle" value="{{old('enTitle')??''}}" class="form-control"
+                                                           placeholder="" id="enTitle">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row mt-2">

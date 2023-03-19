@@ -150,6 +150,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+        var selected = [];
         @php
             $positionss=["blog"=>1,"service"=>2,"service_sample"=>3,"news"=>4,"page"=>5,"index"=>6,"services"=>7,"blogs"=>8,"news"=>9,"sampleServices"=>10];
             $desiredPositions=[];
@@ -183,6 +184,12 @@
                 data: {page_id: page_id, pagee_id: pagee_id},
                 success: function (response) {
                     $("#page_children").html(response);
+                    for (var option of document.getElementById('page_children').options)
+                    {
+                        if (option.selected) {
+                            selected.push(option.value);
+                        }
+                    }
                     $(".js-example-disabled-multi").select2()
                 },
                 error: function () {
@@ -219,7 +226,43 @@
                 data: {page_id: page_id},
                 success: function (response) {
                     $("#page_children").html(response);
-                    $(".js-example-disabled-multi").select2()
+                    for (var option of document.getElementById('page_children').options)
+                    {
+                        if (option.selected && !selected.includes(option.value)) {
+                            selected.push(option.value);
+                        }
+                    }
+
+
+                    for(let index of selected){
+                        $('#page_children').find('option').each(function(i,e){
+                            if($(e).val() == index){
+                                $(this).prop('selected',i);
+                            }
+                        });
+                    }
+                    $("#page_children").change(function(){
+                        for (var option of document.getElementById('page_children').options)
+                        {
+                            if (option.selected && !selected.includes(option.value)) {
+                                selected.push(option.value);
+                            }
+                        }
+
+                        for(let index of selected){
+                            $('#page_children').find('option').each(function(i,e){
+                                if($(e).val() == index){
+                                    $(this).prop('selected',i);
+                                }
+                            });
+                        }
+
+                    });
+                    $(".js-example-disabled-multi").select2();
+
+
+
+
                 },
                 error: function () {
                     alert("ooops");

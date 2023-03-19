@@ -152,15 +152,15 @@ class Page
                     endif;
                 }
 
-                if (strlen($h1_title) <= 2) {
-                    if ($this->language == 'en'):
-                        setError('enter h1_title value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('عنوان H1 را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل العنوان H1 بشكل صحيح');
-                    endif;
-                }
+//                if (strlen($h1_title) <= 2) {
+//                    if ($this->language == 'en'):
+//                        setError('enter h1_title value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('عنوان H1 را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل العنوان H1 بشكل صحيح');
+//                    endif;
+//                }
 
                 if (strlen($description) <= 20) {
                     if ($this->language == 'en'):
@@ -172,7 +172,7 @@ class Page
                     endif;
                 }
 
-                if ($email != " " and !emailVerify($email)) {
+                if ($email != "" and !emailVerify($email)) {
                     if ($this->language == 'en'):
                         setError('Enter email correctly');
                     elseif ($this->language == 'fa'):
@@ -253,7 +253,7 @@ class Page
         }
 
         if ($act == "pageList") {
-            $pages = $this->getPages();
+            $pages = $this->getPages($this->language);
 
             renderView("admin.$this->language.pages.list", ['pages' => $pages]);
         }
@@ -489,15 +489,15 @@ class Page
                 $instagram = sanitizeInput($_POST['instagram']);
                 $telegram = sanitizeInput($_POST['telegram']);
 
-                if (strlen($brief_description) <= 10) {
-                    if ($this->language == 'en'):
-                        setError('The minimum length of the brief description is 10 characters.');
-                    elseif ($this->language == 'fa'):
-                        setError('حداقل طول توضیح مختصر 10 کاراکتر میباشد.');
-                    elseif ($this->language == 'ar'):
-                        setError('الحد الأدنى لطول الوصف المختصر هو 10 أحرف.');
-                    endif;
-                }
+//                if (strlen($brief_description) <= 10) {
+//                    if ($this->language == 'en'):
+//                        setError('The minimum length of the brief description is 10 characters.');
+//                    elseif ($this->language == 'fa'):
+//                        setError('حداقل طول توضیح مختصر 10 کاراکتر میباشد.');
+//                    elseif ($this->language == 'ar'):
+//                        setError('الحد الأدنى لطول الوصف المختصر هو 10 أحرف.');
+//                    endif;
+//                }
 
                 if (strlen($title) <= 2) {
                     if ($this->language == 'en'):
@@ -509,15 +509,15 @@ class Page
                     endif;
                 }
 
-                if (strlen($h1_title) <= 2) {
-                    if ($this->language == 'en'):
-                        setError('enter h1_title value correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('عنوان H1 را به درستی وارد کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('أدخل العنوان H1 بشكل صحيح');
-                    endif;
-                }
+//                if (strlen($h1_title) <= 2) {
+//                    if ($this->language == 'en'):
+//                        setError('enter h1_title value correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('عنوان H1 را به درستی وارد کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('أدخل العنوان H1 بشكل صحيح');
+//                    endif;
+//                }
 
                 if (strlen($description) <= 20) {
                     if ($this->language == 'en'):
@@ -529,7 +529,7 @@ class Page
                     endif;
                 }
 
-                if ($email != " " and !emailVerify($email)) {
+                if ($email != "" and !emailVerify($email)) {
                     if ($this->language == 'en'):
                         setError('Enter email correctly');
                     elseif ($this->language == 'fa'):
@@ -610,6 +610,7 @@ class Page
                     redirect('adminpanel/page-pageEdit-' . $page_id . '?error=true');
                 }
 
+
                 if (empty(getErrors())) {
 
                     $v = $this->editPage($page_id, $title, $brief_description, $description, $h1_title, $keywords, $location, $phone1, $phone2, $phone3, $email, $linkedin, $whatsapp, $telegram, $instagram, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg);
@@ -686,9 +687,9 @@ class Page
         return $this->db->insert("pages", $data);
     }
 
-    public function getPages()
+    public function getPages($language)
     {
-        $query = "select * from `pages` where `language`='".$this->language."' order by `id` desc";
+        $query = "select * from `pages` where `language`='".$language."' order by `id` desc";
 
         return $this->db->rawQuery($query);
     }

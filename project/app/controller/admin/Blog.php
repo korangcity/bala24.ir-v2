@@ -490,6 +490,8 @@ class Blog
 
                 $image = '';
                 $imageOg = '';
+                $video='';
+                $poster='';
 
                 $imageAlts = [];
 
@@ -542,6 +544,39 @@ class Blog
                         }
                     }
 
+                    if (!empty($_FILES['video']) and $_FILES['video']['name'] != '') {
+                        $videoo = $_FILES['video'];
+                        $video = file_upload($videoo, 'plan', ['mp4']);
+                        if ($video == '') {
+                            if ($this->language == 'en'):
+                                setError('enter video with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('ویدئو را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل فیدیو بالتنسيق الصحيح');
+                            endif;
+
+                        }
+                    }else{
+                        $video=$_POST['videoo'];
+                    }
+
+
+                    if (!empty($_FILES['poster']) and !empty($_FILES['poster']['name'])) {
+                        $posterr = $_FILES['poster'];
+
+                        $poster = file_upload($posterr, 'plan', ['png', 'svg', 'jpg', 'jpeg', 'gif', 'PNG', 'JPEG', 'JPG']);
+                        if ($poster == '') {
+                            if ($this->language == 'en'):
+                                setError('enter image with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('تصویر را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل الصورة بالتنسيق الصحيح');
+                            endif;
+                        }
+
+                    }
                 }
 
 
@@ -550,7 +585,7 @@ class Blog
                 }
 
                 if (empty(getErrors())) {
-                    $v = $this->registerBlog($category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg);
+                    $v = $this->registerBlog($category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg, $video,$poster);
 
                     redirect('adminpanel/Blog-blogList?success=true');
                 }
@@ -638,6 +673,17 @@ class Blog
                     $result .= '<td>' . (json_decode($blog_info["alts"]))[$key] . '</td>';
                     $result .= "</tr>";
                 }
+                $result .= "<tr>";
+                $result .= '<th scope="row">پوستر</th>';
+                $result .= '<td> <img class="img-thumbnail" src="' . baseUrl(httpCheck()) . $blog_info["poster"] . '" alt=""></td>';
+                $result .= "</tr>";
+                $result .= "<tr>";
+                $result .= '<th scope="row">ویدئو</th>';
+                $result .= '<td>';
+                $result .=($blog_info['video'] == strip_tags($blog_info['video']))?'<video width="180"  controls><source src="'.baseUrl(httpCheck()).$blog_info["video"].'" type="video/mp4"></video>':html_entity_decode($blog_info["video"]).
+
+                    $result .='</td>';
+                $result .= "</tr>";
 
                 $result .= "</tbody>";
             }
@@ -805,6 +851,8 @@ class Blog
 
                 $images = '';
                 $imageOg = '';
+                $video = '';
+                $poster = '';
                 $imageAlts = [];
 
                 foreach ($_POST['blogImageAlts'] as $blogImageAlt) {
@@ -867,6 +915,39 @@ class Blog
                         }
                     }
 
+                    if (!empty($_FILES['video']) and $_FILES['video']['name'] != '') {
+                        $videoo = $_FILES['video'];
+                        $video = file_upload($videoo, 'plan', ['mp4']);
+                        if ($video == '') {
+                            if ($this->language == 'en'):
+                                setError('enter video with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('ویدئو را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل فیدیو بالتنسيق الصحيح');
+                            endif;
+
+                        }
+                    }else{
+                        $video=$_POST['videoo'];
+                    }
+
+
+                    if (!empty($_FILES['poster']) and !empty($_FILES['poster']['name'])) {
+                        $posterr = $_FILES['poster'];
+
+                        $poster = file_upload($posterr, 'plan', ['png', 'svg', 'jpg', 'jpeg', 'gif', 'PNG', 'JPEG', 'JPG']);
+                        if ($poster == '') {
+                            if ($this->language == 'en'):
+                                setError('enter image with correct format');
+                            elseif ($this->language == 'fa'):
+                                setError('تصویر را با فرمت صحیح وارد کنید');
+                            elseif ($this->language == 'ar'):
+                                setError('أدخل الصورة بالتنسيق الصحيح');
+                            endif;
+                        }
+
+                    }
                 }
 
 
@@ -876,7 +957,7 @@ class Blog
 
                 if (empty(getErrors())) {
 
-                    $v = $this->editBlog($blog_id, $category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg);
+                    $v = $this->editBlog($blog_id, $category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg,$video,$poster);
                     redirect('adminpanel/Blog-blogList?success=true');
                 }
 
@@ -966,7 +1047,7 @@ class Blog
         return $this->db->rawQuery("delete from `blog_category` where `id`=$category_id");
     }
 
-    private function registerBlog($category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg)
+    private function registerBlog($category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg, $video,$poster)
     {
         $data = [
             'category_id' => $category,
@@ -985,7 +1066,8 @@ class Blog
             'page_og_title_seo' => $pageOgTitle,
             'page_og_description_seo' => $pageOgDescription,
             'page_og_type_seo' => $pageOgType,
-            'language' => $this->language
+            'language' => $this->language,
+            'author'=>getUserId()
         ];
         if ($images != '') {
             $data['images'] = $images;
@@ -993,7 +1075,12 @@ class Blog
         if ($imageOg != '') {
             $data['page_og_image_seo'] = $imageOg;
         }
-
+        if($video!=''){
+            $data['video']=$video;
+        }
+        if($poster!=''){
+            $data['poster']=$poster;
+        }
         return $this->db->insert("blogs", $data);
     }
 
@@ -1028,7 +1115,7 @@ class Blog
         return $this->db->update("blogs", $data, "id = '" . $blog_id . "'");
     }
 
-    private function editBlog($blog_id, $category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg)
+    private function editBlog($blog_id, $category, $title, $brief_description, $description, $h1_title, $keywords, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $imageAlts, $images, $imageOg,$video,$poster)
     {
         $data = [
             'category_id' => $category,
@@ -1056,6 +1143,12 @@ class Blog
             $data['page_og_image_seo'] = $imageOg;
         }
 
+        if($video!=''){
+            $data['video']=$video;
+        }
+        if($poster!=''){
+            $data['poster']=$poster;
+        }
         return $this->db->update("blogs", $data, "id='" . $blog_id . "'");
     }
 

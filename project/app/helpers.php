@@ -125,7 +125,9 @@ function file_upload($file, $dir, array $extensions)
     $dir2 = storageRoot() . $dir . "/";
     $file_name_array = explode('.', $file['name']);
     $extension = end($file_name_array);
-    $new_image_name = $file['name'];
+//    $new_image_name = $file['name'];
+    $extImageRandom=generateRandomString(10,1,1,1);
+    $new_image_name = $file_name_array[0].'_'.time().'.'.$extension;
     chmod('upload', 0777);
     if (!is_dir($dir2)) {
         mkdir($dir2);
@@ -150,11 +152,13 @@ function file_group_upload(array $files, $dir, array $extensions)
         }
     }
 
-    if (!$error) {
+
+    if (!$error) { 
         foreach ($files['name'] as $ke => $file) {
             $file_name_array = explode('.', $file);
             $extension = end($file_name_array);
-            $new_image_name = $file;
+            $extImageRandom=generateRandomString(10,1,1,1);
+            $new_image_name = $file_name_array[0].'_'.time().'.'.$extension;
             chmod('upload', 0777);
             if (!is_dir($dir2)) {
                 mkdir($dir2);
@@ -243,6 +247,11 @@ function getUserAgent()
 function redirect($url)
 {
     return header("location:" . httpCheck() . $_SERVER['HTTP_HOST'] . '/' . $url);
+}
+
+function redirectUrlComplete($url)
+{
+    return header("location:" . $url);
 }
 
 function errorHandle()
@@ -425,15 +434,18 @@ function destroyErrorCheck()
     unset($_SESSION['errorCheck']);
 }
 
-function setRegisterMessageOk(){
+function setRegisterMessageOk()
+{
     $_SESSION['registerMessageOk'] = true;
 }
 
-function getRegisterMessageOk(){
-    return $_SESSION['registerMessageOk']??'';
+function getRegisterMessageOk()
+{
+    return $_SESSION['registerMessageOk'] ?? '';
 }
 
-function destroyRegisterMessageOk(){
+function destroyRegisterMessageOk()
+{
     unset($_SESSION['registerMessageOk']);
     return true;
 }
@@ -475,6 +487,19 @@ function get_user_info()
     return false;
 }
 
+function setUserId($user_id)
+{
+    $_SESSION['USER']['id'] = $user_id;
+    return true;
+}
+
+function getUserId()
+{
+    if (isset($_SESSION['USER']['id']))
+        return $_SESSION['USER']['id'];
+    return false;
+}
+
 function setLanguage($lang): bool
 {
     $_SESSION['LANG'] = $lang;
@@ -501,7 +526,7 @@ function isActive($input)
 function isActive2($input)
 {
     $currentUrl = substr($_SERVER['REQUEST_URI'], 1);
-    $currentUrl=urldecode($currentUrl);
+    $currentUrl = urldecode($currentUrl);
     return (is_array($input) and in_array($currentUrl, $input)) ? "active" : (($input == $currentUrl) ? "active" : "");
 
 }
@@ -553,7 +578,8 @@ function sendEmail(string $subject = '', string $message = '', array $addresses,
 //    }
 }
 
-function array_flatten($array) {
+function array_flatten($array)
+{
     if (!is_array($array)) {
         return FALSE;
     }
@@ -561,11 +587,111 @@ function array_flatten($array) {
     foreach ($array as $key => $value) {
         if (is_array($value)) {
             $result = array_merge($result, array_flatten($value));
-        }
-        else {
+        } else {
             $result[$key] = $value;
         }
     }
     return $result;
 }
+
+function setUserEncryptInfo($info)
+{
+    $_SESSION['user_enc_info'] = ['user_id' => $info['user_id'], 'user_code' => $info['user_code']];
+    return true;
+}
+
+function getUserEncryptInfo()
+{
+
+    return isset($_SESSION['user_enc_info']) ? $_SESSION['user_enc_info'] : null;
+}
+
+function destroyUserEncryptInfo()
+{
+    if (isset($_SESSION['user_enc_info'])) {
+        unset($_SESSION['user_enc_info']);
+    }
+    return true;
+}
+
+
+function setUserEncryptInfo1($info)
+{
+    $_SESSION['user_enc_info1'] = ['user_mobile' => $info['user_mobile'], 'user_code' => $info['user_code']];
+    return true;
+}
+
+function getUserEncryptInfo1()
+{
+
+    return isset($_SESSION['user_enc_info1']) ? $_SESSION['user_enc_info1'] : null;
+}
+
+function destroyUserEncryptInfo1()
+{
+    if (isset($_SESSION['user_enc_info1'])) {
+        unset($_SESSION['user_enc_info1']);
+    }
+    return true;
+}
+
+function userLogin()
+{
+    $_SESSION['user_login'] = true;
+    return true;
+}
+
+
+function checkUserLogin()
+{
+    if (isset($_SESSION['user_login']) and $_SESSION['user_login'])
+        return true;
+    return false;
+}
+
+function userLogout()
+{
+    unset($_SESSION['user_login']);
+    return true;
+}
+
+function setHttpRefrer()
+{
+    $_SESSION['httpRefereAddress'] = $_SERVER['HTTP_REFERER'];
+    return true;
+}
+
+function getHttpRefere()
+{
+
+    if(isset($_SESSION['httpRefereAddress'])){
+        if(is_search_engine_referer($_SESSION['httpRefereAddress'])){
+            return "";
+        }else{
+            return $_SESSION['httpRefereAddress'];
+        }
+    }
+}
+
+function destroyHttpRefere()
+{
+    unset($_SESSION['httpRefereAddress']);
+    return true;
+}
+
+function is_search_engine_referer($input) {
+    $search_engine_terms = [ 'google', 'bing', 'yahoo', 'ask', 'duckduckgo', 'ecosia' ];
+
+    $referer_host = parse_url($input, PHP_URL_HOST );
+
+    foreach ( $search_engine_terms as $term ) {
+        if ( preg_match( '/\.?' . preg_quote( $term, '/' ) . '\./i', $referer_host ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 

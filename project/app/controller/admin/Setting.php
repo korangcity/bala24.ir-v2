@@ -233,6 +233,14 @@ class Setting
                 $result .= '<td>' . $setting_info["address"] . '</td>';
                 $result .= "</tr>";
                 $result .= "<tr>";
+                $result .= '<th scope="row">عنوان درباره ما در فوتر</th>';
+                $result .= '<td>' . $setting_info["footer_aboutus_title"] . '</td>';
+                $result .= "</tr>";
+                $result .= "<tr>";
+                $result .= '<th scope="row"> درباره ما در فوتر</th>';
+                $result .= '<td>' . $setting_info["footer_aboutus"] . '</td>';
+                $result .= "</tr>";
+                $result .= "<tr>";
                 $result .= '<th scope="row">متن قسمت چسبیده به فوتر</th>';
                 $result .= '<td>' . $setting_info["stick_footer_text"] . '</td>';
                 $result .= "</tr>";
@@ -303,6 +311,7 @@ class Setting
             $_SESSION['phrase'] = $this->builder->getPhrase();
             $setting = $this->getSetting()[0];
 
+
             renderView("admin.$this->language.setting.edit", ['setting' => $setting, 'token' => $token, 'builder' => $this->builder]);
         }
 
@@ -343,6 +352,26 @@ class Setting
                 $instagram = sanitizeInput($_POST['instagram']);
                 $telegram = sanitizeInput($_POST['telegram']);
                 $address = sanitizeInputNonEn($_POST['address']);
+                $index_service_title = sanitizeInputNonEn($_POST['index_service_title']);
+                $index_service_description = sanitizeInputNonEn($_POST['index_service_description']);
+                $index_company_title = sanitizeInputNonEn($_POST['index_company_title']);
+                $index_satisfy_title = sanitizeInputNonEn($_POST['index_satisfy_title']);
+                $index_functionality_titles1 = sanitizeInputNonEn($_POST['index_functionality_titles1']);
+                $index_functionality_values1 = sanitizeInputNonEn($_POST['index_functionality_values1']);
+                $index_functionality_titles2 = sanitizeInputNonEn($_POST['index_functionality_titles2']);
+                $index_functionality_values2 = sanitizeInputNonEn($_POST['index_functionality_values2']);
+                $index_functionality_titles3 = sanitizeInputNonEn($_POST['index_functionality_titles3']);
+                $index_functionality_values3 = sanitizeInputNonEn($_POST['index_functionality_values3']);
+                $index_functionality_titles4 = sanitizeInputNonEn($_POST['index_functionality_titles4']);
+                $index_functionality_values4 = sanitizeInputNonEn($_POST['index_functionality_values4']);
+                $footer_aboutus_title = sanitizeInputNonEn($_POST['footer_aboutus_title']);
+                $footer_aboutus = sanitizeInputNonEn($_POST['footer_aboutus']);
+
+                $func_array_titles=[$index_functionality_titles1,$index_functionality_titles2,$index_functionality_titles3,$index_functionality_titles4];
+                $func_array_value=[$index_functionality_values1,$index_functionality_values2,$index_functionality_values3,$index_functionality_values4];
+
+                $func_array_titles=json_encode($func_array_titles);
+                $func_array_value=json_encode($func_array_value);
 
 //                if (strlen($location) > 0 and !urlVerify($location)) {
 //                    setError('لوکیشن را صحیح وارد کنید');
@@ -459,7 +488,7 @@ class Setting
                 }
 
                 if (empty(getErrors())) {
-                    $v = $this->updateSetting($location, $address, $phone1, $phone2, $phone3, $email, $linkedin, $whatsapp, $telegram, $instagram, $largeLogoDark,$smallLogoDark,$largeLogoLight,$smallLogoLight,$largeLogoDarkAlt,$smallLogoDarkAlt,$largeLogoLightAlt,$smallLogoLightAlt);
+                    $v = $this->updateSetting($location, $address, $phone1, $phone2, $phone3, $email, $linkedin, $whatsapp, $telegram, $instagram, $largeLogoDark,$smallLogoDark,$largeLogoLight,$smallLogoLight,$largeLogoDarkAlt,$smallLogoDarkAlt,$largeLogoLightAlt,$smallLogoLightAlt,$index_service_title,$index_service_description,$index_company_title,$index_satisfy_title,$func_array_titles,$func_array_value,$footer_aboutus_title,$footer_aboutus);
 
                     redirect('adminpanel/Setting-GeneralInformationList?success=true');
                 }
@@ -477,6 +506,9 @@ class Setting
 
         }
 
+        if($act=="icons"){
+            renderView("admin.$this->language.setting.icons");
+        }
 
 
     }
@@ -522,7 +554,7 @@ class Setting
         return $this->db->update("setting", $data, "id=1");
     }
 
-    private function updateSetting( $location, $address, $phone1, $phone2, $phone3, $email, $linkedin, $whatsapp, $telegram, $instagram, $largeLogoDark,$smallLogoDark,$largeLogoLight,$smallLogoLight,$largeLogoDarkAlt,$smallLogoDarkAlt,$largeLogoLightAlt,$smallLogoLightAlt)
+    private function updateSetting( $location, $address, $phone1, $phone2, $phone3, $email, $linkedin, $whatsapp, $telegram, $instagram, $largeLogoDark,$smallLogoDark,$largeLogoLight,$smallLogoLight,$largeLogoDarkAlt,$smallLogoDarkAlt,$largeLogoLightAlt,$smallLogoLightAlt,$index_service_title,$index_service_description,$index_company_title,$index_satisfy_title,$func_array_titles,$func_array_value,$footer_aboutus_title,$footer_aboutus)
     {
         $data = [
             'location' => $location,
@@ -535,8 +567,14 @@ class Setting
             'address' => $address,
             'telegram' => $telegram,
             'instagram' => $instagram,
-
-
+            'index_service_title' => $index_service_title,
+            'index_service_description' => $index_service_description,
+            'index_company_title' => $index_company_title,
+            'index_satisfy_title' => $index_satisfy_title,
+            'index_functionality_titles' => $func_array_titles,
+            'index_functionality_values' => $func_array_value,
+            'footer_aboutus_title' => $footer_aboutus_title,
+            'footer_aboutus' => $footer_aboutus
         ];
 
         if ($largeLogoDark != '') {

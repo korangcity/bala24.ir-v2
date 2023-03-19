@@ -41,7 +41,14 @@
                                                 <div class="mb-3">
                                                     <label for="title" class="form-label">عنوان دسته بندی (حداقل 3 کاراکتر) <span class="text-danger">*</span></label>
                                                     <input type="text" name="title" value="{{$category['title']}}" class="form-control"
-                                                           placeholder="Enter category title" id="title">
+                                                           placeholder="" id="title">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="enTitle" class="form-label">عنوان انگلیسی دسته بندی  <span class="text-danger">*</span></label>
+                                                    <input type="text" name="enTitle" value="{{$category['enTitle']}}" class="form-control"
+                                                           placeholder="Enter category enTitle" id="enTitle">
                                                 </div>
                                             </div>
                                         </div>

@@ -94,7 +94,7 @@
                                                              }elseif ($pageable_type_id == 8) {
                                                                  $pageable_type = "blogs";
                                                              }elseif ($pageable_type_id == 9) {
-                                                                 $pageable_type = "news";
+                                                                 $pageable_type = "newss";
                                                              }elseif ($pageable_type_id == 10) {
                                                                  $pageable_type = "sampleServices";
                                                              }
@@ -121,7 +121,7 @@
                                                          echo ($k+1)."-صفحه سرویس ها<br>";
                                                      }elseif($pageable_type=="blogs"){
                                                          echo ($k+1)."-صفحه وبلاگ ها<br>";
-                                                     }elseif($pageable_type=="news"){
+                                                     }elseif($pageable_type=="newss"){
                                                          echo ($k+1)."-صفحه خبر ها<br>";
                                                      }elseif($pageable_type=="sampleServices"){
                                                          echo ($k+1)."-صفحه نمونه سرویس ها<br>";

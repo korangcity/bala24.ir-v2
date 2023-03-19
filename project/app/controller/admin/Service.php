@@ -28,6 +28,7 @@ class Service
         $this->phraseBuilder = new PhraseBuilder(5, '0123456789');
         $this->builder = new CaptchaBuilder(null, $this->phraseBuilder);
         $this->language = getLanguage();
+
     }
 
     public function act($act, $option = "")
@@ -54,6 +55,7 @@ class Service
 
                 $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
                 newRequest('title', $_POST['title']);
+                newRequest('enTitle', $_POST['enTitle']);
                 newRequest('pageUrl', $_POST['pageUrl']);
                 newRequest('pageTitle', $_POST['pageTitle']);
                 newRequest('pageDescription', $_POST['pageDescription']);
@@ -75,6 +77,7 @@ class Service
 
                 if ($this->language == 'en'):
                     $title = sanitizeInput($_POST['title']);
+                    $enTitle = sanitizeInput($_POST['enTitle']);
                     $pageUrl = sanitizeInput($_POST['pageUrl']);
                     $pageTitle = sanitizeInput($_POST['pageTitle']);
                     $pageDescription = sanitizeInput($_POST['pageDescription']);
@@ -84,6 +87,7 @@ class Service
                     $pageOgType = sanitizeInput($_POST['pageOgType']);
                 else:
                     $title = sanitizeInputNonEn($_POST['title']);
+                    $enTitle = sanitizeInputNonEn($_POST['enTitle']);
                     $pageUrl = sanitizeInputNonEn($_POST['pageUrl']);
                     $pageTitle = sanitizeInputNonEn($_POST['pageTitle']);
                     $pageDescription = sanitizeInputNonEn($_POST['pageDescription']);
@@ -142,7 +146,7 @@ class Service
                 }
 
                 if (empty(getErrors())) {
-                    $res = $this->registerServiceCategory($title, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg);
+                    $res = $this->registerServiceCategory($title, $enTitle, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg);
                     redirect('adminpanel/Service-serviceCategoryList');
                 }
             }
@@ -202,6 +206,7 @@ class Service
 
                 if ($this->language == 'en'):
                     $title = sanitizeInput($_POST['title']) ?? $category['title'];
+                    $enTitle = sanitizeInput($_POST['enTitle']) ?? $category['enTitle'];
                     $pageUrl = sanitizeInput($_POST['pageUrl']) ?? $category['page_url'];
                     $pageTitle = sanitizeInput($_POST['pageTitle']) ?? $category['page_title_seo'];
                     $pageDescription = sanitizeInput($_POST['pageDescription']) ?? $category['page_description_seo'];
@@ -211,6 +216,7 @@ class Service
                     $pageOgType = sanitizeInput($_POST['pageOgType']) ?? $category['page_og_type_seo'];
                 else:
                     $title = sanitizeInputNonEn($_POST['title']) ?? $category['title'];
+                    $enTitle = sanitizeInputNonEn($_POST['enTitle']) ?? $category['enTitle'];
                     $pageUrl = sanitizeInputNonEn($_POST['pageUrl']) ?? $category['page_url'];
                     $pageTitle = sanitizeInputNonEn($_POST['pageTitle']) ?? $category['page_title_seo'];
                     $pageDescription = sanitizeInputNonEn($_POST['pageDescription']) ?? $category['page_description_seo'];
@@ -272,7 +278,7 @@ class Service
                 }
 
                 if (empty(getErrors())) {
-                    $this->editServiceCategory($category_id, $title, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg);
+                    $this->editServiceCategory($category_id, $title, $enTitle, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg);
                     redirect('adminpanel/Service-serviceCategoryList');
                 }
 
@@ -1441,7 +1447,7 @@ class Service
                 $service_images_f = json_decode($service_info['images']);
                 $service_images_f_alts = json_decode($service_info['alts']);
 
-                $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
+//                $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
                 newRequest('service', $_POST['service']);
                 newRequest('title', $_POST['title']);
                 newRequest('brief_description', $_POST['brief_description']);
@@ -1457,16 +1463,16 @@ class Service
                 newRequest('pageOgDescription', $_POST['pageOgDescription']);
                 newRequest('pageOgType', $_POST['pageOgType']);
 
-                if ($checkCsrf === false) {
-
-                    if ($this->language == 'en'):
-                        setError('send information correctly');
-                    elseif ($this->language == 'fa'):
-                        setError('اطلاعات را به درستی ارسال کنید');
-                    elseif ($this->language == 'ar'):
-                        setError('إرسال المعلومات بشكل صحيح');
-                    endif;
-                }
+//                if ($checkCsrf === false) {
+//
+//                    if ($this->language == 'en'):
+//                        setError('send information correctly');
+//                    elseif ($this->language == 'fa'):
+//                        setError('اطلاعات را به درستی ارسال کنید');
+//                    elseif ($this->language == 'ar'):
+//                        setError('إرسال المعلومات بشكل صحيح');
+//                    endif;
+//                }
 
 
                 if ($this->language == 'en'):
@@ -1609,7 +1615,7 @@ class Service
                     }
 
 
-                    $images = json_encode(array_values($service_images_f));
+                    $images = json_encode(array_filter(array_values($service_images_f)));
                     if (!empty($_FILES['sampleServiceOgImage']) and $_FILES['sampleServiceOgImage']['name'] != '') {
                         $serviceOgImage = $_FILES['sampleServiceOgImage'];
                         $imageOg = file_upload($serviceOgImage, 'service', ['png', 'svg', 'jpg', 'jpeg', 'gif', 'PNG', 'JPEG', 'JPG']);
@@ -2187,14 +2193,131 @@ class Service
 
         }
 
+        if ($act == "createKhadamatSubject") {
+            if (!isset($_REQUEST['error'])) {
+                destroyErrors();
+                requestSessionDestroy();
+            }
+            $token = $this->easyCSRF->generate('my_token');
+            renderView("admin.$this->language.service.khadamat_subject_create", ['token' => $token]);
+        }
+
+        if ($act == "createKhadamatSubjectProcess") {
+            if ($_POST) {
+                destroyErrors();
+                requestSessionDestroy();
+
+                $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
+
+                newRequest('title_main', $_POST['title_main']);
+                newRequest('main_brief_description', $_POST['main_brief_description']);
+
+                if ($checkCsrf === false) {
+
+                    if ($this->language == 'en'):
+                        setError('send information correctly');
+                    elseif ($this->language == 'fa'):
+                        setError('اطلاعات را به درستی ارسال کنید');
+                    elseif ($this->language == 'ar'):
+                        setError('إرسال المعلومات بشكل صحيح');
+                    endif;
+                }
+
+                if ($this->language == 'en'):
+                    $title_main = sanitizeInput($_POST['title_main']);
+                    $main_brief_description = sanitizeInput($_POST['main_brief_description']);
+                else:
+                    $title_main = sanitizeInputNonEn($_POST['title_main']);
+                    $main_brief_description = sanitizeInputNonEn($_POST['main_brief_description']);
+                endif;
+
+                if (!empty(getErrors())) {
+                    redirect('adminpanel/Service-createKhadamatSubject?error=true');
+                }
+
+                if (empty(getErrors())) {
+                    $res = $this->registerKhadamatSubject($title_main, $main_brief_description);
+                    redirect('adminpanel/Service-khadamatSubjectList');
+                }
+            }
+        }
+
+        if ($act == "khadamatSubjectList") {
+            $khadamatSubjects = $this->getkhadamatSubjects();
+
+            renderView("admin.$this->language.service.khadamat_subject_list", ['khadamatSubjects' => $khadamatSubjects]);
+
+        }
+
+        if ($act == "khadamatSubjectDelete") {
+            $khadamatSubject_id = $option;
+            $this->deleteKhadamatSubject($khadamatSubject_id);
+            redirect('adminpanel/Service-khadamatSubjectList');
+        }
+
+        if ($act == "editKhadamatSubject") {
+            $khadamatSubject_id = $option;
+            $khadamatSubject = $this->getKhadamatSubject($khadamatSubject_id)[0];
+            if (!isset($_REQUEST['error'])) {
+                destroyErrors();
+                requestSessionDestroy();
+            }
+            $token = $this->easyCSRF->generate('my_token');
+            renderView("admin.$this->language.service.khadamat_subject_edit", ['token' => $token, 'khadamatSubject' => $khadamatSubject]);
+
+
+        }
+
+        if ($act == "editKhadamatSubjectProcess") {
+            if ($_POST) {
+                destroyErrors();
+                requestSessionDestroy();
+
+                $checkCsrf = $this->easyCSRF->check('my_token', $_POST['token']);
+
+                newRequest('title_main', $_POST['title_main']);
+                newRequest('main_brief_description', $_POST['main_brief_description']);
+
+                if ($checkCsrf === false) {
+
+                    if ($this->language == 'en'):
+                        setError('send information correctly');
+                    elseif ($this->language == 'fa'):
+                        setError('اطلاعات را به درستی ارسال کنید');
+                    elseif ($this->language == 'ar'):
+                        setError('إرسال المعلومات بشكل صحيح');
+                    endif;
+                }
+
+                if ($this->language == 'en'):
+                    $title_main = sanitizeInput($_POST['title_main']);
+                    $main_brief_description = sanitizeInput($_POST['main_brief_description']);
+                else:
+                    $title_main = sanitizeInputNonEn($_POST['title_main']);
+                    $main_brief_description = sanitizeInputNonEn($_POST['main_brief_description']);
+                endif;
+
+                $khadamat_subject_id = sanitizeInput($_POST['khadamt_subject_id']);
+                if (!empty(getErrors())) {
+                    redirect('adminpanel/Service-editKhadamatSubject-' . $khadamat_subject_id . '?error=true');
+                }
+
+                if (empty(getErrors())) {
+                    $res = $this->editKhadamatSubject($khadamat_subject_id, $title_main, $main_brief_description);
+                    redirect('adminpanel/Service-khadamatSubjectList');
+                }
+            }
+
+        }
+
         if ($act == "createKhadamat") {
             if (!isset($_REQUEST['error'])) {
                 destroyErrors();
                 requestSessionDestroy();
             }
             $token = $this->easyCSRF->generate('my_token');
-
-            renderView("admin.$this->language.service.khadamat_create", ['token' => $token]);
+            $khadamat_subject_id=$option;
+            renderView("admin.$this->language.service.khadamat_create", ['token' => $token,"khadamat_subject_id"=>$khadamat_subject_id]);
         }
 
         if ($act == "createKhadamatProcess") {
@@ -2207,7 +2330,6 @@ class Service
                 newRequest('link', $_POST['link']);
                 newRequest('brief_description', $_POST['brief_description']);
                 newRequest('icon', $_POST['icon']);
-
 
                 if ($checkCsrf === false) {
 
@@ -2232,6 +2354,7 @@ class Service
                     $brief_description = sanitizeInputNonEn($_POST['brief_description']);
                     $icon = sanitizeInputNonEn($_POST['icon']);
 
+
                 endif;
 
                 if (strlen($title) <= 2) {
@@ -2244,21 +2367,51 @@ class Service
                     endif;
                 }
 
+//                $planable_type = [];
+//                foreach ($pagee as $item) {
+//                    if ($item == 1) {
+//                        $planable_type[] = "blog";
+//                    } elseif ($item == 2) {
+//                        $planable_type[] = "service";
+//                    } elseif ($item == 3) {
+//                        $planable_type[] = "service_sample";
+//                    } elseif ($item == 4) {
+//                        $planable_type[] = "news";
+//                    } elseif ($item == 5) {
+//                        $planable_type[] = "page";
+//                    } elseif ($item == 6) {
+//                        $planable_type[] = "index";
+//                    } elseif ($item == 7) {
+//                        $planable_type[] = "services";
+//                    } elseif ($item == 8) {
+//                        $planable_type[] = "blogs";
+//                    } elseif ($item == 9) {
+//                        $planable_type[] = "news";
+//                    } elseif ($item == 10) {
+//                        $planable_type[] = "sampleServices";
+//                    }
+//                }
+//                $planable_type = json_encode($planable_type);
+//
+//                $planable_id = json_encode($page_children);
 
+                $khadamat_subject_id=sanitizeInput($_POST['khadamat_subject_id']);
                 if (!empty(getErrors())) {
-                    redirect('adminpanel/Service-createKhadamat?error=true');
+                    redirect('adminpanel/Service-createKhadamat-'.$khadamat_subject_id.'?error=true');
                 }
 
                 if (empty(getErrors())) {
-                    $res = $this->registerKhadamat($title, $link, $brief_description, $icon);
-                    redirect('adminpanel/Service-khadamatList');
+                    $res = $this->registerKhadamat($title, $link, $brief_description, $icon,$khadamat_subject_id);
+                    redirect('adminpanel/Service-khadamatList-'.$khadamat_subject_id);
                 }
             }
         }
 
         if ($act == "khadamatList") {
-            $khadamats = $this->getKhadamats();
-            renderView("admin.$this->language.service.khadamat_list", ['token' => $token, "khadamats" => $khadamats]);
+            $khadamat_subject_id=$option;
+            $khadamats = $this->getKhadamats($khadamat_subject_id);
+            $khadamatSubject = $this->getKhadamatSubject($khadamat_subject_id)[0];
+            renderView("admin.$this->language.service.khadamat_list", ['token' => $token, "khadamats" => $khadamats, "khadamatSubject" => $khadamatSubject]);
         }
 
         if ($act == "editKhadamat") {
@@ -2270,6 +2423,7 @@ class Service
 
             $khadamat_id = $option;
             $khadamat = $this->getKhadamat($khadamat_id)[0];
+
             renderView("admin.$this->language.service.khadamat_edit", ['token' => $token, 'khadamat' => $khadamat]);
         }
 
@@ -2296,12 +2450,12 @@ class Service
                     endif;
                 }
 
+
                 if ($this->language == 'en'):
                     $title = sanitizeInput($_POST['title']);
                     $link = sanitizeInput($_POST['link']);
                     $brief_description = sanitizeInput($_POST['brief_description']);
                     $icon = sanitizeInput($_POST['icon']);
-
                 else:
                     $title = sanitizeInputNonEn($_POST['title']);
                     $link = sanitizeInputNonEn($_POST['link']);
@@ -2311,6 +2465,7 @@ class Service
                 endif;
 
                 $khadamat_id = sanitizeInput($_POST['khadamat_id']);
+                $khadamat_subject_id = sanitizeInput($_POST['khadamat_subject_id']);
                 if (strlen($title) <= 2) {
                     if ($this->language == 'en'):
                         setError('enter title value correctly');
@@ -2321,14 +2476,13 @@ class Service
                     endif;
                 }
 
-
                 if (!empty(getErrors())) {
                     redirect('adminpanel/Service-editKhadamat-' . $khadamat_id . '?error=true');
                 }
 
                 if (empty(getErrors())) {
                     $res = $this->editKhadamat($khadamat_id, $title, $link, $brief_description, $icon);
-                    redirect('adminpanel/Service-khadamatList');
+                    redirect('adminpanel/Service-khadamatList-'.$khadamat_subject_id);
                 }
             }
         }
@@ -2339,12 +2493,110 @@ class Service
             redirect('adminpanel/Service-khadamatList');
         }
 
+        if ($act == "getKhadamatsByTitle") {
+            $title = sanitizeInputNonEn($_POST['title']);
+            $khadamats = $this->getKhadamatsByTitle($title);
+            $result = '';
+
+            if ($khadamats) {
+                foreach ($khadamats as $key => $khadamat) {
+
+                    $result .= "<tr>";
+                    $result .= '<td>' . ($key + 1) . '</td>';
+                    $result .= '<td>' . $khadamat["main_title"] . '</td>';
+                    $result .= '<td>' . $khadamat["main_brief_description"] . '</td>';
+                    $result .= '<td>' . $khadamat["title"] . '</td>';
+                    $result .= '<td>' . $khadamat["brief_description"] . '</td>';
+                    $result .= '<td>' . $khadamat["icon"] . '</td>';
+                    $result .= '<td>' . $khadamat["link"] . '</td>';
+                    $result .= '<td>';
+                    foreach (json_decode($khadamat['pageable_type']) as $j => $pageable_type) {
+
+                        $result .= ($j + 1) . "-" . match ($pageable_type) {
+                                "blog" => "وبلاگ",
+                                "service" => "سرویس",
+                                "service_sample" => "نمونه سرویس",
+                                "news" => "اخبار",
+                                "page" => "صفحات",
+                                "index" => "صفحه اصلی",
+                                "services" => "صفحه سرویس ها",
+                                "blogs" => "صفحه وبلاگ ها",
+                                "newss" => "صفحه خبر ها",
+                                "sampleServices" => "صفحه نمونه سرویس ها"
+                            } . "<br>";
+                    }
+                    $result .= '</td>';
+                    $result .= '<td>';
+                    foreach (json_decode($khadamat['pageable_id']) as $k => $pageable_idd) {
+                        $pageable_id = explode("*", $pageable_idd)[0];
+                        $pageable_type_id = explode("*", $pageable_idd)[1];
+                        if ($pageable_type_id == 1) {
+                            $pageable_type = "blog";
+                        } elseif ($pageable_type_id == 2) {
+                            $pageable_type = "service";
+                        } elseif ($pageable_type_id == 3) {
+                            $pageable_type = "service_sample";
+                        } elseif ($pageable_type_id == 4) {
+                            $pageable_type = "news";
+                        } elseif ($pageable_type_id == 5) {
+                            $pageable_type = "page";
+                        } elseif ($pageable_type_id == 6) {
+                            $pageable_type = "index";
+                        } elseif ($pageable_type_id == 7) {
+                            $pageable_type = "services";
+                        } elseif ($pageable_type_id == 8) {
+                            $pageable_type = "blogs";
+                        } elseif ($pageable_type_id == 9) {
+                            $pageable_type = "newss";
+                        } elseif ($pageable_type_id == 10) {
+                            $pageable_type = "sampleServices";
+                        }
+
+
+                        if ($pageable_type == "blog") {
+                            $blog = new \App\controller\admin\Blog();
+                            $result .= ($k + 1) . "-" . ($blog->getBlog($pageable_id))[0]['title'] . "<br>";
+                        } elseif ($pageable_type == "service") {
+                            $service = new \App\controller\admin\Service();
+                            $result .= ($k + 1) . "-" . ($service->getService($pageable_id))[0]['title'] . "<br>";
+                        } elseif ($pageable_type == "service_sample") {
+                            $service = new \App\controller\admin\Service();
+                            $result .= ($k + 1) . "-" . ($service->getSampleService($pageable_id))[0]['title'] . "<br>";
+                        } elseif ($pageable_type == "news") {
+                            $news = new \App\controller\admin\News();
+                            $result .= ($k + 1) . "-" . ($news->getSingleNews($pageable_id))[0]['title'] . "<br>";
+                        } elseif ($pageable_type == "page") {
+                            $page = new \App\controller\admin\Page();
+                            $result .= ($k + 1) . "-" . ($page->getPage($pageable_id))[0]['title'] . "<br>";
+                        } elseif ($pageable_type == "index") {
+                            $result .= ($k + 1) . "-صفحه اصلی<br>";
+                        } elseif ($pageable_type == "services") {
+                            $result .= ($k + 1) . "-صفحه سرویس ها<br>";
+                        } elseif ($pageable_type == "blogs") {
+                            $result .= ($k + 1) . "-صفحه وبلاگ ها<br>";
+                        } elseif ($pageable_type == "newss") {
+                            $result .= ($k + 1) . "-صفحه خبر ها<br>";
+                        } elseif ($pageable_type == "sampleServices") {
+                            $result .= ($k + 1) . "-صفحه نمونه سرویس ها<br>";
+                        }
+                    }
+
+                    $result .= '</td>';
+                    $result .= "</tr>";
+
+                }
+            }
+
+            echo $result;
+        }
+
     }
 
-    private function registerServiceCategory($title, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg)
+    private function registerServiceCategory($title, $enTitle, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg)
     {
         $data = [
             'title' => $title,
+            'enTitle' => $enTitle,
             'language' => $this->language,
             'created_at' => date("Y/m/d H:i:s"),
             'category_image' => $image,
@@ -2362,7 +2614,7 @@ class Service
 
     }
 
-    private function getServiceCategories($language)
+    public function getServiceCategories($language)
     {
         $data = [
             'language' => $language
@@ -2379,10 +2631,11 @@ class Service
         return $this->db->select_q("service_category", $data);
     }
 
-    private function editServiceCategory($category_id, $title, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg)
+    private function editServiceCategory($category_id, $title, $enTitle, $pageUrl, $pageTitle, $pageDescription, $pageKeywords, $pageOgTitle, $pageOgDescription, $pageOgType, $image, $imageOg)
     {
         $data = [
             'title' => $title,
+            'enTitle' => $enTitle,
             'page_url' => $pageUrl,
             'page_title_seo' => $pageTitle,
             'page_description_seo' => $pageDescription,
@@ -2779,22 +3032,22 @@ class Service
         return $this->db->update("services", $data, 'id="' . $service_id . '"');
     }
 
-    private function registerKhadamat($title, $link, $brief_description, $icon)
+    private function registerKhadamat($title, $link, $brief_description, $icon,$khadamat_subject_id)
     {
         $data = [
             'title' => $title,
             'brief_description' => $brief_description,
             'link' => $link,
             'icon' => $icon,
-
+            'khadamat_subject_id'=>$khadamat_subject_id
         ];
 
         return $this->db->insert("khadamats", $data);
     }
 
-    private function getKhadamats()
+    private function getKhadamats($khadamat_subject_id)
     {
-        return $this->db->select_q("khadamats", [], "order by id desc");
+        return $this->db->select_q("khadamats", ["khadamat_subject_id"=>$khadamat_subject_id], "order by id desc");
     }
 
     private function getKhadamat($khadamat_id)
@@ -2808,8 +3061,7 @@ class Service
             'title' => $title,
             'brief_description' => $brief_description,
             'link' => $link,
-            'icon' => $icon,
-
+            'icon' => $icon
         ];
 
         return $this->db->update("khadamats", $data, "id='" . $khadamat_id . "'");
@@ -2829,5 +3081,46 @@ class Service
         ];
 
         return $this->db->update("services", $data, 'id="' . $service_id . '"');
+    }
+
+    private function getKhadamatsByTitle($title)
+    {
+        return $this->db->select_q("khadamats", ['main_title' => $title], "order by id desc");
+    }
+
+    private function registerKhadamatSubject($title_main, $main_brief_description)
+    {
+        $data = [
+            'main_title' => $title_main,
+            'main_description' => $main_brief_description
+        ];
+
+        return $this->db->insert("khadamat_subjects", $data);
+    }
+
+    private function deleteKhadamatSubject($khadamatSubject_id)
+    {
+        $query = "delete from khadamat_subjects where id='" . $khadamatSubject_id . "' limit 1";
+        return $this->db->select_old($query);
+    }
+
+    private function getkhadamatSubjects()
+    {
+        return $this->db->select_q("khadamat_subjects", [], "order by id desc");
+    }
+
+    private function getKhadamatSubject($khadamatSubject_id)
+    {
+        return $this->db->select_q("khadamat_subjects", ['id' => $khadamatSubject_id]);
+    }
+
+    private function editKhadamatSubject($khadamat_subject_id, $title_main, $main_brief_description)
+    {
+        $data = [
+            'main_title' => $title_main,
+            'main_description' => $main_brief_description
+        ];
+
+        return $this->db->update("khadamat_subjects", $data, "id='" . $khadamat_subject_id . "'");
     }
 }
